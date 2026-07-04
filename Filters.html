@@ -1,142 +1,38 @@
-<script>
+<div class="filters">
 
-function initFilters(app){
+    <select id="filterType">
 
-    populateFilters(app);
+        <option value="">🏸 Tous les évènements</option>
 
-    bindFilters(app);
+    </select>
 
-}
+    <select id="filterCategory">
 
-function populateFilters(app){
+        <option value="">👦 Toutes les catégories</option>
 
-    const types = [...new Set(app.events.map(e => e.type))].sort();
+    </select>
 
-    const categories = [...new Set(
-        app.events.flatMap(e => e.categories || [])
-    )].sort();
+    <select id="filterMonth">
 
-    const months = [...new Set(
-        app.events.map(e => `${e.month} ${e.year}`)
-    )];
+        <option value="">📅 Tous les mois</option>
 
-    fillSelect("filterType", types);
-    fillSelect("filterCategory", categories);
-    fillSelect("filterMonth", months);
+        <option value="0">Janvier</option>
+        <option value="1">Février</option>
+        <option value="2">Mars</option>
+        <option value="3">Avril</option>
+        <option value="4">Mai</option>
+        <option value="5">Juin</option>
+        <option value="6">Juillet</option>
+        <option value="7">Août</option>
+        <option value="8">Septembre</option>
+        <option value="9">Octobre</option>
+        <option value="10">Novembre</option>
+        <option value="11">Décembre</option>
+    </select>
 
-}
+    <input
+        id="search"
+        type="search"
+        placeholder="🔎 Rechercher un évènement">
 
-function bindFilters(app){
-
-    document.getElementById("search").addEventListener("input", e => {
-
-        app.filters.search = e.target.value;
-
-        app.render();
-
-    });
-
-    document.getElementById("filterType").addEventListener("change", e => {
-
-        app.filters.type = e.target.value;
-
-        app.render();
-
-    });
-
-    document.getElementById("filterCategory").addEventListener("change", e => {
-
-        app.filters.category = e.target.value;
-
-        app.render();
-
-    });
-
-    document.getElementById("filterMonth").addEventListener("change", e => {
-
-        app.filters.month = e.target.value;
-
-        app.render();
-
-    });
-
-}
-
-function getFilteredEvents(app){
-
-    return app.events.filter(event => {
-
-        if(app.filters.type !== "Tous"){
-
-            if(event.type !== app.filters.type){
-
-                return false;
-
-            }
-
-        }
-
-        if(app.filters.category !== "Tous"){
-
-            if(!event.categories.includes(app.filters.category)){
-
-                return false;
-
-            }
-
-        }
-
-        if(app.filters.month !== "Tous"){
-
-            const month = `${event.month} ${event.year}`;
-
-            if(month !== app.filters.month){
-
-                return false;
-
-            }
-
-        }
-
-        if(app.filters.search.trim() !== ""){
-
-            const search = app.filters.search.toLowerCase();
-
-            const text = (
-
-                event.title + " " +
-                event.location + " " +
-                event.category + " " +
-                event.type
-
-            ).toLowerCase();
-
-            if(!text.includes(search)){
-
-                return false;
-
-            }
-
-        }
-
-        return true;
-
-    });
-
-}
-
-function fillSelect(id, values){
-
-    const select = document.getElementById(id);
-
-    select.innerHTML = "<option>Tous</option>";
-
-    values.forEach(value => {
-
-        select.innerHTML += `<option>${value}</option>`;
-
-    });
-
-}
-
-</script>
+</div>

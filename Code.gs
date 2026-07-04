@@ -1,15 +1,16 @@
-function doGet(){
+function doGet() {
   return HtmlService
     .createTemplateFromFile("Index")
     .evaluate()
-    .setTitle("Calendrier Jeunes")
-    .addMetaTag("viewport","width=device-width, initial-scale=1");
+    .setTitle(CONFIG.APP_NAME);
 }
 
-function include(file){
-  return HtmlService.createHtmlOutputFromFile(file).getContent();
+function include(filename) {
+  return HtmlService
+    .createHtmlOutputFromFile(filename)
+    .getContent();
 }
 
-function getEvents(){
-  return readEvents();
+function readEvents() {
+  return EventService.read();
 }

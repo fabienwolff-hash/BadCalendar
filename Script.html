@@ -1,42 +1,31 @@
 <script>
 
-const App={
+google.script.run.withSuccessHandler(render).getEvents();
 
-events:[],
+function render(events){
 
-filters:{
-search:"",
-type:"Tous",
-category:"Tous",
-month:"Tous"
-},
+  console.log("EVENTS FRONT:", events);
 
-init(events){
+  if(!events || events.length===0){
+    document.getElementById("events").innerHTML="Aucun événement";
+    return;
+  }
 
-this.events=events;
+  const nextEvent = events[0];
+  const others = events.slice(1);
 
-initFilters(this);
+  let html = "";
 
-this.render();
+  html += `
+    <div class="section-title">🔥 Prochain événement</div>
+    ${eventCard(nextEvent,true)}
+    <div class="section-title">📅 À venir</div>
+  `;
 
-},
+  html += others.map(e => eventCard(e,false)).join("");
 
-render(){
-
-displayEvents(
-
-getFilteredEvents(this)
-
-);
+  document.getElementById("events").innerHTML = html;
 
 }
-
-};
-
-google.script.run
-
-.withSuccessHandler(App.init.bind(App))
-
-.readEvents();
 
 </script>
