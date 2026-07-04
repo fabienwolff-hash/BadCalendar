@@ -1,0 +1,31 @@
+<script>
+
+google.script.run.withSuccessHandler(render).getEvents();
+
+function render(events){
+
+  console.log("EVENTS FRONT:", events);
+
+  if(!events || events.length===0){
+    document.getElementById("events").innerHTML="Aucun événement";
+    return;
+  }
+
+  const nextEvent = events[0];
+  const others = events.slice(1);
+
+  let html = "";
+
+  html += `
+    <div class="section-title">🔥 Prochain événement</div>
+    ${eventCard(nextEvent,true)}
+    <div class="section-title">📅 À venir</div>
+  `;
+
+  html += others.map(e => eventCard(e,false)).join("");
+
+  document.getElementById("events").innerHTML = html;
+
+}
+
+</script>

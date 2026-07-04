@@ -1,0 +1,36 @@
+<script>
+
+const MONTHS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+
+function formatDate(start,end){
+
+  const d1 = start ? new Date(start) : null;
+  const d2 = end ? new Date(end) : null;
+
+  if(!d1 || isNaN(d1)) return "Date invalide";
+
+  if(!d2 || isNaN(d2)){
+    return `${d1.getDate()} ${MONTHS[d1.getMonth()]}`;
+  }
+
+  if(d1.getTime() === d2.getTime()){
+    return `${d1.getDate()} ${MONTHS[d1.getMonth()]}`;
+  }
+
+  if(d1.getMonth() === d2.getMonth()){
+    return `${d1.getDate()} → ${d2.getDate()} ${MONTHS[d1.getMonth()]}`;
+  }
+
+  return `${d1.getDate()} ${MONTHS[d1.getMonth()]} → ${d2.getDate()} ${MONTHS[d2.getMonth()]}`;
+
+}
+
+function registrationButton(event){
+
+  if(!event.registrationUrl) return "";
+
+  return `<a class="button" href="${event.registrationUrl}" target="_blank">S'inscrire</a>`;
+
+}
+
+</script>
