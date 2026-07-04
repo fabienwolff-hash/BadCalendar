@@ -1,30 +1,259 @@
 <script>
 
-google.script.run.withSuccessHandler(render).getEvents();
+const App={
 
-function render(events){
+events:[],
 
-  console.log("EVENTS FRONT:", events);
+state:{
 
-  if(!events || events.length===0){
-    document.getElementById("events").innerHTML="Aucun événement";
-    return;
-  }
+search:"",
 
-  const nextEvent = events[0];
-  const others = events.slice(1);
+type:"Tous",
 
-  let html = "";
+category:"Tous",
 
-  html += `
-    <div class="section-title">🔥 Prochain événement</div>
-    ${eventCard(nextEvent,true)}
-    <div class="section-title">📅 À venir</div>
-  `;
+month:"Tous"
 
-  html += others.map(e => eventCard(e,false)).join("");
+},
 
-  document.getElementById("events").innerHTML = html;
+init(events){
+
+this.events=events;
+
+this.buildFilters();
+
+this.bindFilters();
+
+this.render();
+},
+
+render(){
+
+const list=this.filteredEvents();
+
+displayEvents(list);
+
+},
+
+filteredEvents(){
+
+return this.events.filter(event=>{
+
+if(this.state.type!=="Tous"){
+
+if(event.type!==this.state.type){
+
+return false;
+
+}
+
+}
+
+if(this.state.month!=="Tous"){
+
+if(event.month!==this.state.month){
+
+return false;
+
+}
+
+}
+
+if(this.state.category!=="Tous"){
+
+if(!event.categories.includes(this.state.category)){
+
+return false;
+
+}
+
+}
+
+if(this.state.search.trim()!==""){
+
+const s=this.state.search.toLowerCase();
+
+const txt=(
+
+event.title+" "+
+
+event.location+" "+
+
+event.category+" "+
+
+event.type
+
+).toLowerCase();
+
+if(!txt.includes(s)){
+
+return false;
+
+}
+
+}
+
+return true;
+
+});
+
+},
+
+buildFilters(){
+
+const types=[...new Set(
+
+this.events.map(e=>e.type)
+
+)].sort();
+
+const categories=[...new Set(
+
+this.events.flatMap(e=>e.categories)
+
+)].sort();
+
+const months=[...new Set(
+
+this.events.map(e=>e.month)
+
+)];
+
+fillSelect("filterType",types);
+
+fillSelect("filterCategory",categories);
+
+fillSelect("filterMonth",months);
+
+},
+
+bindFilters(){
+
+document
+.getElementById("search")
+.addEventListener("input",e=>{
+
+this.state.search=e.target.value;
+
+this.render();
+
+});
+
+document
+.getElementById("filterType")
+.addEventListener("change",e=>{
+
+this.state.type=e.target.value;
+
+this.render();
+
+});
+
+document
+.getElementById("filterCategory")
+.addEventListener("change",e=>{
+
+this.state.category=e.target.value;
+
+this.render();
+
+});
+
+document
+.getElementById("filterMonth")
+.addEventListener("change",e=>{
+
+this.state.month=e.target.value;
+
+this.render();
+
+});
+
+};
+
+function fillSelect(id,values){
+
+const select=document.getElementById(id);
+
+select.innerHTML="<option>Tous</option>";
+
+values.forEach(v=>{
+
+select.innerHTML+=`<option>${v}</option>`;
+
+});
+
+}
+
+};
+
+google.script.run
+
+.withSuccessHandler(events=>{
+
+console.log(events);
+
+App.init(events);
+
+})
+
+.readEvents();
+
+function displayEvents(events){
+
+const container=document.getElementById("events");
+
+container.innerHTML="";
+
+events.forEach(event=>{
+
+container.innerHTML+=`
+
+<div class="card">
+
+<div class="type">
+
+${event.type}
+
+</div>
+
+<h2>
+
+${event.title}
+
+</h2>
+
+<div>
+
+📅 ${formatDate(event.startDate,event.endDate)}
+
+</div>
+
+<div>
+
+📍 ${event.location}
+
+</div>
+
+<div>
+
+👦 ${event.category}
+
+</div>
+
+<div>
+
+📝 ${event.registrationType}
+
+</div>
+
+${registrationButton(event)}
+
+</div>
+
+`;
+
+});
 
 }
 

@@ -25,11 +25,9 @@ function parseDate(v){
 
 function readEvents(){
 
-  const ss = SpreadsheetApp.openById(
-    PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID")
-  );
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
 
-  const sheet = ss.getSheetByName("Master");
+  const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
 
   const values = sheet.getDataRange().getValues();
 
