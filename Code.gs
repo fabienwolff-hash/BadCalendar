@@ -1,8 +1,3 @@
-const CONFIG = {
-  spreadsheetId: PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID"),
-  sheetName: "Master"
-};
-
 function doGet(){
   return HtmlService
     .createTemplateFromFile("Index")
