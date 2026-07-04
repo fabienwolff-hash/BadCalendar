@@ -1,89 +1,42 @@
 <script>
 
-const App = {
+const App={
 
-  events: [],
+events:[],
 
-  filters: {
-    search: "",
-    type: "Tous",
-    category: "Tous",
-    month: "Tous"
-  },
+filters:{
+search:"",
+type:"Tous",
+category:"Tous",
+month:"Tous"
+},
 
-  init(events) {
-    this.events = events;
-    this.initFilters();
-    this.render();
-  },
+init(events){
 
-  render() {
-    const events = this.getFilteredEvents();
-    displayEvents(events);
-  }
+this.events=events;
+
+initFilters(this);
+
+this.render();
+
+},
+
+render(){
+
+displayEvents(
+
+getFilteredEvents(this)
+
+);
+
+}
 
 };
 
 google.script.run
+
 .withSuccessHandler(App.init.bind(App))
+
 .readEvents();
-
-function displayEvents(events){
-
-const container=document.getElementById("events");
-
-container.innerHTML="";
-
-events.forEach(event=>{
-
-container.innerHTML+=`
-
-<div class="card">
-
-<div class="type">
-
-${event.type}
-
-</div>
-
-<h2>
-
-${event.title}
-
-</h2>
-
-<div>
-
-📅 ${formatDate(event.startDate,event.endDate)}
-
-</div>
-
-<div>
-
-📍 ${event.location}
-
-</div>
-
-<div>
-
-👦 ${event.category}
-
-</div>
-
-<div>
-
-📝 ${event.registrationType}
-
-</div>
-
-${registrationButton(event)}
-
-</div>
-
-`;
-
-});
-
-}
 
 </script>

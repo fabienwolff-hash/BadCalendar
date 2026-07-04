@@ -1,28 +1,157 @@
 <script>
 
-function eventCard(event, isFeatured=false){
+function displayEvents(events){
 
-return `
+    const container=document.getElementById("events");
 
-<div class="card ${isFeatured ? "featured" : ""}">
+    if(!events || events.length===0){
 
-<div class="badge ${event.type.toLowerCase()}">${event.type}</div>
+        container.innerHTML=renderEmpty();
 
-<h2>${event.title}</h2>
+        return;
 
-<div class="info">📅 ${formatDate(event.startDate,event.endDate)}</div>
+    }
 
-<div class="info">📍 ${event.location}</div>
+    container.innerHTML=renderList(events);
 
-<div class="info">👦 ${event.category}</div>
+}
 
-<div class="info">📝 ${event.registrationType}</div>
+function renderList(events){
 
-${registrationButton(event)}
+    const groups = groupByMonth(events);
 
-</div>
+    return Object.keys(groups)
+        .map(month => renderMonth(month, groups[month]))
+        .join("");
 
-`;
+}
+
+function groupByMonth(events){
+
+    const groups = {};
+
+    events.forEach(event => {
+
+        const key = `${event.month} ${event.year}`;
+
+        if(!groups[key]){
+
+            groups[key] = [];
+
+        }
+
+        groups[key].push(event);
+
+    });
+
+    return groups;
+
+}
+
+function renderMonth(title, events){
+
+    return `
+
+        <section class="month-group">
+
+            <h2 class="month-title">
+
+                📅 ${title}
+
+            </h2>
+
+            ${events.map(renderCard).join("")}
+
+        </section>
+
+    `;
+
+}
+
+function renderCard(event){
+
+    return `
+
+    <article class="card">
+
+        <div class="type">
+
+            ${event.type}
+
+        </div>
+
+        <h2>
+
+            ${event.title}
+
+        </h2>
+
+        <div class="event-line">
+
+            📅 ${formatDate(event.startDate,event.endDate)}
+
+        </div>
+
+        <div class="event-line">
+
+            📍 ${event.location}
+
+        </div>
+
+        <div class="event-line">
+
+            👦 ${event.category}
+
+        </div>
+
+        <div class="event-line">
+
+            📝 ${event.registrationType}
+
+        </div>
+
+        ${renderActions(event)}
+
+    </article>
+
+    `;
+
+}
+
+function renderActions(event){
+
+    if(!event.registrationUrl){
+
+        return "";
+
+    }
+
+    return `
+
+        <a
+            class="button"
+            href="${event.registrationUrl}"
+            target="_blank">
+
+            S'inscrire sur BadNet
+
+        </a>
+
+    `;
+
+}
+
+function renderEmpty(){
+
+    return `
+
+        <div class="empty">
+
+            Aucun événement trouvé.
+
+        </div>
+
+    `;
 
 }
 
