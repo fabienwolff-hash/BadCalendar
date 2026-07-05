@@ -113,7 +113,7 @@ header h1{
 }
 
 /* =========================
-   BADGES
+   BADGES — PALETTE HARMONISÉE 3.4
 ========================= */
 
 .badge{
@@ -125,18 +125,55 @@ header h1{
     font-weight:600;
     letter-spacing:.2px;
     margin-bottom:10px;
-    box-shadow:0 2px 6px rgba(0,0,0,.12);
+    box-shadow:0 2px 6px rgba(0,0,0,.10);
 }
 
-/* Types existants conservés */
-.stage{ background:#F4B400; color:black; }
-.tdj{ background:#42A5F5; }
-.tij{ background:#EF5350; }
-.trj{ background:#7E57C2; }
-.promobad{ background:#66BB6A; }
-.interclub{ background:#78909C; }
-.championnat{ background:#FB8C00; }
-.cdj{ background:#26A69A; }
+/* Formation */
+.stage{
+    background:#FFB300; /* amber 600 */
+    color:#1A1A1A;
+}
+
+/* Jeunes compétitions (famille bleue cohérente) */
+.tdj{
+    background:#1E88E5;
+}
+
+.tij{
+    background:#42A5F5;
+}
+
+.trj{
+    background:#1565C0;
+}
+
+/* Loisirs / initiation */
+.promobad{
+    background:#43A047;
+}
+
+/* Interclubs */
+.interclub{
+    background:#546E7A;
+}
+
+/* Championnat */
+.championnat{
+    background:#EF6C00;
+}
+
+/* CDJ */
+.cdj{
+    background:#00897B;
+}
+
+/* =========================
+   ACCESSIBILITÉ (option importante)
+========================= */
+
+.badge{
+    text-shadow:0 1px 1px rgba(0,0,0,.15);
+}
 
 /* =========================
    INFO TEXT
