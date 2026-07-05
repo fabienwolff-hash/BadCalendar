@@ -5,230 +5,194 @@
 }
 
 body{
-
     margin:0;
-
     background:#EEF2F6;
-
     font-family:Arial,Helvetica,sans-serif;
-
     color:#333;
-
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 header{
-
     position:sticky;
-
     top:0;
-
     z-index:1000;
-
     background:white;
-
-    padding:18px;
-
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-
+    padding:18px 16px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+    border-bottom:1px solid #eee;
 }
 
 header h1{
-
     margin:0;
-
     font-size:22px;
-
+    font-weight:700;
+    letter-spacing:.2px;
 }
 
+/* =========================
+   FILTERS
+========================= */
+
 .filters{
-
     position:sticky;
-
     top:66px;
-
     z-index:999;
-
     display:flex;
-
     flex-direction:column;
-
     gap:10px;
-
-    padding:15px;
-
+    padding:14px 16px;
     background:white;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.05);
-
+    box-shadow:0 4px 12px rgba(0,0,0,.06);
+    border-bottom:1px solid #eee;
 }
 
 .filters select,
 .filters input{
-
     width:100%;
-
-    padding:12px;
-
+    padding:12px 14px;
     border:1px solid #d9d9d9;
-
-    border-radius:10px;
-
+    border-radius:12px;
     font-size:15px;
-
     background:white;
-
+    transition:all .2s ease;
 }
+
+.filters select:focus,
+.filters input:focus{
+    outline:none;
+    border-color:#1976D2;
+    box-shadow:0 0 0 3px rgba(25,118,210,.12);
+}
+
+/* =========================
+   EVENTS CONTAINER
+========================= */
 
 #events{
-
     padding:16px;
-
 }
 
-.section-title{
+/* =========================
+   SECTION TITLES (mois)
+========================= */
 
-    margin:20px 4px 12px;
-
+.section-title,
+.month-header{
+    margin:28px 4px 14px;
+    padding-bottom:8px;
+    border-bottom:2px solid #e0e0e0;
     font-size:18px;
-
-    font-weight:bold;
-
-    color:#444;
-
+    font-weight:700;
+    color:#1565C0;
+    letter-spacing:.3px;
 }
+
+/* =========================
+   CARD (amélioration principale)
+========================= */
 
 .card{
-
     background:white;
-
-    border-radius:16px;
-
+    border-radius:18px;
     padding:16px;
-
     margin-bottom:14px;
-
-    box-shadow:0 4px 14px rgba(0,0,0,.08);
-
+    box-shadow:0 6px 18px rgba(0,0,0,.10);
+    transition:transform .15s ease, box-shadow .15s ease;
+    border:1px solid rgba(0,0,0,.04);
 }
 
+.card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 26px rgba(0,0,0,.14);
+}
+
+/* =========================
+   BADGES
+========================= */
 
 .badge{
-
     display:inline-block;
-
     padding:6px 12px;
-
-    border-radius:20px;
-
+    border-radius:999px;
     color:white;
-
     font-size:12px;
-
+    font-weight:600;
+    letter-spacing:.2px;
     margin-bottom:10px;
-
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
 }
 
-.stage{
-    background:#F4B400;
-    color:black;
-}
+/* Types existants conservés */
+.stage{ background:#F4B400; color:black; }
+.tdj{ background:#42A5F5; }
+.tij{ background:#EF5350; }
+.trj{ background:#7E57C2; }
+.promobad{ background:#66BB6A; }
+.interclub{ background:#78909C; }
+.championnat{ background:#FB8C00; }
+.cdj{ background:#26A69A; }
 
-.tdj{
-    background:#42A5F5;
-}
-
-.tij{
-    background:#EF5350;
-}
-
-.trj{
-    background:#7E57C2;
-}
-
-.promobad{
-    background:#66BB6A;
-}
-
-.interclub{
-    background:#78909C;
-}
-
-.championnat{
-    background:#FB8C00;
-}
-
-.cdj{
-    background:#26A69A;
-}
+/* =========================
+   INFO TEXT
+========================= */
 
 .info{
-
     margin:8px 0;
-
     font-size:14px;
-
+    color:#444;
 }
 
+/* =========================
+   BUTTON
+========================= */
+
 .button{
-
     display:block;
-
     margin-top:16px;
-
     text-align:center;
-
     text-decoration:none;
-
     padding:12px;
-
-    border-radius:10px;
-
+    border-radius:12px;
     background:#1976D2;
-
     color:white;
-
-    font-weight:bold;
-
+    font-weight:600;
+    transition:background .2s ease, transform .1s ease;
 }
 
 .button:hover{
-
-    opacity:.9;
-
+    background:#1565C0;
+    transform:translateY(-1px);
 }
+
+/* =========================
+   EMPTY STATE
+========================= */
 
 .empty{
-
     text-align:center;
-
-    padding:50px;
-
+    padding:50px 20px;
     color:#666;
-
 }
 
-.month-header{
-
-    margin:32px 0 16px;
-
-    padding-bottom:8px;
-
-    border-bottom:2px solid #e0e0e0;
-
-    color:#1565C0;
-
-    font-size:1.3rem;
-
-}
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(min-width:900px){
 
     body{
-
-        max-width:700px;
-
+        max-width:720px;
         margin:auto;
+    }
 
+    .card{
+        padding:18px;
     }
 
 }
