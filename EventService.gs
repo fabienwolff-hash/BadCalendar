@@ -44,25 +44,17 @@ const EventService = {
 
     });
 
-    return {
-
-      type: raw.Type || "",
-
-      title: raw.Titre || "",
-
-      startDate: this.parseDate_(raw.DateDebut),
-
-      endDate: this.parseDate_(raw.DateFin),
-
-      location: raw.Lieu || "",
-
-      category: raw.CategorieAffichee || "",
-
-      registrationType: raw.TypeInscription || "",
-
-      registrationUrl: raw.LienInscription || "",
-
-    };
+   return {
+	  type: raw.Type || "",
+	  scope: raw.Scope || "",
+	  title: raw.Title || "",
+	  startDate: this.parseDate_(raw.StartDate),
+	  endDate: this.parseDate_(raw.EndDate),
+	  location: raw.Location || "",
+	  category: raw.Categories || "",
+	  registrationMode: raw.RegistrationMode || "",
+	  registrationUrl: raw.RegistrationUrl || ""
+	};
 
   },
 
