@@ -6,15 +6,21 @@ function renderCard(event) {
 
 <div class="card">
 
-    <div class="badge ${event.type.toLowerCase()}">
-        ${event.type}
+    <div class="card-header">
+
+        <div class="badge ${event.type.toLowerCase()}">
+            ${event.type}
+        </div>
+
+        <div class="event-date">
+            ${shortDate(event.startDate)}
+        </div>
+
     </div>
 
-    <h2>${event.title}</h2>
-
-    <div class="info">
-        📅 ${formatDate(event.startDate, event.endDate)}
-    </div>
+    <h2 class="event-title">
+        ${event.title}
+    </h2>
 
     <div class="info">
         📍 ${event.location}
@@ -24,8 +30,12 @@ function renderCard(event) {
         👦 ${event.category}
     </div>
 
-    <div class="info">
+    <div class="separator"></div>
+
+    <div class="registration">
+
         📝 ${event.registrationType}
+
     </div>
 
     ${registrationButton(event)}
@@ -52,34 +62,32 @@ ${month.charAt(0).toUpperCase()+month.slice(1)} ${year}
 
 function renderEvents(events){
 
-    const container =
-        document.getElementById("events");
+    const container=document.getElementById("events");
 
-    let html = "";
+    let html="";
 
-    let currentGroup = "";
+    let currentGroup="";
 
     events.forEach(event=>{
 
-        const group =
-            event.year + "-" + event.monthNumber;
+        const group=event.year+"-"+event.monthNumber;
 
-        if(group !== currentGroup){
+        if(group!==currentGroup){
 
-            currentGroup = group;
+            currentGroup=group;
 
-            html += renderMonthHeader(
+            html+=renderMonthHeader(
                 event.month,
                 event.year
             );
 
         }
 
-        html += renderCard(event);
+        html+=renderCard(event);
 
     });
 
-    container.innerHTML = html;
+    container.innerHTML=html;
 
 }
 

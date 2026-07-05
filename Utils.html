@@ -33,4 +33,17 @@ function registrationButton(event){
 
 }
 
+function shortDate(date){
+
+    const d=new Date(date);
+
+    return d.toLocaleDateString(
+        "fr-FR",
+        {
+            day:"numeric",
+            month:"short"
+        }
+    );
+}
+
 </script>
