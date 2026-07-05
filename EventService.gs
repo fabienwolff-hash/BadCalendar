@@ -51,9 +51,12 @@ const EventService = {
 	  startDate: this.parseDate_(raw.StartDate),
 	  endDate: this.parseDate_(raw.EndDate),
 	  location: raw.Location || "",
-	  category: raw.Categories || "",
+	  categories: raw.Categories || "",
 	  registrationMode: raw.RegistrationMode || "",
+	  registrationOpenDate: this.parseDate_(raw.RegistrationOpenDate),
+	  registrationCloseDate: this.parseDate_(raw.RegistrationCloseDate),
 	  registrationUrl: raw.RegistrationUrl || ""
+	  	  
 	};
 
   },
@@ -75,9 +78,10 @@ const EventService = {
 
     year: startDate.getFullYear(),
 
-    categories: event.category
-      .split(" à ")
-      .map(c => c.trim()),
+    categoriesArray: event.categories
+    .split(";")
+    .map(c => c.trim())
+    .filter(Boolean)
 
     isPast:
       startDate < new Date(),
