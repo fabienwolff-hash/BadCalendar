@@ -30,20 +30,14 @@ const App = {
             [...new Set(this.events.map(e => e.type))].sort()
         );
 
-       fillSelect(
+fillSelect(
     "filterCategory",
-    [...new Set(this.events.map(e => e.category))].sort()
+    [...new Set(this.events.flatMap(e => e.categories))].sort()
 );
 
 fillSelect(
     "filterMonth",
-    [...new Set(
-        this.events.map(e =>
-            new Date(e.startDate).toLocaleString("fr-FR", {
-                month: "long"
-            })
-        )
-    )]
+    [...new Set(this.events.map(e => e.month))]
 );
 
     },
@@ -100,16 +94,16 @@ fillSelect(
                 && event.type !== this.state.type)
                 return false;
 
-            if (this.state.category !== "Tous"
-				&& event.category !== this.state.category)
-				return false;
+            if (
+    this.state.category !== "Tous" &&
+    !event.categories.includes(this.state.category)
+)
+    return false;
 
-            const month = new Date(event.startDate).toLocaleString("fr-FR", {
-    month: "long"
-});
-
-if (this.state.month !== "Tous"
-    && month !== this.state.month)
+if (
+    this.state.month !== "Tous" &&
+    event.month !== this.state.month
+)
     return false;
 
             if (this.state.search !== "") {

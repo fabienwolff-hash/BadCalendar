@@ -22,10 +22,14 @@ const EventService = {
     this.sort_(events);
 
     return events.map(event => ({
-      ...event,
-      startDate: event.startDate.toISOString(),
-      endDate: event.endDate.toISOString()
-    }));
+
+  ...event,
+
+  startDate: event.startDate.toISOString(),
+
+  endDate: event.endDate.toISOString()
+
+}));
 
   },
 
@@ -65,13 +69,38 @@ const EventService = {
 
   enrich_(event) {
 
-    return {
+  const startDate = event.startDate;
 
-      ...event
+  return {
 
-    };
+    ...event,
 
-  },
+    month: startDate.toLocaleString(
+      "fr-FR",
+      { month: "long" }
+    ),
+
+    monthNumber: startDate.getMonth() + 1,
+
+    year: startDate.getFullYear(),
+
+    categories: event.category
+      .split(" à ")
+      .map(c => c.trim()),
+
+    isPast:
+      startDate < new Date(),
+
+    isToday:
+      startDate.toDateString() ===
+      new Date().toDateString(),
+
+    isFuture:
+      startDate > new Date()
+
+  };
+
+},
 
   sort_(events) {
 
