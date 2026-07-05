@@ -6,7 +6,9 @@ const EventService = {
       PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID")
     );
 
-    const sheet = ss.getSheetByName("Master");
+	const sheet = ss.getSheetByName(CONFIG.SHEET.NAME);
+
+	const C = CONFIG.COLUMNS;
 
     const values = sheet.getDataRange().getValues();
 
@@ -16,7 +18,6 @@ const EventService = {
     let events = rows
       .filter(row => row && row[0] !== "")
       .map(row => this.normalize_(headers, row))
-      .filter(event => event.active)
       .map(event => this.enrich_(event));
 
     this.sort_(events);
@@ -60,8 +61,6 @@ const EventService = {
       registrationType: raw.TypeInscription || "",
 
       registrationUrl: raw.LienInscription || "",
-
-      active: raw.Actif === "✅"
 
     };
 
