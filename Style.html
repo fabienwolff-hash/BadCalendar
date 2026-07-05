@@ -218,10 +218,76 @@ header h1{
 }
 
 /* =========================
-   RESPONSIVE
+   3.5 — RESPONSIVE IMPROVEMENTS
 ========================= */
 
-@media(min-width:900px){
+/* --- Mobile (optimisation principale) --- */
+@media (max-width: 600px){
+
+    body{
+        padding:0;
+    }
+
+    #events{
+        padding:12px;
+    }
+
+    .card{
+        border-radius:16px;
+        padding:14px;
+        margin-bottom:12px;
+    }
+
+    /* Boutons pleine largeur sur mobile */
+    .button,
+    .action-button{
+        width:100%;
+    }
+
+    .filters{
+        padding:12px;
+        gap:8px;
+    }
+
+    .filters select,
+    .filters input{
+        font-size:14px;
+        padding:11px;
+    }
+
+    .section-title,
+    .month-header{
+        font-size:16px;
+        margin:20px 2px 10px;
+    }
+}
+
+/* --- Tablette --- */
+@media (min-width: 601px) and (max-width: 899px){
+
+    body{
+        max-width:600px;
+        margin:auto;
+    }
+
+    #events{
+        padding:14px;
+    }
+
+    .card{
+        padding:16px;
+    }
+
+    /* boutons un peu plus confortables */
+    .button,
+    .action-button{
+        width:auto;
+        min-width:180px;
+    }
+}
+
+/* --- Desktop --- */
+@media (min-width: 900px){
 
     body{
         max-width:720px;
@@ -232,6 +298,20 @@ header h1{
         padding:18px;
     }
 
+    .button,
+    .action-button{
+        width:auto;
+    }
 }
+
+/* --- Sécurité UX : éviter les débordements --- */
+.card,
+.info,
+.badge{
+    word-break:break-word;
+    overflow-wrap:anywhere;
+}
+
+
 
 </style>
