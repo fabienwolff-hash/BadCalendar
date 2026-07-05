@@ -28,8 +28,14 @@ const EventService = {
 
 	  startDate: event.startDate.toISOString(),
 	  endDate: event.endDate.toISOString(),
-	  registrationOpenDate:	event.registrationOpenDate.toISOString(),
-	  registrationCloseDate: event.registrationCloseDate.toISOString()
+	  registrationOpenDate:
+      event.registrationOpenDate
+        ? event.registrationOpenDate.toISOString()
+        : null,
+	  registrationCloseDate:
+      event.registrationCloseDate
+        ? event.registrationCloseDate.toISOString()
+        : null,
 	}));
 
   },
@@ -97,17 +103,8 @@ const EventService = {
 	const open = event.registrationOpenDate;
 	const close = event.registrationCloseDate;
 
-	// dates "9999" = non renseignées
-	const unknownDate = 9999;
-
-	if (
-		open.getFullYear() === unknownDate ||
-		close.getFullYear() === unknownDate
-	) {
-
-		registrationStatus =
-			CONFIG.STATUS.REGISTRATION.UNKNOWN;
-
+	if (!open || !close) {
+		registrationStatus = CONFIG.STATUS.REGISTRATION.UNKNOWN;
 	} else {
 
 		const openDate = new Date(open);
@@ -173,9 +170,9 @@ const EventService = {
 
     if (!value) {
 
-      return new Date(9999, 0, 1);
+		return null;
 
-    }
+	}
 
     if (value instanceof Date) {
 
@@ -203,12 +200,10 @@ const EventService = {
 
     }
 
-    const date = new Date(value);
+	const date = new Date(value);
 
-    return isNaN(date)
-      ? new Date(9999, 0, 1)
-      : date;
-
-  }
+	return isNaN(date)
+    ? null
+    : date;
 
 };
