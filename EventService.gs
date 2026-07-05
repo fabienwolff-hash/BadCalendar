@@ -22,15 +22,15 @@ const EventService = {
 
     this.sort_(events);
 
-    return events.map(event => ({
+	return events.map(event => ({
 
-  ...event,
+	  ...event,
 
-  startDate: event.startDate.toISOString(),
-
-  endDate: event.endDate.toISOString()
-
-}));
+	  startDate: event.startDate.toISOString(),
+	  endDate: event.endDate.toISOString(),
+	  registrationOpenDate:	event.registrationOpenDate.toISOString(),
+	  registrationCloseDate: event.registrationCloseDate.toISOString()
+	}));
 
   },
 
