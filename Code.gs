@@ -20,4 +20,5 @@ function getConfig() {
     filters: {
       all: CONFIG.FILTERS.ALL
     }
-  };
+  }
+};
