@@ -6,6 +6,14 @@ const UI = {
     SEARCH_PLACEHOLDER: "Rechercher..."
 };
 
+const DOM = {
+    SEARCH: "search",
+    FILTER_TYPE: "filterType",
+    FILTER_CATEGORY: "filterCategory",
+    FILTER_MONTH: "filterMonth",
+    EVENTS: "events"
+};
+
 const App = {
 
     events: [],
@@ -32,17 +40,17 @@ const App = {
     populateFilters() {
 
         fillSelect(
-            "filterType",
+            DOM.FILTER_TYPE,
             [...new Set(this.events.map(e => e.type))].sort()
         );
 
 fillSelect(
-    "filterCategory",
+	DOM.FILTER_CATEGORY,
     [...new Set(this.events.flatMap(e => e.categories))].sort()
 );
 
 fillSelect(
-    "filterMonth",
+	DOM.FILTER_MONTH,
     [...new Set(this.events.map(e => e.month))]
 );
 
@@ -50,44 +58,28 @@ fillSelect(
 
     bindEvents() {
 
-        document
-            .getElementById("search")
+       $(DOM.SEARCH)
             .addEventListener("input", e => {
-
                 this.state.search = e.target.value;
-
                 this.render();
-
             });
 
-        document
-            .getElementById("filterType")
+        $(DOM.FILTER_TYPE)
             .addEventListener("change", e => {
-
                 this.state.type = e.target.value;
-
                 this.render();
-
             });
 
-        document
-            .getElementById("filterCategory")
+        $(DOM.FILTER_CATEGORY)
             .addEventListener("change", e => {
-
                 this.state.category = e.target.value;
-
                 this.render();
-
             });
 
-        document
-            .getElementById("filterMonth")
+        $(DOM.FILTER_MONTH)
             .addEventListener("change", e => {
-
                 this.state.month = e.target.value;
-
                 this.render();
-
             });
 
     },
@@ -151,18 +143,16 @@ if (
 };
 
 function fillSelect(id, values) {
-
     const select = document.getElementById(id);
-
     select.innerHTML = "<option>Tous</option>";
-
     values.forEach(value => {
-
         select.innerHTML +=
             `<option>${value}</option>`;
-
     });
+}
 
+function $(id){
+    return document.getElementById(id);
 }
 
 google.script.run
