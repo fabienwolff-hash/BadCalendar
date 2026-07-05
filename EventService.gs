@@ -65,35 +65,25 @@ const EventService = {
 
   const startDate = event.startDate;
 
-  return {
+	return {
 
-    ...event,
+	  ...event,
 
-    month: startDate.toLocaleString(
-      "fr-FR",
-      { month: "long" }
-    ),
+	  month: startDate.toLocaleString(
+		"fr-FR",
+		{ month: "long" }
+	  ),
 
-    monthNumber: startDate.getMonth() + 1,
+	  monthNumber: startDate.getMonth() + 1,
 
-    year: startDate.getFullYear(),
+	  year: startDate.getFullYear(),
 
-    categoriesArray: event.categories
-    .split(";")
-    .map(c => c.trim())
-    .filter(Boolean),
+	  categoriesArray: event.categories
+		.split(";")
+		.map(c => c.trim())
+		.filter(Boolean)
 
-    isPast:
-      startDate < new Date(),
-
-    isToday:
-      startDate.toDateString() ===
-      new Date().toDateString(),
-
-    isFuture:
-      startDate > new Date()
-
-  };
+	};
 
 },
 
