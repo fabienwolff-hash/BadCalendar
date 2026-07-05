@@ -15,10 +15,6 @@ const CONFIG = {
     day: "numeric",
     month: "long",
     year: "numeric"
-  },
-
-  FILTERS: {
-    ALL: "Tous"
   }
 
 };

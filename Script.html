@@ -1,14 +1,20 @@
 <script>
 
+const UI = {
+    FILTER_ALL: "Tous",
+    EMPTY_MESSAGE: "Aucun événement trouvé.",
+    SEARCH_PLACEHOLDER: "Rechercher..."
+};
+
 const App = {
 
     events: [],
 
     state: {
         search: "",
-        type: "Tous",
-        category: "Tous",
-        month: "Tous"
+        type: UI.FILTER_ALL,
+        category: UI.FILTER_ALL,
+        month: UI.FILTER_ALL
     },
 
     init(events) {
@@ -90,18 +96,18 @@ fillSelect(
 
         return this.events.filter(event => {
 
-            if (this.state.type !== "Tous"
+            if (this.state.type !== UI.FILTER_ALL
                 && event.type !== this.state.type)
                 return false;
 
             if (
-    this.state.category !== "Tous" &&
+    this.state.category !== UI.FILTER_ALL &&
     !event.categories.includes(this.state.category)
 )
     return false;
 
 if (
-    this.state.month !== "Tous" &&
+    this.state.month !== UI.FILTER_ALL &&
     event.month !== this.state.month
 )
     return false;
