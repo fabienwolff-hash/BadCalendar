@@ -27,7 +27,9 @@ function formatDate(start,end){
 
 function registrationButton(event){
 
-  if(!event.registrationUrl) return "";
+  if(!event.registrationUrl || event.registrationStatus !== "OPEN"){
+    return "";
+}
 
   return `<a class="button" href="${event.registrationUrl}" target="_blank">S'inscrire</a>`;
 

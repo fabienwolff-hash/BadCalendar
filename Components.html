@@ -1,5 +1,46 @@
 <script>
 
+function eventStatusLabel(status){
+
+    switch(status){
+
+        case "UPCOMING":
+            return "📅 À venir";
+
+        case "ONGOING":
+            return "🟢 En cours";
+
+        case "FINISHED":
+            return "✔ Terminé";
+
+        default:
+            return "";
+    }
+
+}
+
+function registrationStatusLabel(status){
+
+    switch(status){
+
+        case "OPEN":
+            return "📝 Inscriptions ouvertes";
+
+        case "NOT_OPEN":
+            return "📝 Inscriptions bientôt ouvertes";
+
+        case "CLOSED":
+            return "📝 Inscriptions clôturées";
+
+        case "UNKNOWN":
+            return "📝 Inscriptions à venir";
+
+        default:
+            return "";
+    }
+
+}
+
 function renderCard(event) {
 
   return `
@@ -34,9 +75,11 @@ function renderCard(event) {
 
     <div class="registration">
 
-        📝 ${event.registrationMode}
+        📝 ${registrationStatusLabel(event.registrationStatus)}
 
     </div>
+
+	<div class="info">${eventStatusLabel(event.eventStatus)}</div>
 
     ${registrationButton(event)}
 
