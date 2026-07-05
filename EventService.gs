@@ -81,7 +81,7 @@ const EventService = {
     categoriesArray: event.categories
     .split(";")
     .map(c => c.trim())
-    .filter(Boolean)
+    .filter(Boolean),
 
     isPast:
       startDate < new Date(),
