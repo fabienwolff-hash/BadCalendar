@@ -6,7 +6,7 @@ const EventService = {
       PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID")
     );
 
-	const sheet = ss.getSheetByName(CONFIG.SHEET.NAME);
+	const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
 
 	const C = CONFIG.COLUMNS;
 
