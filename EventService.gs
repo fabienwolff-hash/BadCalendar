@@ -63,12 +63,84 @@ const EventService = {
 
   enrich_(event) {
 
-  const startDate = event.startDate;
+	const startDate = event.startDate;
+	const endDate = event.endDate;
+	const today = new Date();
+
+	// on ignore l'heure
+	today.setHours(0,0,0,0);
+
+	const start = new Date(startDate);
+	start.setHours(0,0,0,0);
+
+	const end = new Date(endDate);
+	end.setHours(0,0,0,0);
+
+	let eventStatus;
+
+	if (today < start) {
+
+	  eventStatus = CONFIG.STATUS.EVENT.UPCOMING;
+
+	} else if (today > end) {
+
+	  eventStatus = CONFIG.STATUS.EVENT.FINISHED;
+
+	} else {
+
+	  eventStatus = CONFIG.STATUS.EVENT.ONGOING;
+
+	}
+	
+	let registrationStatus;
+
+	const open = event.registrationOpenDate;
+	const close = event.registrationCloseDate;
+
+	// dates "9999" = non renseignées
+	const unknownDate = 9999;
+
+	if (
+		open.getFullYear() === unknownDate ||
+		close.getFullYear() === unknownDate
+	) {
+
+		registrationStatus =
+			CONFIG.STATUS.REGISTRATION.UNKNOWN;
+
+	} else {
+
+		const openDate = new Date(open);
+		openDate.setHours(0,0,0,0);
+
+		const closeDate = new Date(close);
+		closeDate.setHours(0,0,0,0);
+
+		if (today < openDate) {
+
+			registrationStatus =
+				CONFIG.STATUS.REGISTRATION.NOT_OPEN;
+
+		} else if (today > closeDate) {
+
+			registrationStatus =
+				CONFIG.STATUS.REGISTRATION.CLOSED;
+
+		} else {
+
+			registrationStatus =
+				CONFIG.STATUS.REGISTRATION.OPEN;
+
+		}
+
+	}
 
 	return {
 
 	  ...event,
 
+	  eventStatus,
+	  registrationStatus,
 	  month: startDate.toLocaleString(
 		"fr-FR",
 		{ month: "long" }

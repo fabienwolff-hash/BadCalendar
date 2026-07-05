@@ -30,6 +30,14 @@ const App = {
         this.events = events;
 		
 		console.log("Events chargés :", this.events);
+		
+		    console.table(
+        this.events.map(e => ({
+            title: e.title,
+            eventStatus: e.eventStatus,
+            registrationStatus: e.registrationStatus
+        }))
+    );
 
         this.populateFilters();
 

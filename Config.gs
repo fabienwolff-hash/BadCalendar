@@ -15,6 +15,22 @@ const CONFIG = {
     day: "numeric",
     month: "long",
     year: "numeric"
+  },
+  
+  STATUS: {
+
+  EVENT: {
+    UPCOMING: "UPCOMING",
+    ONGOING: "ONGOING",
+    FINISHED: "FINISHED"
+  },
+
+  REGISTRATION: {
+    UNKNOWN: "UNKNOWN",
+    NOT_OPEN: "NOT_OPEN",
+    OPEN: "OPEN",
+    CLOSED: "CLOSED"
   }
+}
 
 };
