@@ -1,31 +1,142 @@
 <script>
 
-google.script.run.withSuccessHandler(render).readEvents();
+const App = {
 
-function render(events){
+    events: [],
 
-  console.log("EVENTS FRONT:", events);
+    state: {
 
-  if(!events || events.length===0){
-    document.getElementById("events").innerHTML="Aucun événement";
-    return;
-  }
+        search: "",
+        type: "Tous",
+        category: "Tous",
+        month: "Tous"
 
-  const nextEvent = events[0];
-  const others = events.slice(1);
+    },
 
-  let html = "";
+    init(events) {
 
-  html += `
-    <div class="section-title">🔥 Prochain événement</div>
-    ${eventCard(nextEvent,true)}
-    <div class="section-title">📅 À venir</div>
-  `;
+        this.events = events;
 
-  html += others.map(e => eventCard(e,false)).join("");
+        initializeFilters();
 
-  document.getElementById("events").innerHTML = html;
+        this.bindEvents();
 
-}
+        this.render();
+
+    },
+
+    bindEvents() {
+
+        document
+            .getElementById("search")
+            .addEventListener("input", e => {
+
+                this.state.search = e.target.value;
+
+                this.render();
+
+            });
+
+        document
+            .getElementById("filterType")
+            .addEventListener("change", e => {
+
+                this.state.type = e.target.value;
+
+                this.render();
+
+            });
+
+        document
+            .getElementById("filterCategory")
+            .addEventListener("change", e => {
+
+                this.state.category = e.target.value;
+
+                this.render();
+
+            });
+
+        document
+            .getElementById("filterMonth")
+            .addEventListener("change", e => {
+
+                this.state.month = e.target.value;
+
+                this.render();
+
+            });
+
+    },
+
+    getFilteredEvents() {
+
+        return this.events.filter(event => {
+
+            if (this.state.type !== "Tous" && event.type !== this.state.type)
+                return false;
+
+            if (this.state.category !== "Tous") {
+
+                if (!event.categories.includes(this.state.category))
+                    return false;
+
+            }
+
+            if (this.state.month !== "Tous") {
+
+                if (event.month !== this.state.month)
+                    return false;
+
+            }
+
+            if (this.state.search.trim() !== "") {
+
+                const search = this.state.search.toLowerCase();
+
+                const text = (
+
+                    event.title +
+                    " " +
+                    event.location +
+                    " " +
+                    event.category +
+                    " " +
+                    event.type
+
+                ).toLowerCase();
+
+                if (!text.includes(search))
+                    return false;
+
+            }
+
+            return true;
+
+        });
+
+    },
+
+    render() {
+
+        renderEvents(
+
+            this.getFilteredEvents()
+
+        );
+
+    }
+
+};
+
+google.script.run
+
+    .withSuccessHandler(events => {
+
+        App.init(events);
+
+    })
+
+    .readEvents();
 
 </script>
