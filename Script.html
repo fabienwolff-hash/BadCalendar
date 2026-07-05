@@ -138,19 +138,11 @@ if (
 
     render() {
 
-        const container =
-            document.getElementById("events");
+   renderEvents(
 
-        container.innerHTML = "";
+    this.getFilteredEvents()
 
-        this.getFilteredEvents()
-
-            .forEach(event => {
-
-                container.innerHTML +=
-                    renderCard(event);
-
-            });
+);
 
     }
 

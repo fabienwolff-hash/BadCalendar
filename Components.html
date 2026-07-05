@@ -36,4 +36,47 @@ function renderCard(event) {
 
 }
 
+function renderMonthHeader(month, year){
+
+    return `
+
+<h2 class="month-header">
+
+${month.charAt(0).toUpperCase()+month.slice(1)} ${year}
+
+</h2>
+
+`;
+
+}
+
+function renderEvents(events){
+
+    const container=document.getElementById("events");
+
+    container.innerHTML="";
+
+    let currentGroup="";
+
+    events.forEach(event=>{
+
+        const group=event.year+"-"+event.monthNumber;
+
+        if(group!==currentGroup){
+
+            currentGroup=group;
+
+            container.innerHTML+=renderMonthHeader(
+                event.month,
+                event.year
+            );
+
+        }
+
+        container.innerHTML+=renderCard(event);
+
+    });
+
+}
+
 </script>
