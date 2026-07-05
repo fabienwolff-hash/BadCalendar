@@ -136,15 +136,11 @@ if (
 
     },
 
-    render() {
+   render(){
 
-   renderEvents(
+    renderEvents(this.getFilteredEvents());
 
-    this.getFilteredEvents()
-
-);
-
-    }
+}
 
 };
 
@@ -165,11 +161,7 @@ function fillSelect(id, values) {
 
 google.script.run
 
-    .withSuccessHandler(events => {
-
-        App.init(events);
-
-    })
+    .withSuccessHandler(App.init.bind(App))
 
     .readEvents();
 
