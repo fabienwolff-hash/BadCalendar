@@ -18,11 +18,11 @@ function render(events){
 
   html += `
     <div class="section-title">🔥 Prochain événement</div>
-    ${eventCard(nextEvent,true)}
+    ${renderCard(nextEvent)}
     <div class="section-title">📅 À venir</div>
   `;
 
-  html += others.map(e => eventCard(e,false)).join("");
+  html += others.map(e => renderCard(e)).join("");
 
   document.getElementById("events").innerHTML = html;
 

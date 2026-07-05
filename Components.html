@@ -1,24 +1,34 @@
 <script>
 
-function eventCard(event, isFeatured=false){
+function renderCard(event) {
 
-return `
+  return `
 
-<div class="card ${isFeatured ? "featured" : ""}">
+<div class="card">
 
-<div class="badge ${event.type.toLowerCase()}">${event.type}</div>
+    <div class="badge ${event.type.toLowerCase()}">
+        ${event.type}
+    </div>
 
-<h2>${event.title}</h2>
+    <h2>${event.title}</h2>
 
-<div class="info">📅 ${formatDate(event.startDate,event.endDate)}</div>
+    <div class="info">
+        📅 ${formatDate(event.startDate, event.endDate)}
+    </div>
 
-<div class="info">📍 ${event.location}</div>
+    <div class="info">
+        📍 ${event.location}
+    </div>
 
-<div class="info">👦 ${event.category}</div>
+    <div class="info">
+        👦 ${event.category}
+    </div>
 
-<div class="info">📝 ${event.registrationType}</div>
+    <div class="info">
+        📝 ${event.registrationType}
+    </div>
 
-${registrationButton(event)}
+    ${registrationButton(event)}
 
 </div>
 
