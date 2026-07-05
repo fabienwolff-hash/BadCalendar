@@ -1,31 +1,180 @@
 <script>
 
-google.script.run.withSuccessHandler(render).readEvents();
+const App = {
 
-function render(events){
+    events: [],
 
-  console.log("EVENTS FRONT:", events);
+    state: {
+        search: "",
+        type: "Tous",
+        category: "Tous",
+        month: "Tous"
+    },
 
-  if(!events || events.length===0){
-    document.getElementById("events").innerHTML="Aucun événement";
-    return;
-  }
+    init(events) {
 
-  const nextEvent = events[0];
-  const others = events.slice(1);
+        this.events = events;
 
-  let html = "";
+        this.populateFilters();
 
-  html += `
-    <div class="section-title">🔥 Prochain événement</div>
-    ${renderCard(nextEvent)}
-    <div class="section-title">📅 À venir</div>
-  `;
+        this.bindEvents();
 
-  html += others.map(e => renderCard(e)).join("");
+        this.render();
 
-  document.getElementById("events").innerHTML = html;
+    },
+
+    populateFilters() {
+
+        fillSelect(
+            "filterType",
+            [...new Set(this.events.map(e => e.type))].sort()
+        );
+
+        fillSelect(
+            "filterCategory",
+            [...new Set(this.events.flatMap(e => e.categories))].sort()
+        );
+
+        fillSelect(
+            "filterMonth",
+            [...new Set(this.events.map(e => e.month))]
+        );
+
+    },
+
+    bindEvents() {
+
+        document
+            .getElementById("search")
+            .addEventListener("input", e => {
+
+                this.state.search = e.target.value;
+
+                this.render();
+
+            });
+
+        document
+            .getElementById("filterType")
+            .addEventListener("change", e => {
+
+                this.state.type = e.target.value;
+
+                this.render();
+
+            });
+
+        document
+            .getElementById("filterCategory")
+            .addEventListener("change", e => {
+
+                this.state.category = e.target.value;
+
+                this.render();
+
+            });
+
+        document
+            .getElementById("filterMonth")
+            .addEventListener("change", e => {
+
+                this.state.month = e.target.value;
+
+                this.render();
+
+            });
+
+    },
+
+    getFilteredEvents() {
+
+        return this.events.filter(event => {
+
+            if (this.state.type !== "Tous"
+                && event.type !== this.state.type)
+                return false;
+
+            if (this.state.category !== "Tous"
+                && !event.categories.includes(this.state.category))
+                return false;
+
+            if (this.state.month !== "Tous"
+                && event.month !== this.state.month)
+                return false;
+
+            if (this.state.search !== "") {
+
+                const txt = (
+
+                    event.title +
+                    " " +
+                    event.location +
+                    " " +
+                    event.category +
+                    " " +
+                    event.type
+
+                ).toLowerCase();
+
+                if (!txt.includes(
+                    this.state.search.toLowerCase()
+                )) {
+
+                    return false;
+
+                }
+
+            }
+
+            return true;
+
+        });
+
+    },
+
+    render() {
+
+        const container =
+            document.getElementById("events");
+
+        container.innerHTML = "";
+
+        this.getFilteredEvents()
+
+            .forEach(event => {
+
+                container.innerHTML +=
+                    renderCard(event);
+
+            });
+
+    }
+
+};
+
+function fillSelect(id, values) {
+
+    const select = document.getElementById(id);
+
+    select.innerHTML = "<option>Tous</option>";
+
+    values.forEach(value => {
+
+        select.innerHTML +=
+            `<option>${value}</option>`;
+
+    });
 
 }
+
+google.script.run
+
+    .withSuccessHandler(events => {
+
+        App.init(events);
+
+    })
+
+    .readEvents();
 
 </script>
