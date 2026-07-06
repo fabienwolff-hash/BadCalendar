@@ -67,27 +67,30 @@ function eventButton(event){
 }
 
 function registrationStatusText(event){
+
     switch(event.registrationStatus){
 
+        case "UNKNOWN":
+            return "";
+
         case "NOT_OPEN":
-            if(event.registrationOpenDate &&
-               new Date(event.registrationOpenDate).getFullYear() !== 9999){
-                return `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registrationOpenDate)}`;
-            }
-            return "Inscriptions non ouvertes";
+            return event.registrationOpenDate
+                ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registrationOpenDate)}`
+                : "Inscriptions non ouvertes";
 
         case "OPEN":
-            if(event.registrationCloseDate &&
-               new Date(event.registrationCloseDate).getFullYear() !== 9999){
-                return `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registrationCloseDate)}`;
-            }
-            return "Inscriptions ouvertes";
+            return event.registrationCloseDate
+                ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registrationCloseDate)}`
+                : "Inscriptions ouvertes";
 
         case "CLOSED":
             return UI.STATUS.REGISTRATION_CLOSED;
+
         default:
             return "";
+
     }
+
 }
 
 function shortDate(date){

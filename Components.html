@@ -1,4 +1,5 @@
 <script>
+const registrationInfo = registrationStatusText(event);
 
 function renderCard(event) {
 
@@ -36,15 +37,10 @@ function renderCard(event) {
 		👥 ${event.registrationMode}
 	</div>
 
-    <div class="registration">
-        📝 ${registrationStatusText(event)}
-    </div>
-
-    ${eventButton(event)}
-
-</div>
-
-`;
+${registrationInfo ? `
+<div class="info">
+    📝 ${registrationInfo}
+</div>;`
 
 }
 
