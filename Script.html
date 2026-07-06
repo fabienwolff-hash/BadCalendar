@@ -1,11 +1,30 @@
 <script>
 
 const UI = {
-    FILTER_ALL: "Tous",
-    EMPTY_MESSAGE: "Aucun événement trouvé.",
-    SEARCH_PLACEHOLDER: "Rechercher..."
-};
 
+    FILTERS: {
+        ALL: "Tous"
+    },
+
+    BUTTONS: {
+        REGISTER: "S'inscrire",
+        VIEW_EVENT: "Voir l'événement",
+        VIEW_RESULTS: "Voir les résultats"
+    },
+
+    STATUS: {
+        UPCOMING: "À venir",
+        PAST: "Terminé",
+        REGISTRATION_OPEN: "Inscriptions ouvertes",
+        REGISTRATION_CLOSED: "Inscriptions fermées",
+        REGISTRATION_NOT_OPEN: "Inscriptions non ouvertes"
+    },
+
+    MESSAGES: {
+        EMPTY: "Aucun événement trouvé."
+    }
+
+};
 const DOM = {
     SEARCH: "search",
     FILTER_TYPE: "filterType",
@@ -20,9 +39,9 @@ const App = {
 
     state: {
         search: "",
-        type: UI.FILTER_ALL,
-        category: UI.FILTER_ALL,
-        month: UI.FILTER_ALL
+		type: UI.FILTERS.ALL,
+		category: UI.FILTERS.ALL,
+		month: UI.FILTERS.ALL
     },
 
     init(events) {
@@ -98,18 +117,18 @@ fillSelect(
 
         return this.events.filter(event => {
 
-            if (this.state.type !== UI.FILTER_ALL
+            if (this.state.type !== UI.FILTERS.ALL
                 && event.type !== this.state.type)
                 return false;
 
             if (
-    this.state.category !== UI.FILTER_ALL &&
+    this.state.category !== UI.FILTERS.ALL &&
     !event.categoriesArray.includes(this.state.category)
 )
     return false;
 
 if (
-    this.state.month !== UI.FILTER_ALL &&
+    this.state.month !== UI.FILTERS.ALL &&
     event.month !== this.state.month
 )
     return false;
@@ -154,7 +173,7 @@ if (
 
 function fillSelect(id, values) {
     const select = document.getElementById(id);
-    select.innerHTML = "<option>Tous</option>";
+    select.innerHTML = `<option>${UI.FILTERS.ALL}</option>`;
     values.forEach(value => {
         select.innerHTML +=
             `<option>${value}</option>`;

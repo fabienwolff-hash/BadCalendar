@@ -106,6 +106,14 @@ ${month.charAt(0).toUpperCase()+month.slice(1)} ${year}
 function renderEvents(events){
 
     const container=document.getElementById("events");
+	
+	if(events.length === 0){
+
+        container.innerHTML =
+            `<div class="empty">${UI.MESSAGES.EMPTY}</div>`;
+
+        return;
+    }
 
     let html="";
 
