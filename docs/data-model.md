@@ -15,21 +15,31 @@ Le Master ne doit jamais contenir de données de présentation (couleurs, badges
 
 ---
 
+> **Principe fondamental**
+>
+> Le Master décrit uniquement **ce qu'est un événement**.
+>
+> Il ne décrit jamais **comment cet événement doit être affiché**.
+>
+> Toute logique de présentation (couleurs, icônes, badges, textes, boutons, statuts affichés…) appartient exclusivement au frontend.
+
+---
+
 # Structure du Master
 
-| Ordre | Colonne                | Nom technique     | Type           | Obligatoire  |
-| ----: | ---------------------- | ----------------- | -------------- | :---------:  |
-|     1 | Type                   | type              | Liste          |      ✅      |
-|     2 | Portée                 | scope             | Liste          |      ✅      |
-|     3 | Titre                  | title             | Texte          |      ✅      |
-|     4 | Date début             | startDate         | Date           |      ✅      |
-|     5 | Date fin               | endDate           | Date           |      ✅      |
-|     6 | Ville                  | location          | Texte          |      ✅      |
-|     7 | Catégories             | categories        | Liste multiple |      ✅      |
-|     8 | Ouverture inscriptions | registrationOpen  | Date           |      ❌      |
-|     9 | Fermeture inscriptions | registrationClose | Date           |      ❌      |
-|    10 | Mode inscription       | registrationMode  | Liste          |      ✅      |
-|    11 | Lien vers l'event      | eventUrl          | URL            |      ❌      |
+| Ordre | Colonne                | Nom technique         | Type           | Obligatoire  |
+| ----: | ---------------------- | --------------------- | -------------- | :---------:  |
+|     1 | Type                   | type                  | Liste          |      ✅      |
+|     2 | Portée                 | scope                 | Liste          |      ✅      |
+|     3 | Titre                  | title                 | Texte          |      ✅      |
+|     4 | Date début             | startDate             | Date           |      ✅      |
+|     5 | Date fin               | endDate               | Date           |      ✅      |
+|     6 | Ville                  | location              | Texte          |      ✅      |
+|     7 | Catégories             | categories            | Liste multiple |      ✅      |
+|     8 | Ouverture inscriptions | registrationOpenDate  | Date           |      ❌      |
+|     9 | Fermeture inscriptions | registrationCloseDate | Date           |      ❌      |
+|    10 | Mode inscription       | registrationMode      | Liste          |      ✅      |
+|    11 | Lien vers l'event      | eventUrl              | URL            |      ❌      |
 
 ---
 
@@ -193,9 +203,9 @@ Validation :
 
 ---
 
-## Lien inscription
+## Lien de l'évènement
 
-Lien vers la plateforme d'inscription.
+Lien associé à l'évènement.
 
 Exemples :
 
@@ -210,6 +220,8 @@ Validation :
 * ou vide.
 
 Le backend ne fait aucune hypothèse sur la plateforme utilisée.
+
+Le frontend adapte automatiquement le libellé du bouton d'action selon le contexte métier (inscription ouverte, tournoi terminé, consultation des résultats, etc.).
 
 ---
 
@@ -228,6 +240,9 @@ Ils sont calculés automatiquement par EventService.
 | categoriesArray    | Tableau | Liste des catégories               |
 | eventStatus        | Enum    | UPCOMING / ONGOING / FINISHED      |
 | registrationStatus | Enum    | UNKNOWN / NOT_OPEN / OPEN / CLOSED |
+| isPast             | Booléen | L'événement est terminé            |
+| isToday            | Booléen | L'événement a lieu aujourd'hui     |
+| isFuture           | Booléen | L'événement est à venir            |
 
 ---
 
@@ -312,6 +327,27 @@ Ces informations sont calculées ou obtenues via des tables de paramètres.
 
 ---
 
+# Règles métier
+
+## Événement
+
+* La date de fin est obligatoire.
+* Pour un événement sur une seule journée :
+
+```
+Date début = Date fin
+```
+
+* La date de fin doit être supérieure ou égale à la date de début.
+
+## Inscriptions
+
+* Les dates d'ouverture et de fermeture des inscriptions sont facultatives.
+* Si les deux dates sont absentes, les modalités d'inscription sont considérées comme inconnues (`registrationStatus = UNKNOWN`).
+* Le lien vers l'événement (`eventUrl`) est totalement indépendant du statut des inscriptions et peut rester consultable même après leur fermeture ou après la fin de l'événement.
+
+---
+
 # Futur onglet Paramètres
 
 Le projet pourra contenir un onglet **Paramètres**.
@@ -327,17 +363,44 @@ Il permettra notamment de gérer :
 
 Le Master restera centré uniquement sur les données métier des événements.
 
+Le modèle de données a été conçu pour permettre l'ajout futur de nouvelles informations sans remettre en cause la structure du Master.
+
+Exemples :
+
+* organisateur ;
+* saison ;
+* coordonnées GPS ;
+* documents associés ;
+* liens externes complémentaires.
+
 ---
 
 # Principes d'architecture
 
+## Master
+
 Le Master constitue la source de vérité du projet.
 
-Le backend (`EventService`) est responsable :
+Il contient uniquement les données métier saisies par les administrateurs.
+
+## Backend (`EventService`)
+
+Le backend est responsable :
 
 * de la validation des données ;
+* de leur normalisation ;
 * de leur enrichissement ;
-* du calcul des états ;
+* du calcul des états métier ;
 * de la préparation des données destinées au frontend.
 
-Le frontend ne doit jamais recalculer une information métier.
+## Frontend
+
+Le frontend est responsable :
+
+* des filtres ;
+* de la recherche ;
+* de l'affichage ;
+* de la mise en forme ;
+* des interactions utilisateur.
+
+Il ne doit jamais recalculer une règle métier.

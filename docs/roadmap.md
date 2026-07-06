@@ -309,3 +309,110 @@ Une vue chronologique par mois est jugée plus simple et plus naturelle.
 Supprimée.
 
 Le contrôle des événements actifs sera assuré par le futur module d'administration.
+
+
+-----
+
+
+# V0.9 — Amélioration de l'expérience utilisateur
+
+## Navigation
+
+- [ ] Barre des filtres repliable sur mobile
+- [ ] Optimisation de l'occupation de l'espace sur desktop
+- [ ] Amélioration de l'affichage de l'en-tête
+
+## Filtres
+
+- [ ] Filtre multi-valeurs (catégories)
+- [ ] Filtre multi-valeurs (types)
+- [ ] Filtre multi-valeurs (portées)
+- [ ] Conservation des critères lors d'un rafraîchissement (à étudier)
+
+## Affichage
+
+- [ ] Afficher les catégories sous forme de badges
+- [ ] Tri métier des catégories (Minibad → Junior)
+- [ ] Tri métier des portées (Départementale → Nationale)
+- [ ] Amélioration de l'affichage des statuts d'inscription
+- [ ] Utiliser des couleurs ou icônes pour représenter les statuts d'événement
+- [ ] Bouton dont le libellé s'adapte au statut d'inscription
+    - S'inscrire
+    - Voir le tournoi
+    - Voir les résultats
+
+---
+
+# V1.0 — Première version stable
+
+## Qualité
+
+- [ ] Revue complète du code
+- [ ] Suppression du code mort
+- [ ] Harmonisation du style de code
+- [ ] Optimisation des performances
+
+## Tests
+
+- [ ] Revue fonctionnelle complète
+- [ ] Tests de non-régression
+- [ ] Validation sur mobile
+- [ ] Validation sur desktop
+
+## Documentation
+
+- [ ] README
+- [ ] Guide d'installation
+- [ ] Guide développeur
+- [ ] Documentation d'architecture
+
+---
+
+# Evolutions futures
+
+## Administration
+
+- [ ] Gestion de plusieurs saisons
+- [ ] Archivage automatique des saisons
+- [ ] Paramétrage avancé des listes de valeurs
+
+## Consultation
+
+- [ ] Vue calendrier mensuelle
+- [ ] Vue agenda
+- [ ] Favoris
+- [ ] Partage d'un événement
+
+## Export
+
+- [ ] Export iCal
+- [ ] Export Google Agenda
+- [ ] Export PDF
+
+## Notifications
+
+- [ ] Notification des ouvertures d'inscription
+- [ ] Notification des nouveaux événements
+- [ ] Rappels avant un tournoi
+
+## Personnalisation
+
+- [ ] Thème clair / sombre
+- [ ] Personnalisation des couleurs
+- [ ] Logo personnalisable
+
+---
+
+# Idées à étudier
+
+Ces idées sont volontairement conservées sans engagement de développement.
+
+- Utilisation d'icônes pour les statuts
+- Affichage des badges de catégories avec couleurs
+- Animation légère des cartes
+- Recherche avancée
+- Géolocalisation des compétitions
+- Carte interactive des événements
+- Gestion multilingue
+- PWA (installation sur mobile)
+- Mode hors connexion
