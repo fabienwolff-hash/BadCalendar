@@ -27,11 +27,42 @@ function formatDate(start,end){
 
 function eventButton(event){
 
-  if(!event.eventUrl || event.registrationStatus !== "OPEN"){
-    return "";
-}
+    if(!event.eventUrl){
+        return "";
+    }
 
-  return `<a class="button" href="${event.eventUrl}" target="_blank">${UI.BUTTONS.VIEW_EVENT}</a>`;
+    let label;
+
+    switch(event.eventStatus){
+
+        case "PAST":
+            label = UI.BUTTONS.VIEW_RESULTS;
+            break;
+
+        default:
+
+            switch(event.registrationStatus){
+
+                case "OPEN":
+                    label = UI.BUTTONS.REGISTER;
+                    break;
+
+                default:
+                    label = UI.BUTTONS.VIEW_EVENT;
+
+            }
+
+    }
+
+    return `
+        <a
+            class="button"
+            href="${event.eventUrl}"
+            target="_blank"
+        >
+            ${label}
+        </a>
+    `;
 
 }
 
