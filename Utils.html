@@ -35,7 +35,7 @@ function eventButton(event){
 
     switch(event.eventStatus){
 
-        case CONFIG.STATUS.EVENT.FINISHED:
+        case STATUS.EVENT.FINISHED:
             label = UI.BUTTONS.VIEW_RESULTS;
             break;
 
@@ -70,20 +70,20 @@ function getRegistrationMessage(event){
 
     switch (event.registrationStatus) {
 
-    case CONFIG.STATUS.REGISTRATION.UNKNOWN:
+    case STATUS.REGISTRATION.UNKNOWN:
         return "";
 
-    case CONFIG.STATUS.REGISTRATION.NOT_OPEN:
+    case STATUS.REGISTRATION.NOT_OPEN:
         return event.registrationOpenDate
             ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registrationOpenDate)}`
             : UI.STATUS.REGISTRATION_NOT_OPEN;
 
-    case CONFIG.STATUS.REGISTRATION.OPEN:
+    case STATUS.REGISTRATION.OPEN:
         return event.registrationCloseDate
             ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registrationCloseDate)}`
             : UI.STATUS.REGISTRATION_OPEN;
 
-    case CONFIG.STATUS.REGISTRATION.CLOSED:
+    case STATUS.REGISTRATION.CLOSED:
         return UI.STATUS.REGISTRATION_CLOSED;
 
     default:
