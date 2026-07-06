@@ -25,6 +25,27 @@ const UI = {
     }
 
 };
+
+const ORDER = {
+
+    SCOPES: [
+        "Départementale",
+        "Régionale",
+        "Inter-Régionale",
+        "Nationale"
+    ],
+
+    CATEGORIES: [
+        "Minibad",
+        "Poussin",
+        "Benjamin",
+        "Minime",
+        "Cadet",
+        "Junior"
+    ]
+
+};
+
 const DOM = {
     SEARCH: "search",
     FILTER_TYPE: "filterType",
@@ -76,13 +97,15 @@ const App = {
         );
 
 		fillSelect(
-			DOM.FILTER_CATEGORY,
-			[...new Set(this.events.flatMap(e => e.categoriesArray))].sort()
+			DOM.FILTER_CATEGORY,sortByOrder(
+			[...new Set(this.events.flatMap(e => e.categoriesArray))],
+			ORDER.CATEGORIES)
 		);
 		
 		fillSelect(
-			DOM.FILTER_SCOPE,
-			[...new Set(this.events.map(e => e.scope))].sort()
+			DOM.FILTER_SCOPE,sortByOrder(
+			[...new Set(this.events.map(e => e.scope))],
+			ORDER.SCOPES)
 		);
 
 		fillSelect(
@@ -181,6 +204,31 @@ function fillSelect(id, values) {
         select.innerHTML +=
             `<option>${value}</option>`;
     });
+}
+
+function sortByOrder(values, order){
+
+    return [...values].sort((a, b) => {
+
+        const ia = order.indexOf(a);
+        const ib = order.indexOf(b);
+
+        if(ia === -1 && ib === -1){
+            return a.localeCompare(b);
+        }
+
+        if(ia === -1){
+            return 1;
+        }
+
+        if(ib === -1){
+            return -1;
+        }
+
+        return ia - ib;
+
+    });
+
 }
 
 function $(id){
