@@ -29,6 +29,7 @@ const DOM = {
     SEARCH: "search",
     FILTER_TYPE: "filterType",
     FILTER_CATEGORY: "filterCategory",
+	FILTER_SCOPE: "filterScope",
     FILTER_MONTH: "filterMonth",
     EVENTS: "events"
 };
@@ -41,6 +42,7 @@ const App = {
         search: "",
 		type: UI.FILTERS.ALL,
 		category: UI.FILTERS.ALL,
+		scope: UI.FILTERS.ALL,
 		month: UI.FILTERS.ALL
     },
 
@@ -73,15 +75,20 @@ const App = {
             [...new Set(this.events.map(e => e.type))].sort()
         );
 
-fillSelect(
-	DOM.FILTER_CATEGORY,
-    [...new Set(this.events.flatMap(e => e.categoriesArray))].sort()
-);
+		fillSelect(
+			DOM.FILTER_CATEGORY,
+			[...new Set(this.events.flatMap(e => e.categoriesArray))].sort()
+		);
+		
+		fillSelect(
+			DOM.FILTER_SCOPE,
+			[...new Set(this.events.map(e => e.scope))].sort()
+		);
 
-fillSelect(
-	DOM.FILTER_MONTH,
-    [...new Set(this.events.map(e => e.month))]
-);
+		fillSelect(
+			DOM.FILTER_MONTH,
+			[...new Set(this.events.map(e => e.month))]
+		);
 
     },
 
@@ -104,6 +111,12 @@ fillSelect(
                 this.state.category = e.target.value;
                 this.render();
             });
+			
+		$(DOM.FILTER_SCOPE)
+			.addEventListener("change", e => {
+				this.state.scope = e.target.value;
+				this.render();
+			});	
 
         $(DOM.FILTER_MONTH)
             .addEventListener("change", e => {
@@ -121,53 +134,43 @@ fillSelect(
                 && event.type !== this.state.type)
                 return false;
 
-            if (
-    this.state.category !== UI.FILTERS.ALL &&
-    !event.categoriesArray.includes(this.state.category)
-)
-    return false;
+            if (this.state.category !== UI.FILTERS.ALL 
+				&& !event.categoriesArray.includes(this.state.category))
+				return false;
+				
+			if (this.state.scope !== UI.FILTERS.ALL &&
+				event.scope !== this.state.scope){
+					return false;
+				}
 
-if (
-    this.state.month !== UI.FILTERS.ALL &&
-    event.month !== this.state.month
-)
-    return false;
+			if (this.state.month !== UI.FILTERS.ALL &&
+				event.month !== this.state.month)
+					return false;
 
             if (this.state.search !== "") {
-
                 const txt = (
-
                     event.title +
                     " " +
                     event.location +
                     " " +
                     event.categories +
-                    " " +
+						" " +
                     event.type
-
                 ).toLowerCase();
 
                 if (!txt.includes(
                     this.state.search.toLowerCase()
                 )) {
-
                     return false;
-
                 }
-
             }
-
             return true;
-
         });
-
     },
 
    render(){
-
     renderEvents(this.getFilteredEvents());
-
-}
+	}
 
 };
 
