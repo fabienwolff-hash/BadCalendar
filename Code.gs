@@ -13,12 +13,4 @@ function include(filename) {
 
 function readEvents() {
   return EventService.read();
-}
-
-function getConfig() {
-  return {
-    filters: {
-      all: CONFIG.FILTERS.ALL
-    }
-  }
 };

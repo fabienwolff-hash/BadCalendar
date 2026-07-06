@@ -2,13 +2,9 @@ const EventService = {
 
   read() {
 
-    const ss = SpreadsheetApp.openById(
-      PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID")
-    );
+    const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
 
 	const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
-
-	const C = CONFIG.COLUMNS;
 
     const values = sheet.getDataRange().getValues();
 
@@ -139,7 +135,7 @@ const EventService = {
 	  eventStatus,
 	  registrationStatus,
 	  month: startDate.toLocaleString(
-		"fr-FR",
+		CONFIG.LOCALE,
 		{ month: "long" }
 	  ),
 

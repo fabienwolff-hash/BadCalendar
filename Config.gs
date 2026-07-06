@@ -2,7 +2,7 @@ const CONFIG = {
 
   APP_NAME: "BadCalendar",
 
-  VERSION: "0.6.0",
+  VERSION: "0.8.0",
 
   SPREADSHEET_ID:
     PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID"),
@@ -11,12 +11,6 @@ const CONFIG = {
 
   LOCALE: "fr-FR",
 
-  DATE_OPTIONS: {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  },
-  
   STATUS: {
 
   EVENT: {
