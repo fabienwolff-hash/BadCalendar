@@ -25,13 +25,13 @@ function formatDate(start,end){
 
 }
 
-function registrationButton(event){
+function eventButton(event){
 
-  if(!event.registrationUrl || event.registrationStatus !== "OPEN"){
+  if(!event.eventUrl || event.registrationStatus !== "OPEN"){
     return "";
 }
 
-  return `<a class="button" href="${event.registrationUrl}" target="_blank">S'inscrire</a>`;
+  return `<a class="button" href="${event.eventUrl}" target="_blank">Voir l'évènement</a>`;
 
 }
 

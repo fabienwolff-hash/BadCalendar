@@ -61,7 +61,7 @@ const EventService = {
 	  registrationMode: raw.RegistrationMode || "",
 	  registrationOpenDate: this.parseDate_(raw.RegistrationOpenDate),
 	  registrationCloseDate: this.parseDate_(raw.RegistrationCloseDate),
-	  registrationUrl: raw.RegistrationUrl || ""
+	  eventUrl: raw.EventUrl || ""
 	  	  
 	};
 

@@ -29,7 +29,7 @@ Le Master ne doit jamais contenir de données de présentation (couleurs, badges
 |     8 | Ouverture inscriptions | registrationOpen  | Date           |      ❌      |
 |     9 | Fermeture inscriptions | registrationClose | Date           |      ❌      |
 |    10 | Mode inscription       | registrationMode  | Liste          |      ✅      |
-|    11 | Lien inscription       | registrationUrl   | URL            |      ❌      |
+|    11 | Lien vers l'event      | eventUrl          | URL            |      ❌      |
 
 ---
 
