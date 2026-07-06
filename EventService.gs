@@ -147,7 +147,7 @@ const EventService = {
 
 	  year: startDate.getFullYear(),
 
-	  categoriesArray: event.categories
+	  categoriesArray: (event.categories || "")
 		.split(";")
 		.map(c => c.trim())
 		.filter(Boolean)

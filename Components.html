@@ -1,9 +1,10 @@
 <script>
-const registrationInfo = registrationStatusText(event);
 
 function renderCard(event) {
 
-  return `
+    const registrationInfo = registrationStatusText(event);
+
+    return `
 
 <div class="card">
 
@@ -27,20 +28,27 @@ function renderCard(event) {
         📍 ${event.location}
     </div>
 
-	<div class="info">
-		👦 ${event.categoriesArray.join(" • ")}
-	</div>
+    <div class="info">
+        👦 ${(event.categoriesArray.join(" • ")}
+    </div>
 
     <div class="separator"></div>
 
-	<div class="info">
-		👥 ${event.registrationMode}
-	</div>
+    <div class="info">
+        👥 ${event.registrationMode}
+    </div>
 
-${registrationInfo ? `
-<div class="info">
-    📝 ${registrationInfo}
-</div>;`
+    ${registrationInfo ? `
+    <div class="registration">
+        📝 ${registrationInfo}
+    </div>
+    ` : ""}
+
+    ${eventButton(event)}
+
+</div>
+
+`;
 
 }
 
