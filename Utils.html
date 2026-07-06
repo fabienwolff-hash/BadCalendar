@@ -35,7 +35,7 @@ function eventButton(event){
 
     switch(event.eventStatus){
 
-        case "PAST":
+        case CONFIG.STATUS.EVENT.FINISHED:
             label = UI.BUTTONS.VIEW_RESULTS;
             break;
 
@@ -43,7 +43,7 @@ function eventButton(event){
 
             switch(event.registrationStatus){
 
-                case "OPEN":
+                case STATUS.REGISTRATION.OPEN:
                     label = UI.BUTTONS.REGISTER;
                     break;
 
@@ -66,30 +66,30 @@ function eventButton(event){
 
 }
 
-function registrationStatusText(event){
+function getRegistrationMessage(event){
 
-    switch(event.registrationStatus){
+    switch (event.registrationStatus) {
 
-        case "UNKNOWN":
-            return "";
+    case STATUS.REGISTRATION.UNKNOWN:
+        return "";
 
-        case "NOT_OPEN":
-            return event.registrationOpenDate
-                ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registrationOpenDate)}`
-                : "Inscriptions non ouvertes";
+    case STATUS.REGISTRATION.NOT_OPEN:
+        return event.registrationOpenDate
+            ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registrationOpenDate)}`
+            : UI.STATUS.REGISTRATION_NOT_OPEN;
 
-        case "OPEN":
-            return event.registrationCloseDate
-                ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registrationCloseDate)}`
-                : "Inscriptions ouvertes";
+    case STATUS.REGISTRATION.OPEN:
+        return event.registrationCloseDate
+            ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registrationCloseDate)}`
+            : UI.STATUS.REGISTRATION_OPEN;
 
-        case "CLOSED":
-            return UI.STATUS.REGISTRATION_CLOSED;
+    case STATUS.REGISTRATION.CLOSED:
+        return UI.STATUS.REGISTRATION_CLOSED;
 
-        default:
-            return "";
+    default:
+        return "";
 
-    }
+}
 
 }
 
