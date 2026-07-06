@@ -82,13 +82,15 @@ header h1{
     display:flex;
     flex-direction:column;
     gap:4px;
+    min-width:0;
 }
 
 .filter-group label{
-    font-size:13px;
+    font-size:12px;
     font-weight:600;
-    color:#666;
+    color:#757575;
     margin-left:4px;
+    user-select:none;
 }
 
 /* =========================
@@ -387,22 +389,18 @@ header h1{
     }
 
     .filters{
-        display:grid;
-        grid-template-columns:
-            2fr
-            1fr
-            1fr
-            1.4fr
-            1fr;
-
+        flex-direction:row;
+        flex-wrap:wrap;
+        align-items:flex-end;
         gap:12px;
-        align-items:end;
-
     }
 
-    .filters input,
-    .filters select{
-        margin:0;
+    .filter-group{
+        flex:1 1 140px;
+    }
+
+    .filter-group:first-child{
+        flex:2 1 280px;
     }
 
     #events{
