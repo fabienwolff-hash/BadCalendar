@@ -70,20 +70,20 @@ function getRegistrationMessage(event){
 
     switch (event.registrationStatus) {
 
-    case STATUS.REGISTRATION.UNKNOWN:
+    case CONFIG.STATUS.REGISTRATION.UNKNOWN:
         return "";
 
-    case STATUS.REGISTRATION.NOT_OPEN:
+    case CONFIG.STATUS.REGISTRATION.NOT_OPEN:
         return event.registrationOpenDate
             ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registrationOpenDate)}`
             : UI.STATUS.REGISTRATION_NOT_OPEN;
 
-    case STATUS.REGISTRATION.OPEN:
+    case CONFIG.STATUS.REGISTRATION.OPEN:
         return event.registrationCloseDate
             ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registrationCloseDate)}`
             : UI.STATUS.REGISTRATION_OPEN;
 
-    case STATUS.REGISTRATION.CLOSED:
+    case CONFIG.STATUS.REGISTRATION.CLOSED:
         return UI.STATUS.REGISTRATION_CLOSED;
 
     default:
