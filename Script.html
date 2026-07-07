@@ -1,4 +1,7 @@
 <script>
+const DEBUG = {
+    SIMULATE_INIT_ERROR: false
+};
 
 const App = {
 
@@ -228,7 +231,23 @@ const App = {
 
 		$(DOM.APP)
 			.classList.remove("hidden");
-		}
+	},
+	showError(){
+
+    $(DOM.LOADING)
+        .classList.add("hidden");
+
+    $(DOM.APP)
+        .classList.add("hidden");
+
+    $(DOM.ERROR)
+        .classList.remove("hidden");
+	},
+	initError(error){
+		console.error(error);
+
+		this.showError();
+	}
 };
 
 function fillSelect(id, values) {
@@ -268,11 +287,16 @@ function sortByOrder(values, order){
 function $(id){
     return document.getElementById(id);
 }
+if (DEBUG.SIMULATE_INIT_ERROR) {
 
-google.script.run
+    App.initError(
+        new Error("Erreur simulée")
+    );
 
-    .withSuccessHandler(App.init.bind(App))
-
-    .readEvents();
-
+} else {
+	google.script.run
+		.withSuccessHandler(App.init.bind(App))
+		.withFailureHandler(App.initError.bind(App))
+		.readEvents();
+}
 </script>
