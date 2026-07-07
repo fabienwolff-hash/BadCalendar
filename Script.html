@@ -39,6 +39,7 @@ const App = {
 
         this.render();
 		
+		console.timeEnd("Fin Initialisation BadCalendar");
 		this.showApplication();
 
     },
@@ -268,10 +269,14 @@ function $(id){
     return document.getElementById(id);
 }
 
+console.time("Initialisation BadCalendar");
+
 google.script.run
 
     .withSuccessHandler(App.init.bind(App))
 
     .readEvents();
+
+console.time("Fin readEvents");
 
 </script>
