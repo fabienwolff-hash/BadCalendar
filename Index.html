@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html>
-	<div id="loading">
-		<div class="loading-content">
-			<img class="header-logo"
-				src="https://www.fib35.com/wp-content/uploads/2020/05/cropped-Logo_FIB_reduit-1024x878.jpg"
-				alt="Logo FIB"
-			/>
+	<head>
+		<base target="_top">
 
-			<h1>BadCalendar</h1>
-			<p>Calendrier des compétitions jeunes</p>
-			<p class="loading-text">
-				Chargement des compétitions...
-			</p>
+		<meta name="viewport"
+		content="width=device-width, initial-scale=1">
+
+		<?!= include('Style'); ?>
+	</head>
+	<body>
+		<div id="loading">
+			<div class="loading-content">
+				<img class="header-logo"
+					src="https://www.fib35.com/wp-content/uploads/2020/05/cropped-Logo_FIB_reduit-1024x878.jpg"
+					alt="Logo FIB"
+				/>
+
+				<h1>BadCalendar</h1>
+				<p>Calendrier des compétitions jeunes</p>
+				<p class="loading-text">
+					Chargement des compétitions...
+				</p>
+			</div>
 		</div>
-	</div>
-	<div id="app" class="hidden">
-		<head>
+		<div id="app" class="hidden">
+			<header>
 
-		  <base target="_top">
+				<img class="header-logo"
+					src="https://www.fib35.com/wp-content/uploads/2020/05/cropped-Logo_FIB_reduit-1024x878.jpg"
+					alt="Logo FIB"
+				/>
 
-		  <meta name="viewport"
-				content="width=device-width, initial-scale=1">
+				<h1 style="display:inline-block; vertical-align:middle; margin:0;">
+					Calendrier Jeune Saison 2026/2027
+				</h1>
 
-		  <?!= include('Style'); ?>
+			</header>
 
-		</head>
+			<?!= include('Filters'); ?>
 
-		<body>
-
-		<header>
-
-			<img class="header-logo"
-				src="https://www.fib35.com/wp-content/uploads/2020/05/cropped-Logo_FIB_reduit-1024x878.jpg"
-				alt="Logo FIB"
-			/>
-
-			<h1 style="display:inline-block; vertical-align:middle; margin:0;">
-				Calendrier Jeune Saison 2026/2027
-			</h1>
-
-		</header>
-
-		<?!= include('Filters'); ?>
-
-		<div id="events"></div>
+			<div id="events"></div>
+		</div>
 		
 		<?!= include('Constants'); ?>
 		<?!= include('Components'); ?>
 		<?!= include('Utils'); ?>
 		<?!= include('Script'); ?>
-
-		</body>
-	</div>
+		
+	</body>
 </html>
+
+
+
+
