@@ -166,10 +166,10 @@ const App = {
         this.state.filtersCollapsed
     );
 
-    toggle.setAttribute(
-        "aria-expanded",
-        !this.state.filtersCollapsed
-    );
+	toggle.setAttribute(
+		"aria-expanded",
+		String(!this.state.filtersCollapsed)
+	);
 
     toggle.querySelector(".filters-toggle-icon").textContent =
         this.state.filtersCollapsed ? "▶" : "▼";
