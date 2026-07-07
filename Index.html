@@ -1,44 +1,55 @@
 <!DOCTYPE html>
 <html>
+	<div id="loading">
+		<div class="loading-content">
+			<img
+				src="..."
+				class="loading-logo"
+				alt="BadCalendar">
 
-<head>
+			<h1>BadCalendar</h1>
+			<p>Calendrier des compétitions jeunes</p>
+			<p class="loading-text">
+				Chargement des compétitions...
+			</p>
+		</div>
+	</div>
+	<div id="app" class="hidden">
+		<head>
 
-  <base target="_top">
+		  <base target="_top">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
+		  <meta name="viewport"
+				content="width=device-width, initial-scale=1">
 
-  <?!= include('Style'); ?>
+		  <?!= include('Style'); ?>
 
-</head>
+		</head>
 
-<body>
+		<body>
 
-<header>
+		<header>
 
-    <img class="header-logo"
-        src="https://www.fib35.com/wp-content/uploads/2020/05/cropped-Logo_FIB_reduit-1024x878.jpg"
-        alt="Logo FIB"
-    />
+			<img class="header-logo"
+				src="https://www.fib35.com/wp-content/uploads/2020/05/cropped-Logo_FIB_reduit-1024x878.jpg"
+				alt="Logo FIB"
+			/>
 
-    <h1 style="display:inline-block; vertical-align:middle; margin:0;">
-        Calendrier Jeune Saison 2026/2027
-    </h1>
+			<h1 style="display:inline-block; vertical-align:middle; margin:0;">
+				Calendrier Jeune Saison 2026/2027
+			</h1>
 
-</header>
+		</header>
 
-<?!= include('Filters'); ?>
+		<?!= include('Filters'); ?>
 
-<div id="events">
+		<div id="events"></div>
+		
+		<?!= include('Constants'); ?>
+		<?!= include('Components'); ?>
+		<?!= include('Utils'); ?>
+		<?!= include('Script'); ?>
 
-    Chargement...
-
-</div>
-<?!= include('Constants'); ?>
-<?!= include('Components'); ?>
-<?!= include('Utils'); ?>
-<?!= include('Script'); ?>
-
-</body>
-
+		</body>
+	</div>
 </html>

@@ -38,6 +38,8 @@ const App = {
         this.bindEvents();
 
         this.render();
+		
+		this.showApplication();
 
     },
 
@@ -217,8 +219,15 @@ const App = {
         : "none";
    
     renderEvents(this.getFilteredEvents());
-	}
+	},
+	
+	showApplication(){
+		$(DOM.LOADING)
+			.classList.add("hidden");
 
+		$(DOM.APP)
+			.classList.remove("hidden");
+		}
 };
 
 function fillSelect(id, values) {
