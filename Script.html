@@ -109,6 +109,11 @@ const App = {
 					"badcalendar.filtersCollapsed",
 					this.state.filtersCollapsed
 				);
+				
+				console.log(
+					"Valeur enregistrée :",
+					localStorage.getItem("badcalendar.filtersCollapsed")
+				);
 
 				this.render();
 			});
