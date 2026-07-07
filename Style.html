@@ -197,23 +197,24 @@ header h1{
 }
 
 .checkbox-label{
-
     display:flex;
     align-items:center;
     gap:10px;
-
     cursor:pointer;
 
+    width:fit-content;
+
     font-size:14px;
-    font-weight:400;
-
     color:#333;
-
 }
 
 .checkbox-label input{
+    width:auto;
+    height:auto;
     margin:0;
-    flex-shrink:0;
+    padding:0;
+    border:none;
+    flex:none;
 }
 
 /* =========================
@@ -470,8 +471,8 @@ header h1{
         gap:8px;
     }
 
-    .filters select,
-    .filters input{
+	.filters select,
+	.filters input:not([type="checkbox"]){
         font-size:14px;
         padding:11px;
     }
@@ -480,6 +481,8 @@ header h1{
         font-size:16px;
         margin:20px 2px 10px;
     }
+	
+	
 }
 
 /* --- Tablette --- */
