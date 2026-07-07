@@ -156,6 +156,34 @@ const App = {
         });
     },
 
+	getFiltersSummary() {
+
+		const summary = [];
+
+		if (this.state.search !== "") {
+			summary.push(`Recherche : ${this.state.search}`);
+		}
+
+		if (this.state.type !== UI.FILTERS.ALL) {
+			summary.push(this.state.type);
+		}
+
+		if (this.state.scope !== UI.FILTERS.ALL) {
+			summary.push(this.state.scope);
+		}
+
+		if (this.state.category !== UI.FILTERS.ALL) {
+			summary.push(this.state.category);
+		}
+
+		if (this.state.month !== UI.FILTERS.ALL) {
+			summary.push(this.state.month);
+		}
+
+		return summary;
+
+	}
+
    render(){
    
     const filtersContent = $(DOM.FILTERS_CONTENT);
@@ -173,6 +201,20 @@ const App = {
 
     toggle.querySelector(".filters-toggle-icon").textContent =
         this.state.filtersCollapsed ? "▶" : "▼";
+   
+   const summary = this.getFiltersSummary();
+	const summaryElement = $(DOM.FILTERS_SUMMARY);
+
+	if (summary.length === 0) {
+		summaryElement.textContent = "Aucun filtre actif";
+	} else {
+		summaryElement.textContent = summary.join(" • ");
+	}
+	
+	summaryElement.style.display =
+    this.state.filtersCollapsed
+        ? "block"
+        : "none";
    
     renderEvents(this.getFilteredEvents());
 	}
