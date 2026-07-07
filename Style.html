@@ -24,11 +24,18 @@ body{
 }
 
 #loading{
-    display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
     padding:24px;
+}
+
+#loading:not(.hidden){
+    display:flex;
+}
+
+#loading.hidden{
+    display:none;
 }
 
 .loading-content{
