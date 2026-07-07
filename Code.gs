@@ -12,5 +12,16 @@ function include(filename) {
 }
 
 function readEvents() {
-  return EventService.read();
+
+  const start = Date.now();
+
+  const result = EventService.read();
+
+  console.log(
+    "SERVER readEvents:",
+    Date.now() - start,
+    "ms"
+  );
+
+  return result;
 };

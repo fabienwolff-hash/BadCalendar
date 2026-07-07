@@ -268,10 +268,16 @@ function $(id){
     return document.getElementById(id);
 }
 
+console.time("readEvents");
+
 google.script.run
+    .withSuccessHandler(events => {
 
-    .withSuccessHandler(App.init.bind(App))
+        console.timeEnd("readEvents");
 
+        App.init(events);
+
+    })
     .readEvents();
 
 </script>

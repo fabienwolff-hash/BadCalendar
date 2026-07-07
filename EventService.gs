@@ -2,24 +2,11 @@ const EventService = {
 
   read() {
 
-	console.time("EventService.read total");
-
-    console.time("Open spreadsheet");
-
     const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
 
 	const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
 
-    console.timeEnd("Open spreadsheet");
-
-
-    console.time("Read sheet data");
-
     const values = sheet.getDataRange().getValues();
-	
-	console.timeEnd("Read sheet data");
-
-    console.time("Transform events");
 
     const headers = values[0];
     const rows = values.slice(1);
@@ -29,19 +16,9 @@ const EventService = {
       .map(row => this.normalize_(headers, row))
       .map(event => this.enrich_(event));
 
-    console.timeEnd("Transform events");
-
-
-    console.time("Sort events");
-
     this.sort_(events);
-	
-	console.timeEnd("Sort events");
 
-
-    console.time("Serialize dates");
-
-	const result =  events.map(event => ({
+	return events.map(event => ({
 
 	  ...event,
 
@@ -56,14 +33,6 @@ const EventService = {
         ? event.registrationCloseDate.toISOString()
         : null,
 	}));
-	
-	console.timeEnd("Serialize dates");
-
-
-    console.timeEnd("EventService.read total");
-
-
-    return result;
 
   },
 
