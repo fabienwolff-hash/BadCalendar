@@ -70,13 +70,29 @@ function renderEvents(events){
 
     const container=document.getElementById("events");
 	
-	if(events.length === 0){
+	if (events.length === 0) {
 
-        container.innerHTML =
-            `<div class="empty">${UI.MESSAGES.EMPTY}</div>`;
+    container.innerHTML = `
+        <div class="empty">
+            <p>${UI.MESSAGES.EMPTY}</p>
 
-        return;
-    }
+            <button
+                id="resetFilters"
+                class="button"
+                type="button">
+
+                ${UI.BUTTONS.RESET_FILTERS}
+
+            </button>
+        </div>
+    `;
+
+    document
+        .getElementById("resetFilters")
+        .addEventListener("click", () => App.resetFilters());
+
+    return;
+	}
 
     let html="";
 

@@ -224,6 +224,25 @@ const App = {
     renderEvents(this.getFilteredEvents());
 	},
 	
+	resetFilters(){
+
+    this.state.search = "";
+    this.state.type = UI.FILTERS.ALL;
+    this.state.scope = UI.FILTERS.ALL;
+    this.state.category = UI.FILTERS.ALL;
+    this.state.month = UI.FILTERS.ALL;
+
+    $(DOM.SEARCH).value = "";
+
+    $(DOM.FILTER_TYPE).value = UI.FILTERS.ALL;
+    $(DOM.FILTER_SCOPE).value = UI.FILTERS.ALL;
+    $(DOM.FILTER_CATEGORY).value = UI.FILTERS.ALL;
+    $(DOM.FILTER_MONTH).value = UI.FILTERS.ALL;
+
+    this.render();
+
+	},
+	
 	showApplication(){
 	
 		$(DOM.LOADING)
