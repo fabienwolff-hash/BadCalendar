@@ -13,7 +13,8 @@ const App = {
 		category: UI.FILTERS.ALL,
 		scope: UI.FILTERS.ALL,
 		month: UI.FILTERS.ALL,
-		filtersCollapsed: false
+		filtersCollapsed: false,
+		showFinished: false
     },
 
     init(events) {
@@ -37,6 +38,14 @@ const App = {
 		if (collapsed !== null) {
 			this.state.filtersCollapsed = collapsed === "true";
 		}
+		
+		const showFinished = localStorage.getItem("badcalendar.showFinished");
+
+		if (showFinished !== null) {
+			this.state.showFinished = showFinished === "true";
+		}
+
+		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
 
         this.bindEvents();
 
@@ -117,6 +126,20 @@ const App = {
 				
 				this.render();
 			});
+			
+		$(DOM.SHOW_FINISHED)
+			.addEventListener("change", e => {
+
+				this.state.showFinished =
+					e.target.checked;
+
+				localStorage.setItem(
+					"badcalendar.showFinished",
+					this.state.showFinished
+				);
+
+				this.render();
+			});	
     },
 
     getFilteredEvents() {
@@ -139,6 +162,11 @@ const App = {
 			if (this.state.month !== UI.FILTERS.ALL &&
 				event.month !== this.state.month)
 					return false;
+
+			if (!this.state.showFinished &&
+				event.eventStatus === STATUS.EVENT.FINISHED){
+					return false;
+				}
 
             if (this.state.search !== "") {
                 const txt = (
@@ -245,6 +273,14 @@ const App = {
         "badcalendar.filtersCollapsed",
         false
     );
+	
+	this.state.showFinished = false;
+	$(DOM.SHOW_FINISHED).checked = false;
+
+	localStorage.setItem(
+		"badcalendar.showFinished",
+		false
+	);
 
     this.render();
 	},
