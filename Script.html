@@ -232,6 +232,8 @@ const App = {
     this.state.category = UI.FILTERS.ALL;
     this.state.month = UI.FILTERS.ALL;
 
+    this.state.filtersCollapsed = false;
+
     $(DOM.SEARCH).value = "";
 
     $(DOM.FILTER_TYPE).value = UI.FILTERS.ALL;
@@ -239,8 +241,12 @@ const App = {
     $(DOM.FILTER_CATEGORY).value = UI.FILTERS.ALL;
     $(DOM.FILTER_MONTH).value = UI.FILTERS.ALL;
 
-    this.render();
+    localStorage.setItem(
+        "badcalendar.filtersCollapsed",
+        false
+    );
 
+    this.render();
 	},
 	
 	showApplication(){
