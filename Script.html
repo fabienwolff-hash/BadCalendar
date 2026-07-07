@@ -15,9 +15,7 @@ const App = {
 
     init(events) {
 
-        console.time("Frontend initialization");
-		
-		this.events = events;
+        this.events = events;
 		
 		console.log("Events chargés :", this.events);
 		
@@ -42,8 +40,6 @@ const App = {
         this.render();
 		
 		this.showApplication();
-		
-		console.timeEnd("Frontend initialization");
 
     },
 
@@ -191,7 +187,7 @@ const App = {
 	},
 
    render(){
-    console.time("render");
+   
     const filtersContent = $(DOM.FILTERS_CONTENT);
     const toggle = $(DOM.FILTERS_TOGGLE);
 
@@ -223,7 +219,6 @@ const App = {
         : "none";
    
     renderEvents(this.getFilteredEvents());
-	console.timeEnd("render");
 	},
 	
 	showApplication(){
@@ -273,17 +268,9 @@ function $(id){
     return document.getElementById(id);
 }
 
-console.time("readEvents");
-
 google.script.run
 
-    .withSuccessHandler(events => {
-
-        console.timeEnd("readEvents");
-
-        App.init(events);
-
-    })
+    .withSuccessHandler(App.init.bind(App))
 
     .readEvents();
 
