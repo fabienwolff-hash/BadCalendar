@@ -34,35 +34,6 @@ Catégories :
 
 ---
 
-## Barre de filtres repliable
-
-Sur desktop, la barre de filtres occupe une hauteur importante.
-
-Une évolution est prévue afin de :
-
-- replier les filtres ;
-- afficher uniquement les filtres actifs ;
-- afficher le nombre de filtres actifs ;
-- permettre de développer les filtres à la demande.
-
----
-
-## Affichage des filtres actifs
-
-Après repli de la barre de filtres, seuls les filtres appliqués seront visibles.
-
-Exemple :
-
-```
-Benjamin ×
-TDJ ×
-Mars ×
-```
-
-Une réflexion est également prévue pour permettre la suppression directe d'un filtre depuis cette vue.
-
----
-
 ## Icônes métier
 
 Les cartes utilisent actuellement des émojis.
@@ -95,20 +66,6 @@ Les informations suivantes ne sont pas encore disponibles :
 - lien Google Maps.
 
 Ces informations seront probablement gérées via un futur onglet **Paramètres**.
-
----
-
-## Organisateur
-
-Les événements ne possèdent pas encore d'organisateur.
-
-Cette information pourra être ajoutée ultérieurement.
-
-Exemples :
-
-- Comité 35
-- Ligue Bretagne
-- Club organisateur
 
 ---
 

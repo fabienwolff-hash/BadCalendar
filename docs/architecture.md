@@ -36,38 +36,12 @@ Chaque couche possède une responsabilité unique.
 
 # Architecture logique
 
-## 1. Source de données
-
-Le fichier Google Sheets constitue la source de vérité (Single Source of Truth).
-
-Il contient uniquement les données métier.
-
-Exemples :
-
-- type
-- portée
-- dates
-- catégories
-- mode d'inscription
-- URL
-
-Il ne contient jamais :
-
-- couleurs
-- badges
-- textes affichés
-- icônes
-- statuts calculés
-
-Toutes ces informations sont calculées ailleurs.
-
----
 
 ## 2. Backend Apps Script
 
 Le backend est responsable de toute la logique métier.
 
-Aujourd'hui cette logique est portée par :
+Cette logique est portée par :
 
 - Code.gs
 - Config.gs
@@ -75,87 +49,19 @@ Aujourd'hui cette logique est portée par :
 
 ### Responsabilités
 
-Le backend :
+# Backend
 
-- lit le Master ;
+Au niveau du backend, le traitement des événements s'effectue en plusieurs étapes :
+
+- lecture des données ;
 - valide les données ;
-- normalise les valeurs ;
-- enrichit les événements ;
+- transformation des données ;
+- enrichissement métier ;
 - calcule les statuts métier ;
+- tri ;
 - prépare les données destinées au frontend.
 
 Le frontend ne doit jamais recalculer une information métier.
-
----
-
-# EventService
-
-EventService est le cœur métier de l'application.
-
-Aujourd'hui il est organisé autour de plusieurs étapes.
-
-```text
-Lecture du Sheet
-        │
-        ▼
-normalize_
-        │
-        ▼
-enrich_
-        │
-        ▼
-sort_
-        │
-        ▼
-conversion JSON
-```
-
----
-
-## normalize_
-
-Transforme une ligne du tableur en objet JavaScript.
-
-Responsabilités :
-
-- lecture des colonnes
-- conversion des dates
-- gestion des valeurs nulles
-- renommage des colonnes
-
-Aucune logique métier.
-
----
-
-## enrich_
-
-Ajoute toutes les informations calculées.
-
-Exemples :
-
-- eventStatus
-- registrationStatus
-- month
-- monthNumber
-- year
-- categoriesArray
-
-C'est ici que se trouve toute l'intelligence métier.
-
----
-
-## sort_
-
-Trie les événements.
-
-Aujourd'hui :
-
-- ordre chronologique croissant
-
-Demain :
-
-- critères secondaires
-- priorités éventuelles
 
 ---
 
@@ -316,82 +222,11 @@ Aucune modification n'est renvoyée vers le backend.
 
 # Gestion des filtres
 
-Le frontend conserve l'état courant dans :
+Le frontend conserve l'état des filtres dans une structure applicative locale.
 
-```javascript
-App.state
-```
+Toute modification d'un filtre entraîne un nouveau rendu de la liste affichée.
 
-Exemple :
-
-```javascript
-state = {
-
-    search:"",
-    type:"Tous",
-    scope:"Tous",
-    category:"Tous",
-    month:"Tous"
-
-}
-```
-
-Chaque modification :
-
-↓
-
-met à jour le state
-
-↓
-
-relance render()
-
-↓
-
-recalcule la liste affichée.
-
-Le filtrage est entièrement côté client.
-
----
-
-# États métier
-
-Deux états sont calculés par le backend.
-
-## eventStatus
-
-Valeurs :
-
-- UPCOMING
-- ONGOING
-- FINISHED
-
-Calcul :
-
-- Date début
-- Date fin
-- Aujourd'hui
-
----
-
-## registrationStatus
-
-Valeurs :
-
-- UNKNOWN
-- NOT_OPEN
-- OPEN
-- CLOSED
-
-Calcul :
-
-- Date ouverture
-- Date fermeture
-- Aujourd'hui
-
-Le frontend exploite uniquement ces valeurs.
-
-Il ne refait jamais les calculs.
+Le filtrage est entièrement réalisé côté client à partir des données déjà enrichies fournies par le backend.
 
 ---
 
@@ -419,137 +254,56 @@ CSS :
 
 ---
 
-## Pas de duplication
+## Contrat entre le backend et le frontend
 
-Une information ne doit être calculée qu'une seule fois.
+Le backend fournit au frontend des données déjà validées, normalisées et enrichies.
 
-Exemple :
+Le frontend doit considérer ces données comme la source de vérité.
 
-registrationStatus
+Le frontend ne doit jamais :
 
-est calculé uniquement dans EventService.
-
----
-
-## Pas de chaînes magiques
-
-Les constantes sont centralisées.
-
-Exemple :
-
-```javascript
-STATUS.REGISTRATION.OPEN
-```
-
-au lieu de
-
-```javascript
-"OPEN"
-```
-
----
-
-## Fonctions courtes
-
-Une fonction doit remplir une seule responsabilité.
-
-Les fonctions longues doivent être découpées.
+- recalculer un statut ;
+- retraiter les catégories ;
+- retraiter les dates ;
+- réordonner les données métier.
 
 ---
 
 ## Données enrichies
 
 Le backend prépare les données afin de simplifier le frontend.
-
-Exemple :
-
-Au lieu de :
-
-```javascript
-categories.split(";")
-```
-
-dans plusieurs endroits,
-
-EventService fournit directement :
-
-```javascript
-categoriesArray
-```
-
----
-
-# Dépendances
-
-Aujourd'hui le projet dépend uniquement de :
-
-- Google Apps Script
-- Google Spreadsheet
-- HTML
-- CSS
-- JavaScript ES6
-
-Aucune bibliothèque externe.
+Les transformations, normalisations et enrichissements nécessaires sont réalisés avant l'envoi des données au navigateur. (Voir data-model.md)
 
 ---
 
 # Évolutions prévues
 
-L'architecture est prévue pour accueillir de nouveaux modules sans remettre en cause les fondations.
+L'architecture est conçue pour permettre :
 
-Par exemple :
+- l'ajout de nouveaux champs métier ;
+- l'enrichissement des données ;
+- l'intégration de nouveaux modules.
 
-- Paramètres (villes, gymnases, Google Maps)
-- Organisateurs
-- Résultats
-- Favoris
-- Export iCal
-- Notifications
-- Cache
-- PWA
-- Internationalisation
-- Authentification éventuelle
-
-Ces fonctionnalités devront respecter les mêmes principes :
-
-- séparation métier / affichage ;
-- source de vérité unique ;
-- calcul métier côté backend ;
-- frontend le plus simple possible.
+Les évolutions fonctionnelles détaillées sont décrites dans roadmap.md.
 
 ---
 
-# Vision de l'architecture cible (v1.x)
+# Documents associés
 
-```text
-                    Google Spreadsheet
+Modèle de données :
+data-model.md
 
-                 +---------------------+
-                 |      Master         |
-                 +---------------------+
-                           │
-                 +---------------------+
-                 |    Paramètres       |
-                 +---------------------+
-                           │
-                           ▼
-                  +------------------+
-                  |  EventService    |
-                  +------------------+
-                           │
-          ┌────────────────┴────────────────┐
-          ▼                                 ▼
-   StatusService                    LocationService
-          ▼                                 ▼
-      JSON enrichi                    Données enrichies
-          └────────────────┬────────────────┘
-                           ▼
-                     Frontend WebApp
-                           │
-          ┌────────────────┼────────────────┐
-          ▼                ▼                ▼
-      Filtres         Cartes          Navigation
-```
+Règles métier :
+business_rules.md
+
+Décisions d'architecture :
+decisions.md
+
+Vision produit :
+vision.md
+
+Contexte du projet :
+project_context.md
 
 ---
 

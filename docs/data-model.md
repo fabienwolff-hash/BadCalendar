@@ -25,21 +25,21 @@ Le Master ne doit jamais contenir de données de présentation (couleurs, badges
 
 ---
 
-# Structure du Master
+# Données sources (Google Sheets)
 
 | Ordre | Colonne                | Nom technique         | Type           | Obligatoire  |
 | ----: | ---------------------- | --------------------- | -------------- | :---------:  |
-|     1 | Type                   | type                  | Liste          |      ✅      |
-|     2 | Portée                 | scope                 | Liste          |      ✅      |
-|     3 | Titre                  | title                 | Texte          |      ✅      |
-|     4 | Date début             | startDate             | Date           |      ✅      |
-|     5 | Date fin               | endDate               | Date           |      ✅      |
-|     6 | Ville                  | location              | Texte          |      ✅      |
-|     7 | Catégories             | categories            | Liste multiple |      ✅      |
-|     8 | Ouverture inscriptions | registrationOpenDate  | Date           |      ❌      |
-|     9 | Fermeture inscriptions | registrationCloseDate | Date           |      ❌      |
-|    10 | Mode inscription       | registrationMode      | Liste          |      ✅      |
-|    11 | Lien vers l'event      | eventUrl              | URL            |      ❌      |
+|     1 | Type                   | Type                  | Liste          |      ✅      |
+|     2 | Portée                 | Scope                 | Liste          |      ✅      |
+|     3 | Titre                  | Title                 | Texte          |      ✅      |
+|     4 | Date début             | StartDate             | Date           |      ✅      |
+|     5 | Date fin               | EndDate               | Date           |      ✅      |
+|     6 | Ville                  | Location              | Texte          |      ✅      |
+|     7 | Catégories             | Categories            | Liste multiple |      ✅      |
+|     8 | Ouverture inscriptions | RegistrationOpenDate  | Date           |      ❌      |
+|     9 | Fermeture inscriptions | RegistrationCloseDate | Date           |      ❌      |
+|    10 | Mode inscription       | RegistrationMode      | Liste          |      ✅      |
+|    11 | Lien vers l'event      | EventUrl              | URL            |      ❌      |
 
 ---
 
@@ -77,7 +77,7 @@ Rayonnement de l'événement.
 
 * Départementale
 * Régionale
-* Interrégionale
+* Inter-Régionale
 * Nationale
 
 Validation :
@@ -221,11 +221,9 @@ Validation :
 
 Le backend ne fait aucune hypothèse sur la plateforme utilisée.
 
-Le frontend adapte automatiquement le libellé du bouton d'action selon le contexte métier (inscription ouverte, tournoi terminé, consultation des résultats, etc.).
-
 ---
 
-# Champs calculés
+# Données enrichies (Backend)
 
 Les champs suivants n'existent pas dans le Master.
 
@@ -240,71 +238,37 @@ Ils sont calculés automatiquement par EventService.
 | categoriesArray    | Tableau | Liste des catégories               |
 | eventStatus        | Enum    | UPCOMING / ONGOING / FINISHED      |
 | registrationStatus | Enum    | UNKNOWN / NOT_OPEN / OPEN / CLOSED |
-| isPast             | Booléen | L'événement est terminé            |
-| isToday            | Booléen | L'événement a lieu aujourd'hui     |
-| isFuture           | Booléen | L'événement est à venir            |
 
 ---
 
-# États calculés
+# Contrat Backend → Frontend
 
-## eventStatus
+Un objet réellement envoyé au frontend ressemble à : 
 
-Calculé à partir de :
+{
+  "type": "TDJ",
+  "scope": "Départementale",
+  "title": "...",
+  "startDate": "2026-09-12T00:00:00.000Z",
+  "endDate": "2026-09-12T00:00:00.000Z",
+  "location": "Rennes",
+  "categories": "Benjamin;Minime",
+  "categoriesArray": [
+     "Benjamin",
+     "Minime"
+  ],
+  "eventStatus": "UPCOMING",
+  "registrationStatus": "OPEN",
+  "month": "...",
+  "monthNumber": 9,
+  "year": 2026,
+  "registrationMode": "...",
+  "registrationOpenDate": "...",
+  "registrationCloseDate": "...",
+  "eventUrl": "...",
+  "categoriesArray": [...]
 
-* Date début
-* Date fin
-* Aujourd'hui
-
-### UPCOMING
-
-Aujourd'hui < Date début
-
----
-
-### ONGOING
-
-Date début ≤ Aujourd'hui ≤ Date fin
-
----
-
-### FINISHED
-
-Aujourd'hui > Date fin
-
----
-
-## registrationStatus
-
-Calculé à partir de :
-
-* Ouverture inscriptions
-* Fermeture inscriptions
-* Aujourd'hui
-
-### UNKNOWN
-
-Dates non renseignées.
-
-L'événement est annoncé mais les inscriptions ne sont pas encore disponibles.
-
----
-
-### NOT_OPEN
-
-Aujourd'hui < Ouverture inscriptions
-
----
-
-### OPEN
-
-Ouverture inscriptions ≤ Aujourd'hui ≤ Fermeture inscriptions
-
----
-
-### CLOSED
-
-Aujourd'hui > Fermeture inscriptions
+}
 
 ---
 
@@ -316,7 +280,6 @@ Le Master ne contient pas :
 * badges ;
 * textes d'affichage ;
 * icônes ;
-* organisateur ;
 * gymnase ;
 * adresse ;
 * département ;
@@ -327,28 +290,7 @@ Ces informations sont calculées ou obtenues via des tables de paramètres.
 
 ---
 
-# Règles métier
-
-## Événement
-
-* La date de fin est obligatoire.
-* Pour un événement sur une seule journée :
-
-```
-Date début = Date fin
-```
-
-* La date de fin doit être supérieure ou égale à la date de début.
-
-## Inscriptions
-
-* Les dates d'ouverture et de fermeture des inscriptions sont facultatives.
-* Si les deux dates sont absentes, les modalités d'inscription sont considérées comme inconnues (`registrationStatus = UNKNOWN`).
-* Le lien vers l'événement (`eventUrl`) est totalement indépendant du statut des inscriptions et peut rester consultable même après leur fermeture ou après la fin de l'événement.
-
----
-
-# Futur onglet Paramètres
+# Evolutions possibles du modèle
 
 Le projet pourra contenir un onglet **Paramètres**.
 
@@ -367,40 +309,6 @@ Le modèle de données a été conçu pour permettre l'ajout futur de nouvelles 
 
 Exemples :
 
-* organisateur ;
 * saison ;
 * coordonnées GPS ;
-* documents associés ;
 * liens externes complémentaires.
-
----
-
-# Principes d'architecture
-
-## Master
-
-Le Master constitue la source de vérité du projet.
-
-Il contient uniquement les données métier saisies par les administrateurs.
-
-## Backend (`EventService`)
-
-Le backend est responsable :
-
-* de la validation des données ;
-* de leur normalisation ;
-* de leur enrichissement ;
-* du calcul des états métier ;
-* de la préparation des données destinées au frontend.
-
-## Frontend
-
-Le frontend est responsable :
-
-* des filtres ;
-* de la recherche ;
-* de l'affichage ;
-* de la mise en forme ;
-* des interactions utilisateur.
-
-Il ne doit jamais recalculer une règle métier.

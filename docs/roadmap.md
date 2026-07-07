@@ -195,7 +195,7 @@ si cela améliore la compréhension du modèle métier.
 
 ---
 
-# V0.9 — Administration
+# V0.12 — Administration
 
 Création d'un module d'administration.
 
@@ -302,13 +302,6 @@ Non retenu.
 
 Une vue chronologique par mois est jugée plus simple et plus naturelle.
 
----
-
-## Colonne Actif
-
-Supprimée.
-
-Le contrôle des événements actifs sera assuré par le futur module d'administration.
 
 
 -----

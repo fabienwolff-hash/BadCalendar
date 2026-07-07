@@ -2,17 +2,44 @@
 
 ## Présentation
 
-BadCalendar est une application web permettant de publier simplement le calendrier d'une saison sportive à partir d'un unique fichier Google Sheets.
+BadCalendar est une application web permettant de publier simplement le calendrier d'une saison sportive de badminton à partir d'une source de données facilement administrable.
 
 L'objectif est de fournir une consultation moderne, responsive et toujours à jour des compétitions, stages et événements, sans nécessiter de développement spécifique lors de l'ajout ou de la modification d'un événement.
 
-Le projet est volontairement centré sur la simplicité d'administration, la qualité des données et une architecture facilement maintenable.
+BadCalendar est un produit de consultation : Son objectif n'est pas de gérer l'organisation des compétitions, les inscriptions ou les résultats, mais de faciliter l'accès à l'information pour ses utilisateurs.
+
+Le projet est volontairement centré sur la simplicité d'administration, la qualité des données et la pérennité de la solution.
+
+---
+
+# Problème à résoudre
+
+Les calendriers sportifs sont souvent diffusés sous forme de documents PDF, tableaux Excel ou pages Web statiques.
+
+Ces supports sont difficiles à maintenir, rapidement obsolètes et peu adaptés à une consultation sur mobile.
+
+Les familles doivent souvent consulter plusieurs sources pour retrouver les informations essentielles :
+- date ;
+- lieu ;
+- catégories concernées ;
+- modalités d'inscription ;
+- lien vers la compétition.
+
+BadCalendar vise à centraliser ces informations dans une interface unique, simple, toujours à jour et adaptée à une consultation rapide.
 
 ---
 
 # Objectifs
 
 BadCalendar poursuit plusieurs objectifs.
+
+
+## Promesse utilisateur
+
+BadCalendar doit permettre à un utilisateur de retrouver en quelques secondes les informations essentielles d'un événement sportif sans avoir à consulter plusieurs documents ou plateformes.
+
+La consultation doit rester simple, rapide et compréhensible quel que soit le support utilisé.
+
 
 ## Simplifier la diffusion des calendriers
 
@@ -28,177 +55,28 @@ L'ensemble des événements est administré dans un unique fichier Google Sheets
 
 Les responsables n'ont pas besoin de connaître le fonctionnement technique de l'application.
 
-Une simple modification du fichier Master est immédiatement prise en compte.
-
----
-
-## Garantir une source de vérité unique
-
-Le fichier **Master** constitue la seule source officielle des données.
-
-Toutes les informations affichées dans l'application proviennent directement de ce fichier ou sont calculées automatiquement.
-
-Aucune donnée métier n'est dupliquée.
-
----
-
-## Séparer les responsabilités
-
-Le projet repose sur une séparation claire des responsabilités.
-
-### Le Master
-
-Décrit les événements.
-
-### Le backend
-
-Valide, normalise et enrichit les données.
-
-Calcule également tous les états métier.
-
-### Le frontend
-
-Affiche les données et gère les interactions utilisateur.
-
-Il ne contient aucune règle métier.
+Une simple mise à jour des données sources suffit à actualiser le calendrier publié.
 
 ---
 
 # Public cible
 
-BadCalendar est destiné à l'ensemble des acteurs d'une organisation sportive.
-
-- joueurs
-- parents
-- entraîneurs
-- clubs
-- comités départementaux
-- ligues
-
-L'application peut également être adaptée à d'autres disciplines sportives.
+Bien que BadCalendar puisse être utilisée par l'ensemble des acteurs d'une organisation sportive, la conception du produit privilégie avant tout les besoins de consultation des parents et des jeunes licenciés.
 
 ---
 
-# Fonctionnalités actuelles
+# Principes directeurs
 
-## Consultation
+BadCalendar est conçu autour de quelques principes simples :
 
-- affichage chronologique
-- regroupement par mois
-- consultation sur mobile et desktop
-- affichage responsive
-
----
-
-## Recherche
-
-- recherche texte
-- filtre par type
-- filtre par portée
-- filtre par catégorie
-- filtre par mois
-
----
-
-## Informations affichées
-
-Chaque événement présente notamment :
-
-- son type
-- sa portée
-- son titre
-- ses dates
-- son lieu
-- les catégories concernées
-- le mode d'inscription
-- le statut des inscriptions
-- un lien vers la plateforme associée
-
----
-
-## Calculs automatiques
-
-Le backend calcule automatiquement :
-
-- le mois
-- l'année
-- les catégories sous forme de tableau
-- le statut de l'événement
-- le statut des inscriptions
-
-Le frontend exploite ensuite ces informations pour construire l'affichage.
-
----
-
-# Architecture générale
-
-Le fonctionnement de BadCalendar peut être résumé par le schéma suivant.
-
-```
-                Master Google Sheets
-                         │
-                         ▼
-                 Validation des données
-                         │
-                         ▼
-                   Normalisation
-                         │
-                         ▼
-                  Enrichissement
-                         │
-                         ▼
-              Calcul des états métier
-                         │
-                         ▼
-                     Frontend
-                         │
-                         ▼
-                 Affichage utilisateur
-```
-
-Chaque étape possède une responsabilité clairement identifiée.
-
----
-
-# Principes de conception
-
-Le développement de BadCalendar repose sur plusieurs principes.
-
-## Simplicité
-
-Une nouvelle fonctionnalité doit rester simple à comprendre, à maintenir et à faire évoluer.
-
----
-
-## Données avant présentation
-
-Le Master décrit uniquement les événements.
-
-Toutes les décisions d'affichage sont prises par l'application.
-
----
-
-## Responsabilités clairement séparées
-
-Les traitements métier sont exclusivement réalisés dans le backend.
-
-Le frontend ne fait qu'afficher les données.
-
----
-
-## Documentation systématique
-
-Chaque évolution importante s'accompagne de la mise à jour :
-
-- du modèle de données ;
-- de la roadmap ;
-- de la documentation technique.
-
----
-
-## Évolutivité
-
-Le modèle de données est conçu pour accueillir de nouveaux champs sans remettre en cause l'architecture existante.
+- simplicité d'utilisation ;
+- consultation rapide ;
+- priorité à l'usage mobile ;
+- informations toujours à jour ;
+- faible charge de maintenance ;
+- qualité des données ;
+- évolutivité ;
+- documentation maintenue ;
 
 ---
 
@@ -206,24 +84,14 @@ Le modèle de données est conçu pour accueillir de nouveaux champs sans remett
 
 À terme, BadCalendar a vocation à devenir une plateforme générique de publication de calendriers sportifs.
 
-L'objectif n'est pas de répondre uniquement aux besoins du badminton, mais de proposer une architecture suffisamment souple pour être adaptée à d'autres sports ou organisations.
-
 Le fichier Google Sheets reste le point d'entrée unique des données, tandis que l'application prend en charge automatiquement leur validation, leur enrichissement et leur présentation.
 
 Cette approche permet à une structure sportive de publier rapidement un calendrier moderne sans développement spécifique.
 
 ---
 
-# Valeurs du projet
+# Vision de succès
 
-Le développement de BadCalendar repose sur quelques valeurs fondamentales.
-
-- simplicité d'utilisation ;
-- qualité des données ;
-- lisibilité du code ;
-- séparation des responsabilités ;
-- documentation complète ;
-- évolutivité ;
-- maintenabilité.
-
-Ces principes guident l'ensemble des décisions techniques et fonctionnelles du projet.
+Le succès de BadCalendar se mesure par sa capacité à fournir
+une information fiable, facilement accessible et maintenue
+sans effort technique particulier pour les responsables sportifs.

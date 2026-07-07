@@ -108,24 +108,17 @@ Tous les filtres sont indépendants.
 
 ---
 
-# 7. Évolutions prévues
+# 7. Barre de filtres repliable
 
-La barre des filtres deviendra repliable.
+La barre de filtres peut être repliée afin d'augmenter
+l'espace disponible pour la consultation.
 
-Une fois repliée, elle affichera uniquement :
+Lorsqu'elle est repliée :
 
-- un bouton d'ouverture ;
-- les filtres actuellement actifs.
+- un bouton permet son ouverture ;
+- un résumé des filtres actifs reste visible.
 
-Exemple :
-
-```
-Filtres (3)
-
-TDJ
-Benjamin
-Septembre
-```
+L'état replié est conservé pendant la navigation.
 
 À terme, chaque filtre actif pourra être supprimé individuellement via une croix (✕).
 
@@ -290,8 +283,6 @@ Au chargement de l'application :
 Chargement...
 ```
 
-À terme, ce texte pourra être remplacé par un indicateur de chargement plus moderne (spinner ou skeleton).
-
 ---
 
 # 17. Accessibilité
@@ -320,8 +311,6 @@ La largeur maximale du contenu est volontairement limitée.
 
 Les améliorations identifiées sont :
 
-- barre de filtres repliable ;
-- affichage des filtres actifs ;
 - suppression d'un filtre actif en un clic ;
 - compteur de filtres actifs ;
 - icônes Material Design ;

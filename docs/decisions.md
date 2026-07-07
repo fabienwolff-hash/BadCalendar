@@ -62,21 +62,6 @@ Le frontend ne calcule jamais :
 
 Ils sont reçus directement du backend.
 
----
-
-# DEC-003 — Les statuts sont calculés
-
-## Décision
-
-Les statuts ne sont jamais stockés dans le Master.
-
-Ils sont calculés automatiquement.
-
-## Motivation
-
-Éviter les oublis de mise à jour.
-
-Garantir leur cohérence.
 
 ---
 
@@ -105,30 +90,6 @@ Le modèle devient plus naturel.
 Le code est plus simple.
 
 Les tests sont plus lisibles.
-
----
-
-# DEC-005 — Les catégories sont stockées sous forme de chaîne
-
-## Décision
-
-Le Master conserve :
-
-```
-Benjamin;Minime;Cadet
-```
-
-Le backend transforme automatiquement cette valeur en :
-
-```
-categoriesArray
-```
-
-## Motivation
-
-Le stockage reste simple.
-
-Le frontend dispose directement d'un tableau.
 
 ---
 
@@ -290,24 +251,6 @@ Le lien BadNet reste utile après la fermeture des inscriptions.
 
 ---
 
-# DEC-012 — Les informations d'inscription sont calculées
-
-## Décision
-
-Le texte affiché dans la carte est construit à partir de :
-
-registrationStatus
-
-registrationOpenDate
-
-registrationCloseDate
-
-## Motivation
-
-Éviter la duplication.
-
----
-
 # DEC-013 — Les filtres sont purement visuels
 
 ## Décision
@@ -421,9 +364,10 @@ Privilégier un code simple.
 
 ## Décision
 
-La documentation est considérée comme une fonctionnalité du projet.
+La documentation est considérée comme une fonctionnalité du projet et décrit l'implémentation réelle.
 
-Une version n'est jamais terminée tant que la documentation n'est pas à jour.
+Une fonctionnalité n'est pas considérée comme terminée tant que la documentation associée n'est pas mise à jour.
+
 
 ## Motivation
 
@@ -469,3 +413,58 @@ Si elle devient obsolète, elle est marquée comme :
 **Remplacée par DEC-XXX**
 
 afin de conserver l'historique des choix techniques du projet.
+
+---
+
+# DEC-021 — Séparation documentaire
+
+## Décision
+
+Chaque document possède une responsabilité unique.
+
+Vision          → Pourquoi
+Architecture    → Comment
+Data Model      → Données
+Business Rules  → Règles métier
+Function Spec   → Fonctionnalités utilisateur
+Decisions       → Justification des choix
+
+## Motivation
+
+Réduire les duplications.
+Limiter les dérives documentaires.
+
+## Conséquences
+
+Une information ne doit avoir qu'une seule source documentaire.
+
+Les autres documents doivent référencer
+la source officielle plutôt que dupliquer son contenu.
+
+
+---
+
+# DEC-022 — Persistance locale limitée
+
+## Décision
+
+Seules les préférences d'interface peuvent être stockées localement
+
+## Motivation
+
+Préserver la simplicité.
+Ne jamais stocker de données métier côté navigateur.
+
+
+## Conséquences
+
+Peuvent être stockées localement :
+- préférences d'affichage ;
+- état de l'interface ;
+- paramètres de confort utilisateur.
+
+Ne doivent jamais être stockées localement :
+- données métier ;
+- événements ;
+- statuts métier ;
+- données issues du Master.

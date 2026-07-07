@@ -64,19 +64,6 @@ Il n'intervient jamais directement sur la WebApp.
 
 ---
 
-# 4. Source des données
-
-Toutes les données proviennent de :
-
-```
-Google Sheets
-    └── Master
-```
-
-Le backend lit ce fichier puis enrichit les données avant de les envoyer au navigateur.
-
----
-
 # 5. Consultation des événements
 
 Au chargement :
@@ -155,17 +142,8 @@ Tous les filtres sont cumulables.
 
 # 9. Gestion des catégories
 
-Un événement peut appartenir à plusieurs catégories.
 
-Exemple :
-
-```
-Benjamin
-Minime
-Cadet
-```
-
-Les catégories sont affichées sous forme de liste lisible.
+Les catégories associées à un événement sont visibles sur la carte de l'événement
 
 ---
 
@@ -185,7 +163,8 @@ Son libellé dépend du contexte métier.
 
 # 11. Gestion des inscriptions
 
-Le backend calcule automatiquement l'état des inscriptions.
+Les informations d'inscription affichées à l'utilisateur dépendent de l'état des inscriptions associé à l'événement.
+
 
 Les états possibles sont :
 
@@ -200,13 +179,12 @@ Les états possibles sont :
 
 # 12. Gestion des événements
 
-Le backend calcule également l'état de l'événement.
 
-Valeurs :
+Un événement peut être :
+- à venir ; (UPCOMING)
+- en cours ; (ONGOING)
+- terminé. (FINISHED)
 
-- UPCOMING
-- ONGOING
-- FINISHED
 
 Ces informations sont actuellement utilisées pour le choix du bouton mais ne sont pas affichées à l'utilisateur.
 
@@ -279,8 +257,6 @@ Ces fonctionnalités sont documentées dans la roadmap.
 Les principales évolutions identifiées sont :
 
 - filtres multi-sélection ;
-- barre de filtres repliable ;
-- affichage des filtres actifs ;
 - tri métier enrichi ;
 - amélioration de l'expérience desktop ;
 - remplacement des émojis par des icônes ;
@@ -320,3 +296,42 @@ Ce document est complémentaire des documents suivants :
 - `release-notes.md`
 
 En cas de conflit, les règles métier définies dans `business-rules.md` prévalent sur cette spécification fonctionnelle.
+
+---
+
+# XX. Gestion des états d'interface
+
+Au démarrage de l'application, un écran de chargement est affiché jusqu'à la récupération des données.
+En cas d'échec du chargement, un message d'erreur est affiché.
+
+---
+
+# XX. Aucun résultat
+
+Si aucun événement ne correspond aux critères, un message dédié est affiché.
+
+---
+
+# XX. Réinitialisation
+
+L'utilisateur peut réinitialiser l'ensemble des filtres appliqués.
+
+---
+
+# XX. Barre de filtres
+
+La zone de filtres peut être repliée pour améliorer la consultation, notamment sur mobile.
+
+---
+
+# XX. Résumé des filtres
+
+Lorsque les filtres sont repliés, un résumé des filtres actifs est affiché.
+
+---
+
+# XX. Consultation mobile
+
+L'ensemble des fonctionnalités de consultation, de recherche et de filtrage doit rester utilisable sur smartphone sans nécessiter d'action spécifique.
+
+

@@ -8,35 +8,6 @@ Il décrit les règles de gestion indépendamment de l'implémentation technique
 
 ---
 
-# BR-001 — Le Master est la source de vérité
-
-Toutes les données métier proviennent exclusivement de la feuille **Master**.
-
-Aucune information métier ne doit être créée ou modifiée dans le frontend.
-
-Le backend est responsable de l'enrichissement des données.
-
----
-
-# BR-002 — Un événement est défini par ses données métier
-
-Un événement est composé des informations suivantes :
-
-- type
-- portée
-- titre
-- date de début
-- date de fin
-- ville
-- catégories
-- mode d'inscription
-- dates d'inscription
-- URL éventuelle
-
-Les couleurs, textes d'affichage et éléments graphiques ne font pas partie du modèle métier.
-
----
-
 # BR-003 — Les événements sont toujours triés chronologiquement
 
 L'ordre d'affichage est exclusivement basé sur :
@@ -79,8 +50,6 @@ Le stockage dans le Master utilise le séparateur officiel :
 ;
 ```
 
-Le backend transforme cette valeur en tableau.
-
 ---
 
 # BR-006 — Une catégorie appartient toujours à l'ordre officiel
@@ -98,6 +67,8 @@ Cet ordre est utilisé pour :
 
 - les filtres ;
 - les affichages futurs.
+
+Cet ordre est obligatoire dans tous les affichages métier et filtres.
 
 Le tri alphabétique n'est jamais utilisé.
 
@@ -215,10 +186,10 @@ Ils sont calculés à partir :
 
 Valeurs possibles :
 
-- UNKNOWN
-- NOT_OPEN
-- OPEN
-- CLOSED
+- UNKNOWN (Dates d'inscription absentes)
+- NOT_OPEN (Aujourd'hui < ouverture)
+- OPEN (Ouverture ≤ aujourd'hui ≤ fermeture)
+- CLOSED (Aujourd'hui > fermeture)
 
 ---
 
@@ -228,43 +199,12 @@ Le statut d'un événement est calculé automatiquement.
 
 Valeurs possibles :
 
-- UPCOMING
-- ONGOING
-- FINISHED
-
+- UPCOMING (Aujourd'hui < Date début)
+- ONGOING (Date début ≤ Aujourd'hui ≤ Date fin)
+- FINISHED (Aujourd'hui > Date fin)
+ 
 Aucun statut n'est saisi dans le Master.
 
----
-
-# BR-016 — Le frontend ne recalcule jamais une règle métier
-
-Le frontend affiche uniquement :
-
-- les données ;
-- les statuts ;
-- les informations calculées par le backend.
-
-Toute règle métier doit être implémentée dans `EventService`.
-
----
-
-# BR-017 — Les dates sont normalisées
-
-Toutes les dates transmises au frontend sont sérialisées au format ISO 8601.
-
-Le frontend est responsable uniquement du format d'affichage.
-
----
-
-# BR-018 — Les valeurs absentes sont représentées par `null`
-
-Une date inconnue est transmise sous la forme :
-
-```
-null
-```
-
-Aucune valeur sentinelle (comme `9999-12-31`) ne doit être utilisée.
 
 ---
 
@@ -288,53 +228,6 @@ L'utilisateur ne doit jamais voir une page vide sans explication.
 
 ---
 
-# BR-021 — Les constantes métier sont centralisées
-
-Les chaînes de caractères utilisées par l'application sont regroupées dans `Constants.html`.
-
-Cela concerne notamment :
-
-- les libellés des boutons ;
-- les messages utilisateur ;
-- les statuts affichés ;
-- les identifiants DOM ;
-- les ordres métier.
-
----
-
-# BR-022 — L'interface ne dépend pas des valeurs techniques
-
-Le frontend ne doit jamais afficher directement des valeurs internes telles que :
-
-- `UPCOMING`
-- `OPEN`
-- `FINISHED`
-- `UNKNOWN`
-
-Ces valeurs restent réservées à la logique métier.
-
----
-
-# BR-023 — Les données métier priment sur la présentation
-
-Une évolution graphique ne doit jamais modifier les règles métier.
-
-Les changements de style (couleurs, icônes, disposition) doivent être indépendants des traitements fonctionnels.
-
----
-
-# BR-024 — Les fonctionnalités futures doivent préserver la simplicité
-
-Toute nouvelle fonctionnalité devra respecter les principes fondateurs du projet :
-
-- simplicité d'utilisation ;
-- maintenance minimale ;
-- absence de dépendances externes ;
-- architecture claire ;
-- séparation stricte entre métier, présentation et données.
-
----
-
 # Principes
 
 Les règles décrites dans ce document constituent la référence fonctionnelle de BadCalendar.
@@ -343,3 +236,11 @@ En cas de divergence entre le code et ce document, une revue devra être réalis
 
 - le code doit être corrigé ;
 - ou si la règle métier a évolué et nécessite une mise à jour de cette documentation.
+
+---
+
+# BR-025 — Les événements terminés sont masqués par défaut (Prévu pour V0.9.7)
+
+Par défaut, seuls les événements UPCOMING et ONGOING sont affichés.
+
+L'utilisateur peut explicitement demander l'affichage des événements FINISHED.
