@@ -9,7 +9,8 @@ const App = {
 		type: UI.FILTERS.ALL,
 		category: UI.FILTERS.ALL,
 		scope: UI.FILTERS.ALL,
-		month: UI.FILTERS.ALL
+		month: UI.FILTERS.ALL,
+		filtersCollapsed: false
     },
 
     init(events) {
@@ -27,6 +28,12 @@ const App = {
     );
 
         this.populateFilters();
+		
+		const collapsed = localStorage.getItem("badcalendar.filtersCollapsed");
+
+		if (collapsed !== null) {
+			this.state.filtersCollapsed = collapsed === "true";
+		}
 
         this.bindEvents();
 
@@ -92,6 +99,19 @@ const App = {
                 this.render();
             });
 
+		$(DOM.FILTERS_TOGGLE)
+			.addEventListener("click", () => {
+
+				this.state.filtersCollapsed =
+					!this.state.filtersCollapsed;
+
+				localStorage.setItem(
+					"badcalendar.filtersCollapsed",
+					this.state.filtersCollapsed
+				);
+
+				this.render();
+			});
     },
 
     getFilteredEvents() {
@@ -137,6 +157,23 @@ const App = {
     },
 
    render(){
+   
+    const filtersContent = $(DOM.FILTERS_CONTENT);
+    const toggle = $(DOM.FILTERS_TOGGLE);
+
+    filtersContent.classList.toggle(
+        "collapsed",
+        this.state.filtersCollapsed
+    );
+
+    toggle.setAttribute(
+        "aria-expanded",
+        !this.state.filtersCollapsed
+    );
+
+    toggle.querySelector(".filters-toggle-icon").textContent =
+        this.state.filtersCollapsed ? "▶" : "▼";
+   
     renderEvents(this.getFilteredEvents());
 	}
 

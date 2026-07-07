@@ -1,28 +1,42 @@
 <div class="filters">
 
-<div class="filter-group">
-    <label for="search">Recherche</label>
-    <input id="search" placeholder="Rechercher...">
-</div>
+    <button
+        id="filtersToggle"
+        class="filters-toggle"
+        type="button"
+        aria-expanded="true"
+        aria-controls="filtersContent">
 
-<div class="filter-group">
-    <label for="filterType">Type</label>
-    <select id="filterType"></select>
-</div>
+        <span>Filtres</span>
 
-<div class="filter-group">
-    <label for="filterScope">Portée</label>
-    <select id="filterScope"></select>
-</div>
+        <span class="filters-toggle-icon">▼</span>
 
-<div class="filter-group">
-    <label for="filterCategory">Catégorie</label>
-    <select id="filterCategory"></select>
-</div>
+    </button>
 
-<div class="filter-group">
-    <label for="filterMonth">Mois</label>
-    <select id="filterMonth"></select>
-</div>
+    <div id="filtersContent">
+		<div class="filter-group">
+			<label for="search">Recherche</label>
+			<input id="search" placeholder="Rechercher...">
+		</div>
 
+		<div class="filter-group">
+			<label for="filterType">Type</label>
+			<select id="filterType"></select>
+		</div>
+
+		<div class="filter-group">
+			<label for="filterScope">Portée</label>
+			<select id="filterScope"></select>
+		</div>
+
+		<div class="filter-group">
+			<label for="filterCategory">Catégorie</label>
+			<select id="filterCategory"></select>
+		</div>
+
+		<div class="filter-group">
+			<label for="filterMonth">Mois</label>
+			<select id="filterMonth"></select>
+		</div>
+	</div>
 </div>

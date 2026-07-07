@@ -344,6 +344,34 @@ header h1{
         font-size:14px;
         padding:11px;
     }
+	
+	.filters-toggle{
+		display:flex;
+		justify-content:space-between;
+		align-items:center;
+
+		width:100%;
+
+		padding:10px 0;
+
+		background:none;
+		border:none;
+
+		cursor:pointer;
+
+		font-size:15px;
+		font-weight:600;
+	}
+	
+	#filtersContent{
+		overflow:hidden;
+		max-height:600px;
+		transition:max-height .25s ease;
+	}
+	
+	#filtersContent.collapsed{
+		max-height:0;
+	}
 
     .month-header{
         font-size:16px;
