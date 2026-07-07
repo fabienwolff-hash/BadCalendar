@@ -30,6 +30,10 @@ const App = {
         this.populateFilters();
 		
 		const collapsed = localStorage.getItem("badcalendar.filtersCollapsed");
+		console.log(
+					"Valeur enregistrée :",
+					localStorage.getItem("badcalendar.filtersCollapsed")
+				);
 
 		if (collapsed !== null) {
 			this.state.filtersCollapsed = collapsed === "true";
