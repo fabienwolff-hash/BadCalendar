@@ -53,7 +53,7 @@ const ValidationService = {
 
   return issues;
 
-  }
+  },
 
   validateRequiredField_(events, rule) {
 
