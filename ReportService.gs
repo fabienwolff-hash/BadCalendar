@@ -33,7 +33,5 @@ const ReportService = {
     sheet
       .getRange(2, 1, rows.length, 4)
       .setValues(rows);
-
   }
-
 };
