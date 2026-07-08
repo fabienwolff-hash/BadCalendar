@@ -65,7 +65,6 @@ const EventService = {
   },
 
   enrich_(event) {
-
 	const startDate = event.startDate;
 	const endDate = event.endDate;
 	const today = new Date();
@@ -82,17 +81,11 @@ const EventService = {
 	let eventStatus;
 
 	if (today < start) {
-
 	  eventStatus = CONFIG.STATUS.EVENT.UPCOMING;
-
 	} else if (today > end) {
-
 	  eventStatus = CONFIG.STATUS.EVENT.FINISHED;
-
 	} else {
-
 	  eventStatus = CONFIG.STATUS.EVENT.ONGOING;
-
 	}
 	
 	let registrationStatus;
@@ -103,7 +96,6 @@ const EventService = {
 	if (!open || !close) {
 		registrationStatus = CONFIG.STATUS.REGISTRATION.UNKNOWN;
 	} else {
-
 		const openDate = new Date(open);
 		openDate.setHours(0,0,0,0);
 
@@ -111,22 +103,15 @@ const EventService = {
 		closeDate.setHours(0,0,0,0);
 
 		if (today < openDate) {
-
 			registrationStatus =
 				CONFIG.STATUS.REGISTRATION.NOT_OPEN;
-
 		} else if (today > closeDate) {
-
 			registrationStatus =
 				CONFIG.STATUS.REGISTRATION.CLOSED;
-
 		} else {
-
 			registrationStatus =
 				CONFIG.STATUS.REGISTRATION.OPEN;
-
 		}
-
 	}
 
 	return {
@@ -148,10 +133,8 @@ const EventService = {
 		.split(";")
 		.map(c => c.trim())
 		.filter(Boolean)
-
 	};
-
-},
+  },
 
   sort_(events) {
 
@@ -170,7 +153,7 @@ const EventService = {
             String(cell).trim() === ""
         );
 
-  }
+  },
 
   parseDate_(value) {
 
