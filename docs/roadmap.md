@@ -228,6 +228,15 @@ Fonctionnalités attendues :
 
 # Évolutions futures
 
+## Amélioration du modèle de localisation :
+
+- gestion de la région ;
+- gestion du département ;
+- gestion de la ville ;
+- référentiel des lieux. (avec gestion du google place id pour les besoins de google maps ?)
+
+---
+
 ## Google Calendar
 
 Permettre l'ajout d'un événement dans le calendrier personnel.

@@ -35,7 +35,12 @@ const EventService = {
     const rows = values.slice(1);
 
     return rows
-        .filter(row => row && row[0] !== "")
+        .filter(row =>
+			row &&
+			row.some(cell =>
+			  String(cell).trim() !== ""
+			)
+		)
         .map(row => this.normalize_(headers, row));
 	},
 

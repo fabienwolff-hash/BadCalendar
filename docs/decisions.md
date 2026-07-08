@@ -476,3 +476,31 @@ Ne doivent jamais être stockées localement :
 ## Décision
 
 Les préférences d'interface utilisateur sont restaurées automatiquement au démarrage de l'application.
+
+---
+
+# DEC-024 — Le niveau sportif est distinct de la localisation
+
+## Décision
+
+Le champ Scope représente le niveau sportif de l'événement et non sa localisation.
+
+## Motivation
+
+Le niveau sportif influence notamment :
+
+- les modalités d'inscription ;
+- la sélection des joueurs ;
+- le niveau de compétition.
+
+La localisation géographique constitue une information distincte.
+
+## Conséquence
+
+Une future évolution du modèle pourra introduire :
+
+- Region ;
+- Department ;
+- Location ;
+
+sans remettre en cause Scope.

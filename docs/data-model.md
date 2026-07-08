@@ -314,3 +314,35 @@ Exemples :
 * saison ;
 * coordonnées GPS ;
 * liens externes complémentaires.
+
+## Évolution de la localisation
+
+Le champ actuel `Location` représente la ville de l'événement.
+
+Une évolution future pourra introduire plusieurs niveaux de localisation :
+
+- Region
+- Department
+- Location (ville)
+
+Cette évolution vise à permettre la planification d'événements dont la localisation exacte n'est pas encore connue.
+
+Exemples :
+
+TRJ planifié :
+
+- Region = Bretagne
+- Department = vide
+- Location = vide
+
+CDJ planifié :
+
+- Region = Bretagne
+- Department = 35
+- Location = vide
+
+Événement attribué :
+
+- Region = Bretagne
+- Department = 35
+- Location = Rennes
