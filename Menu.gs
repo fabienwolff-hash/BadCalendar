@@ -9,4 +9,10 @@ function onOpen() {
 
 function verifyMaster() {
 
+  const events = EventService.readNormalized();
+
+  const issues = ValidationService.validate(events);
+
+  ReportService.write(issues);
+
 }
