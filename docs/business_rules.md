@@ -247,10 +247,41 @@ L'utilisateur peut explicitement demander l'affichage des événements FINISHED.
 
 ---
 
-
 # BR-026 — Les préférences utilisateur sont conservées
 
 Les préférences d'interface suivantes sont conservées :
 
 - état de repli de la barre de filtres ;
 - affichage des compétitions terminées.
+
+---
+
+# BR-027 — Certains champs sont obligatoires
+
+Les champs suivants doivent obligatoirement être renseignés :
+
+StartDate
+EndDate
+Type
+Scope
+
+L'absence d'une de ces valeurs constitue une erreur bloquante.
+
+---
+
+# BR-028 — Certains champs sont recommandés
+
+Les champs suivants sont recommandés :
+
+Location
+EventUrl
+
+Leur absence génère un avertissement mais n'empêche pas la publication.
+
+---
+
+# BR-029 — Les contrôles sont exécutés avant publication
+
+Les données du Master sont analysées avant leur publication.
+
+Chaque anomalie détectée est restituée dans un rapport de contrôle.

@@ -17,17 +17,22 @@ BadCalendar suit une architecture en trois couches.
                      (Master)
                          │
                          ▼
-                EventService.gs
-        (lecture + enrichissement métier)
+          EventService.readNormalized()
                          │
-                         ▼
-                  Code.gs (API)
-                         │
-                         ▼
-               Frontend HTML / JS
-                         │
-                         ▼
-                  Utilisateur
+            ┌────────────┴────────────┐
+            ▼                         ▼
+   ValidationService          EventService.read()
+            │                         │
+            ▼                         ▼
+   ValidationIssue[]          enrich_()
+            │                 sort_()
+            ▼                 serialize()
+    ReportService                  │
+            │                      ▼
+            ▼                  Code.gs
+ Google Sheet (Contrôles)          │
+                                   ▼
+                            Frontend HTML / JS
 ```
 
 Chaque couche possède une responsabilité unique.
@@ -53,8 +58,8 @@ Cette logique est portée par :
 
 Au niveau du backend, le traitement des événements s'effectue en plusieurs étapes :
 
+Pipeline WebApp :
 - lecture des données ;
-- valide les données ;
 - transformation des données ;
 - enrichissement métier ;
 - calcule les statuts métier ;
@@ -62,6 +67,11 @@ Au niveau du backend, le traitement des événements s'effectue en plusieurs ét
 - prépare les données destinées au frontend.
 
 Le frontend ne doit jamais recalculer une information métier.
+
+Pipeline Administration :
+- lecture des données ;
+- valide les données ;
+- génère un rapport des contrôles en erreur ;
 
 ---
 
@@ -174,49 +184,86 @@ qui pilote toute l'application.
 
 ---
 
+## ValidationService.gs
+
+Responsabilités :
+
+appliquer les règles de validation ;
+produire une liste de ValidationIssue ;
+ne réaliser aucun affichage.
+
+---
+
+## ReportService.gs
+
+Responsabilités :
+
+générer le rapport de validation ;
+créer ou mettre à jour l'onglet Contrôles ;
+présenter les anomalies détectées.
+
+---
+
+## Menu.gs
+
+Responsabilités :
+
+créer le menu BadCalendar ;
+lancer les traitements d'administration.
+
+---
+
 # Flux de données
 
-Le cycle de vie d'un événement est le suivant.
+## WebApp 
 
-```text
-Google Sheet
-
-↓
-
-EventService.read()
+Master
 
 ↓
 
-normalize_
+read()
 
 ↓
 
-enrich_
+readNormalized()
 
 ↓
 
-JSON
+enrich_()
 
 ↓
 
-google.script.run
+serialize()
 
 ↓
 
-App.init()
+Frontend
+
+
+## Administration
+
+Master
 
 ↓
 
-render()
+readNormalized()
 
 ↓
 
-renderCard()
-```
+ValidationService
 
-Les données circulent toujours dans le même sens.
+↓
 
-Aucune modification n'est renvoyée vers le backend.
+ValidationIssue[]
+
+↓
+
+ReportService
+
+↓
+
+Onglet Contrôles
+
 
 ---
 

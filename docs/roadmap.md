@@ -47,36 +47,110 @@ Statut : **Terminée**
 
 ---
 
-# V0.8 — Expérience utilisateur
+## ✅ V0.8 — Amélioration de l'expérience utilisateur
 
-Objectif : améliorer le confort d'utilisation sans modifier l'architecture.
+Objectif : améliorer l'ergonomie et la lisibilité de la WebApp sans modifier son architecture métier.
 
-## Haute priorité
+### Fonctionnalités
 
-### Filtre par portée
+#### Filtres
 
-Ajouter un filtre :
+- Ajout du filtre par portée
+- Tri métier des catégories (Minibad → Junior)
+- Tri métier des portées (Départementale → Nationale)
 
-* Départementale
-* Régionale
-* Inter-Régionale
-* Nationale
+#### Affichage
+
+- Refonte graphique des cartes d'événements
+- Affichage compact des catégories
+- Affichage des informations d'inscription uniquement lorsqu'elles sont pertinentes
+- Bouton dynamique selon le statut de l'événement :
+  - S'inscrire
+  - Consulter le tournoi
+  - Voir les résultats
+- Nouvelle palette de badges colorés selon le type de compétition
+- Amélioration de la lisibilité des en-têtes de mois
+- Optimisation de l'affichage desktop (compactage de l'en-tête)
+
+#### Architecture
+
+- Centralisation des constantes Frontend (`Constants.html`)
+- Centralisation des messages liés aux inscriptions (`getRegistrationMessage()`)
+- Suppression de duplications de code
+- Nettoyage des composants Frontend
+- Utilisation exclusive des dates `null` en remplacement des anciennes dates sentinelles
+- Harmonisation des statuts métier entre backend et frontend
+
+#### Documentation
+
+- Mise à jour de la Roadmap
+- Mise à jour du modèle de données
+- Rédaction du document de vision du projet
+- Ajout des Release Notes
+- Création de la documentation d'architecture et des règles de développement
+
+Statut : **Terminée**
 
 ---
 
-### Amélioration de l'affichage des catégories
+## ✅ V0.9 — Amélioration de l'expérience utilisateur
 
-Aujourd'hui :
+Objectif : améliorer l'ergonomie, la lisibilité et le confort d'utilisation de la WebApp sans modifier son architecture métier.
 
-Minibad;Poussin;Benjamin;Minime
+### Fonctionnalités
 
-Proposition :
+#### Navigation
 
-Minibad • Poussin • Benjamin • Minime
+- Barre des filtres repliable
+- Mémorisation de l'état des filtres (localStorage)
+- Résumé des filtres lorsque la zone est repliée
+- Écran d'initialisation pendant le chargement
+- Écran d'erreur en cas d'échec du chargement
 
-ou
+#### Filtres
 
-Minibad / Poussin / Benjamin / Minime
+- Filtre par portée
+- Option "Afficher les compétitions terminées"
+- Préférence mémorisée dans le navigateur
+- Réinitialisation complète des filtres
+
+#### Affichage
+
+- Tri métier des catégories
+- Tri métier des portées
+- Affichage compact des catégories
+- Bouton dynamique selon le statut de l'événement
+- Badges colorés par type de compétition
+- Compétitions terminées masquées par défaut
+- Style spécifique des compétitions terminées
+- Mise en évidence discrète des compétitions en cours
+- Responsive amélioré (mobile / tablette / desktop)
+
+#### Qualité
+
+- Refactoring du stockage local
+- Centralisation de l'initialisation de l'application
+- Réduction des duplications de code
+- Nettoyage et simplification du Frontend
+
+Statut : **Terminée**
+
+---
+
+## ✅ V0.10 — Administration
+
+### Fonctionnalités
+
+* Introduction de readNormalized()
+* Création du ValidationService
+* Création du ReportService
+* Création du modèle ValidationIssue
+* Ajout du menu BadCalendar
+* Contrôles bloquants
+* Avertissements
+* Rapport de validation
+
+Statut : **Terminée**
 
 ---
 
@@ -195,19 +269,24 @@ si cela améliore la compréhension du modèle métier.
 
 ---
 
-# V0.12 — Administration
-
-Création d'un module d'administration.
+# V0.11 — Renforcement des contrôles métier
 
 Fonctionnalités envisagées :
+* Validation des dates
+* Validation des référentiels
+* Validation des URL
+* Tri des anomalies
+* Tests automatisés (non-régression)
 
-* création d'événement
-* modification
-* suppression
-* contrôles de cohérence
-* génération automatique des champs calculés
-* validation des données
-* gestion des paramètres
+---
+
+# V0.12 — Assistance à l'administration
+
+Fonctionnalités envisagées :
+* Navigation vers les lignes en erreur
+* Validation à la modification
+* Paramètres d'administration
+* Historique des contrôles
 
 ---
 
@@ -311,21 +390,14 @@ Non retenu.
 
 Une vue chronologique par mois est jugée plus simple et plus naturelle.
 
+---
 
-
------
-
-
-# V0.9 — Amélioration de l'expérience utilisateur
-
-## Navigation
-
-- [ ] Barre des filtres repliable sur mobile
-- [ ] Optimisation de l'occupation de l'espace sur desktop
-- [ ] Amélioration de l'affichage de l'en-tête
+# V1.0 — Première version stable
 
 ## Filtres
 
+- [ ] Optimisation de l'occupation de l'espace sur desktop
+- [ ] Amélioration de l'affichage de l'en-tête
 - [ ] Filtre multi-valeurs (catégories)
 - [ ] Filtre multi-valeurs (types)
 - [ ] Filtre multi-valeurs (portées)
@@ -342,10 +414,6 @@ Une vue chronologique par mois est jugée plus simple et plus naturelle.
     - S'inscrire
     - Voir le tournoi
     - Voir les résultats
-
----
-
-# V1.0 — Première version stable
 
 ## Qualité
 
@@ -374,8 +442,6 @@ Une vue chronologique par mois est jugée plus simple et plus naturelle.
 
 ## Administration
 
-- [ ] Gestion de plusieurs saisons
-- [ ] Archivage automatique des saisons
 - [ ] Paramétrage avancé des listes de valeurs
 
 ## Consultation
@@ -389,7 +455,6 @@ Une vue chronologique par mois est jugée plus simple et plus naturelle.
 
 - [ ] Export iCal
 - [ ] Export Google Agenda
-- [ ] Export PDF
 
 ## Notifications
 

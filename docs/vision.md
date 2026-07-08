@@ -55,7 +55,7 @@ L'ensemble des événements est administré dans un unique fichier Google Sheets
 
 Les responsables n'ont pas besoin de connaître le fonctionnement technique de l'application.
 
-Une simple mise à jour des données sources suffit à actualiser le calendrier publié.
+Une simple mise à jour des données sources suffit à actualiser le calendrier publié. Un module d'administration permet également de contrôler la qualité des données du Master avant leur publication.
 
 ---
 
@@ -84,7 +84,7 @@ BadCalendar est conçu autour de quelques principes simples :
 
 À terme, BadCalendar a vocation à devenir une plateforme générique de publication de calendriers sportifs.
 
-Le fichier Google Sheets reste le point d'entrée unique des données, tandis que l'application prend en charge automatiquement leur validation, leur enrichissement et leur présentation.
+Le fichier Google Sheets reste le point d'entrée unique des données. BadCalendar s'appuie sur des services spécialisés pour assurer successivement la lecture, la validation, l'enrichissement et la présentation des données. Cette architecture garantit la qualité des données tout en facilitant les évolutions futures.
 
 Cette approche permet à une structure sportive de publier rapidement un calendrier moderne sans développement spécifique.
 
