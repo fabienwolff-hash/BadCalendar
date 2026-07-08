@@ -270,6 +270,8 @@ Un objet réellement envoyé au frontend ressemble à :
 
 }
 
+Toutes les dates sont transmises sous forme de chaînes ISO 8601.
+
 ---
 
 # Données volontairement absentes

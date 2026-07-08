@@ -468,3 +468,11 @@ Ne doivent jamais être stockées localement :
 - événements ;
 - statuts métier ;
 - données issues du Master.
+
+---
+
+# DEC-023 — Rechargement des préférences utilisateurs
+
+## Décision
+
+Les préférences d'interface utilisateur sont restaurées automatiquement au démarrage de l'application.

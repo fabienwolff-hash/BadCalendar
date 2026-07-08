@@ -239,8 +239,18 @@ En cas de divergence entre le code et ce document, une revue devra être réalis
 
 ---
 
-# BR-025 — Les événements terminés sont masqués par défaut (Prévu pour V0.9.7)
+# BR-025 — Les événements terminés sont masqués par défaut
 
 Par défaut, seuls les événements UPCOMING et ONGOING sont affichés.
 
 L'utilisateur peut explicitement demander l'affichage des événements FINISHED.
+
+---
+
+
+# BR-026 — Les préférences utilisateur sont conservées
+
+Les préférences d'interface suivantes sont conservées :
+
+- état de repli de la barre de filtres ;
+- affichage des compétitions terminées.

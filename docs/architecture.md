@@ -222,11 +222,15 @@ Aucune modification n'est renvoyée vers le backend.
 
 # Gestion des filtres
 
-Le frontend conserve l'état des filtres dans une structure applicative locale.
+Le frontend conserve l'état des filtres localement afin de conserver certaines préférences utilisateur.
+Préférences persistées :
+- barre de filtres repliée ;
+- affichage des compétitions terminées.
 
 Toute modification d'un filtre entraîne un nouveau rendu de la liste affichée.
 
 Le filtrage est entièrement réalisé côté client à partir des données déjà enrichies fournies par le backend.
+
 
 ---
 
@@ -266,6 +270,8 @@ Le frontend ne doit jamais :
 - retraiter les catégories ;
 - retraiter les dates ;
 - réordonner les données métier.
+
+Le frontend applique également un filtrage sur les événements terminés à partir du champ eventStatus fourni par le backend.
 
 ---
 

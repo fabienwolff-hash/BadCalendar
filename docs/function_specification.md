@@ -312,21 +312,19 @@ Si aucun événement ne correspond aux critères, un message dédié est affich�
 
 ---
 
-# XX. Réinitialisation
+# XX. Réinitialisation des filtres
 
 L'utilisateur peut réinitialiser l'ensemble des filtres appliqués.
 
 ---
 
-# XX. Barre de filtres
+# XX. Barre de filtres repliable
 
 La zone de filtres peut être repliée pour améliorer la consultation, notamment sur mobile.
 
----
-
-# XX. Résumé des filtres
-
-Lorsque les filtres sont repliés, un résumé des filtres actifs est affiché.
+Lorsqu'elle est repliée :
+- un résumé des filtres actifs est visible ;
+- les filtres restent applicables.
 
 ---
 

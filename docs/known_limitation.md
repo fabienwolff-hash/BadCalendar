@@ -129,6 +129,18 @@ Exemple futur :
 
 ---
 
+## Persistance utilisateur limitée
+
+Les préférences suivantes sont conservées :
+
+- état replié de la barre de filtres ;
+- affichage des compétitions terminées.
+
+Les autres critères de filtrage ne sont pas restaurés entre deux sessions.
+
+---
+
+
 # Limitations techniques
 
 ## Aucune authentification
@@ -140,16 +152,6 @@ Il n'existe pas de gestion :
 - des utilisateurs ;
 - des rôles ;
 - des permissions.
-
----
-
-## Pas de persistance côté navigateur
-
-Les filtres ne sont pas mémorisés.
-
-À chaque ouverture :
-
-- tous les filtres reviennent à leur valeur par défaut.
 
 ---
 
@@ -206,56 +208,6 @@ est calculé mais n'est volontairement pas affiché.
 Cette décision a été prise afin de limiter le bruit visuel.
 
 Elle pourra être réévaluée dans une future version.
-
----
-
-## Bouton d'action simplifié
-
-Le libellé du bouton est actuellement déterminé à partir :
-
-- de `eventStatus` ;
-- de `registrationStatus`.
-
-Une évolution est envisagée afin de rendre cette logique entièrement pilotée par les statuts métier, avec une meilleure séparation entre la logique métier et l'interface.
-
----
-
-# Limitations d'architecture
-
-## Pas de framework JavaScript
-
-Le projet utilise uniquement :
-
-- HTML ;
-- CSS ;
-- JavaScript natif ;
-- Google Apps Script.
-
-C'est un choix volontaire.
-
----
-
-## Pas d'étape de build
-
-Le projet ne nécessite :
-
-- ni compilation ;
-- ni transpilation ;
-- ni bundler.
-
-Cette simplicité fait partie des principes fondateurs du projet.
-
----
-
-## Pas de dépendance externe
-
-Aucune bibliothèque JavaScript n'est utilisée.
-
-Objectif :
-
-- simplicité ;
-- maintenance minimale ;
-- pérennité.
 
 ---
 

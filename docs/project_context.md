@@ -76,15 +76,14 @@ Fonctionnalités déjà présentes :
 - recherche
 - filtres
 - filtre portée
-- barre repliable
-- résumé des filtres
-- état vide
+- barre de filtres repliable
+- résumé des filtres actifs
+- persistance locale des préférences UI
 - écran de chargement
 - écran d'erreur
-
-Travail en cours :
-- gestion des événements terminés
-- revue documentaire
+- état si aucun résultat ne correspond à la recherche
+- affichage des compétitions terminées (option utilisateur)
+- bouton de réinitialisation des filtres
 
 ---
 
