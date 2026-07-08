@@ -3,6 +3,25 @@ const DEBUG = {
     SIMULATE_INIT_ERROR: false
 };
 
+const Storage = {
+
+    loadFiltersCollapsed() {
+        return localStorage.getItem("badcalendar.filtersCollapsed") === "true";
+    },
+
+    saveFiltersCollapsed(value) {
+        localStorage.setItem("badcalendar.filtersCollapsed",value);
+    },
+
+    loadShowFinished() {
+        return localStorage.getItem("badcalendar.showFinished") === "true";
+    },
+
+    saveShowFinished(value) {
+        localStorage.setItem("badcalendar.showFinished",value);
+    }
+};
+
 const App = {
 
     events: [],
@@ -21,31 +40,22 @@ const App = {
 
         this.events = events;
 		
-		console.log("Events chargés :", this.events);
-		
-		    console.table(
-        this.events.map(e => ({
-            title: e.title,
-            eventStatus: e.eventStatus,
-            registrationStatus: e.registrationStatus
-        }))
+		console.table(
+			this.events.map(e => ({
+				title: e.title,
+				eventStatus: e.eventStatus,
+				registrationStatus: e.registrationStatus
+			})
+		)
     );
 
         this.populateFilters();
 		
-		const collapsed = localStorage.getItem("badcalendar.filtersCollapsed");
-
-		if (collapsed !== null) {
-			this.state.filtersCollapsed = collapsed === "true";
-		}
+		this.state.filtersCollapsed = Storage.loadFiltersCollapsed();
 		
-		const showFinished = localStorage.getItem("badcalendar.showFinished");
+		this.state.showFinished = Storage.loadShowFinished();
 
-		if (showFinished !== null) {
-			this.state.showFinished = showFinished === "true";
-		}
-
-		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
+		$(DOM.SHOW_FINISHED).checked = Storage.loadShowFinished();
 
         this.bindEvents();
 
@@ -119,24 +129,15 @@ const App = {
 				this.state.filtersCollapsed =
 					!this.state.filtersCollapsed;
 
-				localStorage.setItem(
-					"badcalendar.filtersCollapsed",
-					this.state.filtersCollapsed
-				);
+				Storage.saveFiltersCollapsed(this.state.filtersCollapsed);
 				
 				this.render();
 			});
 			
 		$(DOM.SHOW_FINISHED)
 			.addEventListener("change", e => {
-
-				this.state.showFinished =
-					e.target.checked;
-
-				localStorage.setItem(
-					"badcalendar.showFinished",
-					this.state.showFinished
-				);
+				this.state.showFinished = e.target.checked;
+				Storage.saveShowFinished(this.state.showFinished);
 
 				this.render();
 			});	
