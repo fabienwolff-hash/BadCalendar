@@ -35,7 +35,7 @@ const CONFIG = {
 		"CEJ",
 		"BAC",
 		"BNP",
-		"Interclub"
+		"Interclub",
 		"Stage",
 		"Promobad",
 		"Championnat"
