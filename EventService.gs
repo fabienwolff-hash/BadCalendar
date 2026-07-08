@@ -35,12 +35,7 @@ const EventService = {
     const rows = values.slice(1);
 
     return rows
-        .filter(row =>
-			row &&
-			row.some(cell =>
-			  String(cell).trim() !== ""
-			)
-		)
+        .filter(row => !this.isEmptyRow_(row))
         .map(row => this.normalize_(headers, row));
 	},
 
@@ -167,6 +162,15 @@ const EventService = {
     );
 
   },
+  
+  isEmptyRow_(row) {
+
+    return !row ||
+        row.every(cell =>
+            String(cell).trim() === ""
+        );
+
+  }
 
   parseDate_(value) {
 
