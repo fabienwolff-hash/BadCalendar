@@ -267,35 +267,30 @@ const App = {
 	
 	resetFilters(){
 
-    this.state.search = "";
-    this.state.type = UI.FILTERS.ALL;
-    this.state.scope = UI.FILTERS.ALL;
-    this.state.category = UI.FILTERS.ALL;
-    this.state.month = UI.FILTERS.ALL;
+		this.state.search = "";
+		this.state.type = UI.FILTERS.ALL;
+		this.state.scope = UI.FILTERS.ALL;
+		this.state.category = UI.FILTERS.ALL;
+		this.state.month = UI.FILTERS.ALL;
 
-    this.state.filtersCollapsed = false;
+		this.state.filtersCollapsed = false;
 
-    $(DOM.SEARCH).value = "";
+		$(DOM.SEARCH).value = "";
 
-    $(DOM.FILTER_TYPE).value = UI.FILTERS.ALL;
-    $(DOM.FILTER_SCOPE).value = UI.FILTERS.ALL;
-    $(DOM.FILTER_CATEGORY).value = UI.FILTERS.ALL;
-    $(DOM.FILTER_MONTH).value = UI.FILTERS.ALL;
+		$(DOM.FILTER_TYPE).value = UI.FILTERS.ALL;
+		$(DOM.FILTER_SCOPE).value = UI.FILTERS.ALL;
+		$(DOM.FILTER_CATEGORY).value = UI.FILTERS.ALL;
+		$(DOM.FILTER_MONTH).value = UI.FILTERS.ALL;
 
-    localStorage.setItem(
-        "badcalendar.filtersCollapsed",
-        false
-    );
-	
-	this.state.showFinished = false;
-	$(DOM.SHOW_FINISHED).checked = false;
+		this.state.filtersCollapsed = false;
+		this.state.showFinished = false;
 
-	localStorage.setItem(
-		"badcalendar.showFinished",
-		false
-	);
+		$(DOM.SHOW_FINISHED).checked = false;
 
-    this.render();
+		Storage.saveFiltersCollapsed(this.state.filtersCollapsed);
+		Storage.saveShowFinished(this.state.showFinished);
+
+		this.render();
 	},
 	
 	showApplication(){
@@ -306,20 +301,19 @@ const App = {
 		$(DOM.APP)
 			.classList.remove("hidden");
 	},
+	
 	showError(){
+		$(DOM.LOADING)
+			.classList.add("hidden");
 
-    $(DOM.LOADING)
-        .classList.add("hidden");
+		$(DOM.APP)
+			.classList.add("hidden");
 
-    $(DOM.APP)
-        .classList.add("hidden");
-
-    $(DOM.ERROR)
-        .classList.remove("hidden");
+		$(DOM.ERROR)
+			.classList.remove("hidden");
 	},
+	
 	initError(error){
-		console.error(error);
-
 		this.showError();
 	}
 };
