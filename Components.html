@@ -3,10 +3,19 @@
 function renderCard(event) {
 
     const registrationInfo = getRegistrationMessage(event);
+	
+	let cardClass = "";
+
+	if (event.eventStatus === STATUS.EVENT.FINISHED) {
+		cardClass = "card-finished";
+	}
+	else if (event.eventStatus === STATUS.EVENT.ONGOING) {
+		cardClass = "card-ongoing";
+	}
 
     return `
 
-<div class="card ${event.eventStatus === STATUS.EVENT.FINISHED ? "card-finished" : ""}">
+<div class="card ${cardClass}">
 
     <div class="card-header">
 
