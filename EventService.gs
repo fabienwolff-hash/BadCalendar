@@ -2,19 +2,8 @@ const EventService = {
 
   read() {
 
-    const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-
-	const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
-
-    const values = sheet.getDataRange().getValues();
-
-    const headers = values[0];
-    const rows = values.slice(1);
-
-    let events = rows
-      .filter(row => row && row[0] !== "")
-      .map(row => this.normalize_(headers, row))
-      .map(event => this.enrich_(event));
+	let events = this.readNormalized()
+        .map(event => this.enrich_(event));
 
     this.sort_(events);
 
@@ -35,15 +24,27 @@ const EventService = {
 	}));
 
   },
+  
+  readNormalized() {
+
+    const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+    const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
+    const values = sheet.getDataRange().getValues();
+
+    const headers = values[0];
+    const rows = values.slice(1);
+
+    return rows
+        .filter(row => row && row[0] !== "")
+        .map(row => this.normalize_(headers, row));
+	},
 
   normalize_(headers, row) {
 
     const raw = {};
 
     headers.forEach((header, index) => {
-
       raw[header] = row[index];
-
     });
 
    return {
