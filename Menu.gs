@@ -5,7 +5,7 @@ function onOpen() {
     .addItem("Vérifier le Master", "verifyMaster")
     .addToUi();
 
-},
+}
 
 function verifyMaster() {
 
