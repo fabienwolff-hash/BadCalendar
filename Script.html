@@ -45,25 +45,29 @@ const App = {
 				title: e.title,
 				eventStatus: e.eventStatus,
 				registrationStatus: e.registrationStatus
-			})
-		)
-    );
-
-        this.populateFilters();
+			}))
+		);
 		
+		this.initialize();
+    },
+	
+	initialize() {
+
+		this.populateFilters();
+
 		this.state.filtersCollapsed = Storage.loadFiltersCollapsed();
-		
-		this.state.showFinished = Storage.loadShowFinished();
 
+		this.state.showFinished = Storage.loadShowFinished();
+		
 		$(DOM.SHOW_FINISHED).checked = Storage.loadShowFinished();
 
-        this.bindEvents();
+		this.bindEvents();
 
-        this.render();
-		
+		this.render();
+
 		this.showApplication();
 
-    },
+	},
 
     populateFilters() {
 
