@@ -12,19 +12,44 @@ const CONFIG = {
   LOCALE: "fr-FR",
 
   STATUS: {
-
-  EVENT: {
-    UPCOMING: "UPCOMING",
-    ONGOING: "ONGOING",
-    FINISHED: "FINISHED"
+	  EVENT: {
+		UPCOMING: "UPCOMING",
+		ONGOING: "ONGOING",
+		FINISHED: "FINISHED"
+	  },
+	  REGISTRATION: {
+		UNKNOWN: "UNKNOWN",
+		NOT_OPEN: "NOT_OPEN",
+		OPEN: "OPEN",
+		CLOSED: "CLOSED"
+	  }
   },
+  
+  ALLOWED_VALUES: {
 
-  REGISTRATION: {
-    UNKNOWN: "UNKNOWN",
-    NOT_OPEN: "NOT_OPEN",
-    OPEN: "OPEN",
-    CLOSED: "CLOSED"
+	  TYPES: [
+		"TDJ",
+		"TRJ",
+		"TIJ",
+		"Stage",
+		"Plateau",
+		"Animation"
+	  ],
+
+	  SCOPES: [
+		"Départementale",
+		"Régionale",
+		"Inter-Régionale",
+		"Nationale"
+	  ],
+
+	  CATEGORIES: [
+		"Minibad",
+		"Poussin",
+		"Benjamin",
+		"Minime",
+		"Cadet",
+		"Junior"
+	  ]
   }
-}
-
 };

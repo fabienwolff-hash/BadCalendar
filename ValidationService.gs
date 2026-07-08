@@ -109,8 +109,36 @@ const ValidationService = {
 		  );
 
 		});
+		
+	const allowedValueRules = [
+		{
+			field: "type",
+			label: "Type",
+			allowedValues: CONFIG.ALLOWED_VALUES.TYPES,
+			multiple: false
+		 },
+    	{
+			field: "scope",
+			label: "Scope",
+			allowedValues: CONFIG.ALLOWED_VALUES.SCOPES,
+			multiple: false
+		},
+    	{
+			field: "categories",
+			label: "Categories",
+			allowedValues: CONFIG.ALLOWED_VALUES.CATEGORIES,
+			multiple: true
+		}
+	];
+		
+	allowedValueRules.forEach(rule => {
 
-	  issues.sort((a, b) => {
+		  issues.push(
+			...this.validateAllowedValues_(events, rule)
+		  );
+	});
+
+	issues.sort((a, b) => {
 
 		if (a.row !== b.row) {
 		  return a.row - b.row;
@@ -118,10 +146,9 @@ const ValidationService = {
 
 		return a.field.localeCompare(b.field);
 
-	  });
+	});
 
-	  return issues;
-
+	return issues;
   },
 
   validateRequiredField_(events, rule) {
@@ -178,5 +205,39 @@ const ValidationService = {
 	  });
 
   return issues;
+  },
+  
+  validateAllowedValues_(events, rule) {
+
+	  const issues = [];
+
+	  events.forEach((event, index) => {
+
+		const value = event[rule.field];
+
+		if (!value) {
+		  return;
+		}
+
+		const values = rule.multiple
+		  ? value.split(";").map(v => v.trim()).filter(Boolean)
+		  : [value];
+
+		values.forEach(currentValue => {
+
+		  if (!rule.allowedValues.includes(currentValue)) {
+
+			issues.push(
+			  ValidationIssue.error(
+				index + 2,
+				rule.label,
+				`"${currentValue}" n'est pas une valeur autorisée`
+			  )
+			);
+		  }
+		});
+	  });
+
+	  return issues;
   }
 };
