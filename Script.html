@@ -55,11 +55,7 @@ const App = {
 
 		this.populateFilters();
 
-		this.state.filtersCollapsed = Storage.loadFiltersCollapsed();
-
-		this.state.showFinished = Storage.loadShowFinished();
-		
-		$(DOM.SHOW_FINISHED).checked = Storage.loadShowFinished();
+		this.restoreState();
 
 		this.bindEvents();
 
@@ -67,6 +63,12 @@ const App = {
 
 		this.showApplication();
 
+	},
+	
+	restoreState() {
+		this.state.filtersCollapsed =  Storage.loadFiltersCollapsed();
+		this.state.showFinished = Storage.loadShowFinished();
+		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
 	},
 
     populateFilters() {
