@@ -324,7 +324,27 @@ Permettre l'ajout d'un événement dans le calendrier personnel.
 
 ## Google Maps
 
-Afficher l'emplacement exact du gymnase.
+Permettre l'ouverture directe du lieu de compétition dans Google Maps.
+
+### Objectifs
+
+- simplifier la localisation des lieux de compétition ;
+- éviter la saisie répétée des informations de localisation ;
+- conserver le Master centré sur les données métier des événements.
+
+### Évolutions prévues
+
+- ajout d'un référentiel des lieux dans l'onglet Paramètres ;
+- association d'une ville à une requête Google Maps ;
+- ajout d'un bouton « Ouvrir dans Google Maps » sur les événements ;
+- ouverture du lieu dans Google Maps sur mobile et desktop.
+
+### Principes
+
+- le Master conserve uniquement la ville de l'événement ;
+- les informations de localisation détaillées sont centralisées dans le référentiel des lieux ;
+- l'intégration Google Maps repose sur une recherche textuelle du lieu ;
+- aucun stockage d'adresse ou de coordonnées GPS n'est nécessaire dans les événements.
 
 ---
 

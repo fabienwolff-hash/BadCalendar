@@ -346,3 +346,14 @@ CDJ planifié :
 - Region = Bretagne
 - Department = 35
 - Location = Rennes
+
+## Référentiel des lieux
+
+Un futur onglet Paramètres pourra permettre d'associer une ville à une information de localisation utilisée pour l'ouverture dans Google Maps.
+
+Exemple :
+
+Ville → Requête Google Maps
+
+Saint-Grégoire → Flume Ille Badminton Saint-Grégoire
+Rennes → Complexe des Gayeulles Rennes

@@ -3,7 +3,7 @@ const ValidationIssue = {
   error(row, field, message) {
 
     return {
-      level: ValidationLevel.ERROR,
+      level: "ERROR",
       row,
       field,
       message
@@ -14,7 +14,7 @@ const ValidationIssue = {
   warning(row, field, message) {
 
     return {
-      level: ValidationLevel.WARNING,
+      level: "WARNING",
       row,
       field,
       message
