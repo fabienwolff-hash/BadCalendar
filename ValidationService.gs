@@ -2,70 +2,84 @@ const ValidationService = {
 
   validate(events) {
 
-    const issues = [];
+  const issues = [];
 
-    this.validateRequiredField_(events, issues, {
-      property: "startDate",
-      field: "StartDate",
-      level: "ERROR",
-      message: "Champ obligatoire"
-    });
+  const requiredFields = [
+    {
+      field: "type",
+      label: "Type"
+    },
+    {
+      field: "scope",
+      label: "Scope"
+    },
+    {
+      field: "title",
+      label: "Title"
+    },
+    {
+      field: "startDate",
+      label: "StartDate"
+    },
+    {
+      field: "endDate",
+      label: "EndDate"
+    },
+    {
+      field: "categories",
+      label: "Categories"
+    },
+    {
+      field: "registrationMode",
+      label: "RegistrationMode"
+    }
+  ];
 
-    this.validateRequiredField_(events, issues, {
-      property: "endDate",
-      field: "EndDate",
-      level: "ERROR",
-      message: "Champ obligatoire"
-    });
+  requiredFields.forEach(rule => {
+    issues.push(
+      ...this.validateRequiredField_(events, rule)
+    );
+  });
 
-    this.validateRequiredField_(events, issues, {
-      property: "type",
-      field: "Type",
-      level: "ERROR",
-      message: "Champ obligatoire"
-    });
+  issues.sort((a, b) => {
 
-    this.validateRequiredField_(events, issues, {
-      property: "scope",
-      field: "Scope",
-      level: "ERROR",
-      message: "Champ obligatoire"
-    });
+    if (a.row !== b.row) {
+      return a.row - b.row;
+    }
 
-    this.validateRequiredField_(events, issues, {
-      property: "location",
-      field: "Location",
-      level: "WARNING",
-      message: "Champ recommandé"
-    });
+    return a.field.localeCompare(b.field);
 
-    return issues;
+  });
 
-  },
-
-  validateRequiredField_(events, issues, rule) {
-
-    events.forEach((event, index) => {
-
-      const value = event[rule.property];
-
-      const isMissing =
-        value == null ||
-        (typeof value === "string" && value.trim() === "");
-
-      if (isMissing) {
-
-        issues.push({
-          level: rule.level,
-          row: index + 2,
-          field: rule.field,
-          message: rule.message
-        });
-
-      }
-
-    });
+  return issues;
 
   }
 
+  validateRequiredField_(events, rule) {
+
+	const issues = [];
+
+	events.forEach((event, index) => {
+
+		const value = event[rule.field];
+
+		const isMissing =
+		  value === null ||
+		  value === undefined ||
+		  (typeof value === "string" && value.trim() === "");
+
+		if (isMissing) {
+
+		  issues.push(
+			ValidationIssue.error(
+			  index + 2,
+			  rule.label,
+			  `${rule.label} obligatoire`
+			)
+		  );
+		}
+	  });
+
+	  return issues;
+  }
 };
