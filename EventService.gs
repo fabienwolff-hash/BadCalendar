@@ -58,10 +58,8 @@ const EventService = {
 	  registrationMode: raw.RegistrationMode || "",
 	  registrationOpenDate: this.parseDate_(raw.RegistrationOpenDate),
 	  registrationCloseDate: this.parseDate_(raw.RegistrationCloseDate),
-	  eventUrl: raw.EventUrl || ""
-	  	  
+	  eventUrl: raw.EventUrl || ""	  
 	};
-
   },
 
   enrich_(event) {
