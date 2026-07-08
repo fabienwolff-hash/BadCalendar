@@ -226,38 +226,44 @@ const App = {
 
    render(){
    
-    const filtersContent = $(DOM.FILTERS_CONTENT);
-    const toggle = $(DOM.FILTERS_TOGGLE);
-
-    filtersContent.classList.toggle(
-        "collapsed",
-        this.state.filtersCollapsed
-    );
-
-	toggle.setAttribute(
-		"aria-expanded",
-		String(!this.state.filtersCollapsed)
-	);
-
-    toggle.querySelector(".filters-toggle-icon").textContent =
-        this.state.filtersCollapsed ? "▶" : "▼";
+		this.updateFiltersUI();
    
-   const summary = this.getFiltersSummary();
-	const summaryElement = $(DOM.FILTERS_SUMMARY);
-
-	if (summary.length === 0) {
-		summaryElement.textContent = "Aucun filtre actif";
-	} else {
-		summaryElement.textContent = summary.join(" • ");
-	}
-	
-	summaryElement.style.display =
-    this.state.filtersCollapsed
-        ? "block"
-        : "none";
-   
-    renderEvents(this.getFilteredEvents());
+		renderEvents(this.getFilteredEvents());
 	},
+	
+	updateFiltersUI() {
+
+		const filtersContent = $(DOM.FILTERS_CONTENT);
+		const toggle = $(DOM.FILTERS_TOGGLE);
+
+		filtersContent.classList.toggle(
+			"collapsed",
+			this.state.filtersCollapsed
+		);
+
+		toggle.setAttribute(
+			"aria-expanded",
+			String(!this.state.filtersCollapsed)
+		);
+
+		toggle.querySelector(".filters-toggle-icon").textContent =
+			this.state.filtersCollapsed ? "▶" : "▼";
+
+		const summary = this.getFiltersSummary();
+		const summaryElement = $(DOM.FILTERS_SUMMARY);
+
+		if (summary.length === 0) {
+			summaryElement.textContent = UI.MESSAGES.NO_FILTER;
+		} else {
+			summaryElement.textContent = summary.join(" • ");
+		}
+
+		summaryElement.style.display =
+			this.state.filtersCollapsed
+				? "block"
+				: "none";
+	},
+	
 	
 	resetFilters(){
 
