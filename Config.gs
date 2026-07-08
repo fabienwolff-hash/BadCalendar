@@ -28,12 +28,17 @@ const CONFIG = {
   ALLOWED_VALUES: {
 
 	  TYPES: [
+	    "CDJ",
 		"TDJ",
 		"TRJ",
 		"TIJ",
+		"CEJ",
+		"BAC",
+		"BNP",
+		"Interclub"
 		"Stage",
-		"Plateau",
-		"Animation"
+		"Promobad",
+		"Championnat"
 	  ],
 
 	  SCOPES: [
