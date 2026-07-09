@@ -282,7 +282,6 @@ L'affichage continue d'utiliser le champ `Location` de manière transitoire.
 
 La stratégie d'affichage du lieu sera définie dans une version ultérieure.
 
-
 ---
 
 # Philosophie des versions
@@ -290,44 +289,3 @@ La stratégie d'affichage du lieu sera définie dans une version ultérieure.
 Les versions mineures (0.x) permettent d'enrichir progressivement l'application tout en consolidant son architecture.
 
 La version **1.0** représentera la première version considérée comme stable, documentée et prête à être utilisée dans un contexte de production.
-
----
-
-# V0.X (en préparation)
-
-## Expérience utilisateur
-
-- barre des filtres repliable sur mobile ;
-- optimisation desktop ;
-- filtres multi-valeurs ;
-- tri métier des listes de valeurs.
-
-## Affichage
-
-- catégories sous forme de badges ;
-- amélioration des statuts ;
-- amélioration des boutons d'action.
-
----
-
-# V1.0 (objectif)
-
-## Stabilisation
-
-- revue complète du code ;
-- suppression du code mort ;
-- optimisation des performances ;
-- revue UX.
-
-## Documentation
-
-- documentation complète ;
-- guide d'installation ;
-- architecture ;
-- modèle de données.
-
-## Validation
-
-- tests de non-régression ;
-- validation mobile ;
-- validation desktop.
