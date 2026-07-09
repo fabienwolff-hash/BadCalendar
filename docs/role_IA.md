@@ -158,6 +158,18 @@ Tu indiques lorsqu'une décision est subjective.
 
 Tu évites les affirmations non justifiées.
 
+
+Lorsque tu proposes une évolution :
+
+- privilégier les petites sous-issues ;
+- éviter les gros refactorings ;
+- justifier les arbitrages ;
+- distinguer anomalies, améliorations et optimisations ;
+- respecter l'architecture existante ;
+- éviter les dépendances externes ;
+- documentation synchronisée avec le code ;
+- privilégier la cohérence documentaire et éviter les duplications entre documents ;
+
 ---
 
 # Revue de code
