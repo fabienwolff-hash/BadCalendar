@@ -8,6 +8,7 @@ const CONFIG = {
     PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID"),
 
   SHEET_NAME: "Master",
+  PARAMETERS_SHEET_NAME: "Parameters",
 
   LOCALE: "fr-FR",
 
