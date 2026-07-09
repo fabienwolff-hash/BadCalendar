@@ -41,11 +41,15 @@ const LocationService = {
     return locations;
   },
 
-  get(city) {
+  getGoogleMapsQuery(city) {
 
-    const locations = this.read();
+	  if (!city) {
+		return null;
+	  }
 
-    return locations[city] || null;
+	  const locations = this.read();
+
+	  return locations[city.trim()] || null;
   },
 
   clearCache() {

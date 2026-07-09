@@ -124,6 +124,7 @@ const EventService = {
 	  eventStatus,
 	  registrationStatus,
 	  displayLocation,
+	  googleMapsQuery: LocationService.getGoogleMapsQuery(event.city),
 	  month: startDate.toLocaleString(
 		CONFIG.LOCALE,
 		{ month: "long" }
