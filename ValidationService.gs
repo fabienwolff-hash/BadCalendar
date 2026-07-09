@@ -138,6 +138,10 @@ const ValidationService = {
 		  );
 	});
 
+	issues.push(
+		...this.validateRegistrationDates_(event, rowNumber)
+	);
+
 	issues.sort((a, b) => {
 
 		if (a.row !== b.row) {
@@ -239,5 +243,76 @@ const ValidationService = {
 	  });
 
 	  return issues;
-  }
+  },
+  
+  validateRegistrationDates_(event, rowNumber) {
+
+	  const issues = [];
+
+	  const open = event.registrationOpenDate;
+	  const close = event.registrationCloseDate;
+	  const start = event.startDate;
+
+	  if (open && close && close < open) {
+
+		issues.push(
+		  ValidationIssue.error(
+			rowNumber,
+			"RegistrationCloseDate",
+			"La date de fermeture des inscriptions doit être postérieure ou égale à la date d'ouverture."
+		  )
+		);
+
+	  }
+
+	  if (open && !close) {
+
+		issues.push(
+		  ValidationIssue.warning(
+			rowNumber,
+			"RegistrationCloseDate",
+			"La date de fermeture des inscriptions est absente."
+		  )
+		);
+
+	  }
+
+	  if (!open && close) {
+
+		issues.push(
+		  ValidationIssue.warning(
+			rowNumber,
+			"RegistrationOpenDate",
+			"La date d'ouverture des inscriptions est absente."
+		  )
+		);
+
+	  }
+
+	  if (open && start && open > start) {
+
+		issues.push(
+		  ValidationIssue.warning(
+			rowNumber,
+			"RegistrationOpenDate",
+			"La date d'ouverture des inscriptions est postérieure à la date de début de l'événement."
+		  )
+		);
+
+	  }
+
+	  if (close && start && close > start) {
+
+		issues.push(
+		  ValidationIssue.warning(
+			rowNumber,
+			"RegistrationCloseDate",
+			"La date de fermeture des inscriptions est postérieure à la date de début de l'événement."
+		  )
+		);
+
+	  }
+
+	  return issues;
+	}
 };
