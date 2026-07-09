@@ -42,15 +42,20 @@ const LocationService = {
 
   buildGoogleMapsUrl(city) {
 
-	  const query = this.getGoogleMapsQuery(city);
-
-	  if (!query) {
+	if (!city) {
 		return null;
 	  }
 
+	const locations = this.read();
+
 	  return (
 		"https://www.google.com/maps/search/?api=1&query=" +
-		query
-	  );
+		locations[city.trim()]
+	  ) || null;
+	},
+
+  clearCache() {
+    this.cache_ = null;
   }
+
 };
