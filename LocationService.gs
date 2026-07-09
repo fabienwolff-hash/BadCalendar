@@ -42,17 +42,15 @@ const LocationService = {
 
   buildGoogleMapsUrl(city) {
 
-	if (!city) {
-		return null;
-	  }
-
 	const locations = this.read();
+	const query = city && locations[city.trim()];
 
-	  return (
-		"https://www.google.com/maps/search/?api=1&query=" +
-		locations[city.trim()]
-	  ) || null;
-	},
+	if (!city || !query) {
+		return null;
+	}
+
+	return `https://www.google.com/maps/search/?api=1&query=${query}`;
+  },
 
   clearCache() {
     this.cache_ = null;
