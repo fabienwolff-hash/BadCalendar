@@ -135,6 +135,24 @@ const ValidationService = {
 			label: "RegistrationMode",
 			allowedValues: parameters.RegistrationMode,
 			multiple: false
+		},
+		{
+			field: "region",
+			label: "Region",
+			allowedValues: parameters.Region,
+			multiple: false
+		},
+		{
+			field: "department",
+			label: "Department",
+			allowedValues: parameters.Department,
+			multiple: false
+		},
+		{
+			field: "city",
+			label: "City",
+			allowedValues: parameters.City,
+			multiple: false
 		}
 	];
 		
