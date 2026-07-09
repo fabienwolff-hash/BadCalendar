@@ -89,6 +89,8 @@ const EventService = {
 	  eventStatus = CONFIG.STATUS.EVENT.ONGOING;
 	}
 	
+	const displayLocation = this.buildDisplayLocation_(event);
+	
 	let registrationStatus;
 
 	const open = event.registrationOpenDate;
@@ -121,6 +123,7 @@ const EventService = {
 
 	  eventStatus,
 	  registrationStatus,
+	  displayLocation,
 	  month: startDate.toLocaleString(
 		CONFIG.LOCALE,
 		{ month: "long" }
@@ -155,7 +158,24 @@ const EventService = {
         );
 
   },
+  
+  buildDisplayLocation_(event) {
 
+	 if (event.city && event.city.trim()) {
+	    return event.city;
+	 }
+
+	  if (event.department && event.department.trim()) {
+		return event.department;
+	  }
+
+	  if (event.region && event.region.trim()) {
+		return event.region;
+	  }
+
+	  return "Lieu à définir";
+	},
+  
   parseDate_(value) {
 
     if (!value) {
