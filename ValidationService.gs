@@ -139,7 +139,7 @@ const ValidationService = {
 	});
 
 	issues.push(
-		...this.validateRegistrationDates_(event, rowNumber)
+		...this.validateRegistrationDates_(events, rowNumber)
 	);
 
 	issues.sort((a, b) => {
