@@ -275,10 +275,6 @@ Le modèle distingue désormais :
 * Department ;
 * City.
 
-Le champ historique `Location` est conservé temporairement afin d'assurer une migration progressive du modèle.
-
-Une future évolution définira la règle métier permettant de calculer automatiquement la localisation affichée à l'utilisateur.
-
 ---
 
 # Principes
