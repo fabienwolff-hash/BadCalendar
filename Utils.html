@@ -45,18 +45,13 @@ function eventButton(event){
 
 function googleMapsButton(event) {
 
-    if (!event.googleMapsQuery) {
+    if (!event.googleMapsUrl) {
         return "";
     }
-
-    const url =
-        "https://www.google.com/maps/search/?api=1&query=" +
-        event.googleMapsQuery;
-
     return `
         <a
             class="button secondary"
-            href="${url}"
+            href="${event.googleMapsUrl}"
             target="_blank"
             rel="noopener noreferrer">
             ${UI.BUTTONS.GOOGLE_MAPS}

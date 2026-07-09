@@ -56,7 +56,6 @@ const EventService = {
 	  region: raw.Region || "",
 	  department: raw.Department || "",
 	  city: raw.City || "",
-	  location: raw.Location || "",
 	  categories: raw.Categories || "",
 	  registrationMode: raw.RegistrationMode || "",
 	  registrationOpenDate: this.parseDate_(raw.RegistrationOpenDate),
@@ -124,7 +123,7 @@ const EventService = {
 	  eventStatus,
 	  registrationStatus,
 	  displayLocation,
-	  googleMapsQuery: LocationService.getGoogleMapsQuery(event.city),
+	  googleMapsUrl: LocationService.buildGoogleMapsUrl(event.city),
 	  month: startDate.toLocaleString(
 		CONFIG.LOCALE,
 		{ month: "long" }
