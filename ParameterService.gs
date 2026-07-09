@@ -1,6 +1,6 @@
 const ParameterService = {
 
-  cache_: null,
+  cache_: undefined,
 
   read() {
 
