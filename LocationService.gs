@@ -31,9 +31,8 @@ const LocationService = {
         return;
       }
 
-      locations[city] = {
-        googleMapsQuery
-      };
+      locations[city] = googleMapsQuery;
+	  
     });
 
     this.cache_ = locations;
