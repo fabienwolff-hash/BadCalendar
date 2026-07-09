@@ -55,6 +55,12 @@ const CONFIG = {
 		"Minime",
 		"Cadet",
 		"Junior"
+	  ],
+	  
+	  ALLOWED_VALUES.REGISTRATION_MODES: [
+	    "Inscription libre",
+		"Sur sélection de la ligue de Bretagne",
+		"Sur Sélection du Comité Départemental"
 	  ]
   }
 };

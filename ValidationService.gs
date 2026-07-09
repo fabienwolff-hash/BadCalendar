@@ -128,6 +128,12 @@ const ValidationService = {
 			label: "Categories",
 			allowedValues: CONFIG.ALLOWED_VALUES.CATEGORIES,
 			multiple: true
+		},
+		{
+			field: "registrationMode",
+			label: "RegistrationMode",
+			allowedValues: CONFIG.ALLOWED_VALUES.REGISTRATION_MODES,
+			multiple: false
 		}
 	];
 		
@@ -137,10 +143,23 @@ const ValidationService = {
 			...this.validateAllowedValues_(events, rule)
 		  );
 	});
+	
+	const patternRules = [
+	  {
+		field: "eventUrl",
+		label: "EventUrl",
+		pattern: /^https?:\/\//,
+		message: "URL invalide"
+	  }
+	];
 
-	issues.push(
-		...this.validateRegistrationDates_(events, rowNumber)
-	);
+	patternRules.forEach(rule => {
+
+	  issues.push(
+		...this.validatePattern_(events, rule)
+	  );
+
+	});
 
 	issues.sort((a, b) => {
 
@@ -245,73 +264,29 @@ const ValidationService = {
 	  return issues;
   },
   
-  validateRegistrationDates_(event, rowNumber) {
+  validatePattern_(events, rule) {
 
 	  const issues = [];
 
-	  const open = event.registrationOpenDate;
-	  const close = event.registrationCloseDate;
-	  const start = event.startDate;
+	  events.forEach((event, index) => {
 
-	  if (open && close && close < open) {
+		const value = event[rule.field];
 
-		issues.push(
-		  ValidationIssue.error(
-			rowNumber,
-			"RegistrationCloseDate",
-			"La date de fermeture des inscriptions doit être postérieure ou égale à la date d'ouverture."
-		  )
-		);
+		if (!value) {
+		  return;
+		}
 
-	  }
+		if (!rule.pattern.test(value)) {
 
-	  if (open && !close) {
-
-		issues.push(
-		  ValidationIssue.warning(
-			rowNumber,
-			"RegistrationCloseDate",
-			"La date de fermeture des inscriptions est absente."
-		  )
-		);
-
-	  }
-
-	  if (!open && close) {
-
-		issues.push(
-		  ValidationIssue.warning(
-			rowNumber,
-			"RegistrationOpenDate",
-			"La date d'ouverture des inscriptions est absente."
-		  )
-		);
-
-	  }
-
-	  if (open && start && open > start) {
-
-		issues.push(
-		  ValidationIssue.warning(
-			rowNumber,
-			"RegistrationOpenDate",
-			"La date d'ouverture des inscriptions est postérieure à la date de début de l'événement."
-		  )
-		);
-
-	  }
-
-	  if (close && start && close > start) {
-
-		issues.push(
-		  ValidationIssue.warning(
-			rowNumber,
-			"RegistrationCloseDate",
-			"La date de fermeture des inscriptions est postérieure à la date de début de l'événement."
-		  )
-		);
-
-	  }
+		  issues.push(
+			ValidationIssue.error(
+			  index + 2,
+			  rule.label,
+			  rule.message
+			)
+		  );
+		}
+	  });
 
 	  return issues;
 	}
