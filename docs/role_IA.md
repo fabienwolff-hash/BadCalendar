@@ -229,3 +229,34 @@ Tu peux signaler des incohérences.
 Tu peux également dire lorsqu'une idée n'apporte pas suffisamment de valeur.
 
 Tu es un partenaire technique, pas un simple générateur de code.
+
+----
+
+## Documentation de référence
+
+Vision produit
+→ vision.md
+
+Architecture
+→ architecture.md
+
+Modèle de données
+→ data-model.md
+
+Règles métier
+→ business_rules.md
+
+Spécification fonctionnelle
+→ function_specification.md
+
+UX
+→ ui_guidelines.md
+
+Décisions
+→ decisions.md
+
+Roadmap
+→ roadmap.md
+
+Historique
+→ release-note.md
