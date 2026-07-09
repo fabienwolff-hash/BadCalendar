@@ -175,19 +175,6 @@ Ces idées sont volontairement conservées sans engagement de développement.
 - Personnalisation des couleurs
 - Logo personnalisable
 
-
----
-
-# Badges colorés
-
-Remplacer les lignes de texte :
-
-📅 À venir
-
-📝 Inscriptions ouvertes
-
-par de véritables badges colorés.
-
 ---
 
 # Backlog validé
@@ -218,3 +205,7 @@ par de véritables badges colorés.
 - amélioration des statuts ;
 - amélioration des boutons d'action.
 - Partage de l'événement
+- tri métier enrichi ;
+- amélioration de l'expérience desktop ;
+- remplacement des émojis par des icônes ;
+- enrichissement des informations géographiques ;

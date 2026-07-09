@@ -250,18 +250,6 @@ Les fonctionnalités suivantes ne sont pas incluses dans la version actuelle :
 
 Ces fonctionnalités sont documentées dans la roadmap.
 
----
-
-# 18. Évolutions prévues (v0.9+)
-
-Les principales évolutions identifiées sont :
-
-- filtres multi-sélection ;
-- tri métier enrichi ;
-- amélioration de l'expérience desktop ;
-- remplacement des émojis par des icônes ;
-- enrichissement des informations géographiques ;
-- export vers les calendriers.
 
 ---
 
@@ -299,26 +287,26 @@ En cas de conflit, les règles métier définies dans `business-rules.md` préva
 
 ---
 
-# XX. Gestion des états d'interface
+# 21. Gestion des états d'interface
 
 Au démarrage de l'application, un écran de chargement est affiché jusqu'à la récupération des données.
 En cas d'échec du chargement, un message d'erreur est affiché.
 
 ---
 
-# XX. Aucun résultat
+# 22. Aucun résultat
 
 Si aucun événement ne correspond aux critères, un message dédié est affiché.
 
 ---
 
-# XX. Réinitialisation des filtres
+# 23. Réinitialisation des filtres
 
 L'utilisateur peut réinitialiser l'ensemble des filtres appliqués.
 
 ---
 
-# XX. Barre de filtres repliable
+# 24. Barre de filtres repliable
 
 La zone de filtres peut être repliée pour améliorer la consultation, notamment sur mobile.
 
@@ -328,8 +316,6 @@ Lorsqu'elle est repliée :
 
 ---
 
-# XX. Consultation mobile
+# 25. Consultation mobile
 
 L'ensemble des fonctionnalités de consultation, de recherche et de filtrage doit rester utilisable sur smartphone sans nécessiter d'action spécifique.
-
-

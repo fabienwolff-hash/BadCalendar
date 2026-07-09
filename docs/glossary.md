@@ -250,7 +250,8 @@ Il n'existe pas dans le Master.
 
 ## Portée
 
-Rayonnement géographique d'un événement.
+Représente le niveau sportif ou niveau de compétition.
+Elle ne décrit pas la localisation géographique réelle.
 
 Valeurs officielles :
 
