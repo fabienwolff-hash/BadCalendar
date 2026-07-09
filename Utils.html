@@ -43,6 +43,28 @@ function eventButton(event){
 
 }
 
+function googleMapsButton(event) {
+
+    if (!event.googleMapsQuery) {
+        return "";
+    }
+
+    const url =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        event.googleMapsQuery;
+
+    return `
+        <a
+            class="button secondary"
+            href="${url}"
+            target="_blank"
+            rel="noopener noreferrer">
+            ${UI.BUTTONS.GOOGLE_MAPS}
+        </a>
+    `;
+
+}
+
 function getRegistrationMessage(event){
 
     switch (event.registrationStatus) {
