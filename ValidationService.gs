@@ -114,25 +114,25 @@ const ValidationService = {
 		{
 			field: "type",
 			label: "Type",
-			allowedValues: CONFIG.ALLOWED_VALUES.TYPES,
+			allowedValues: ParameterService.getList("Type"),
 			multiple: false
 		 },
     	{
 			field: "scope",
 			label: "Scope",
-			allowedValues: CONFIG.ALLOWED_VALUES.SCOPES,
+			allowedValues: ParameterService.getList("Scope"),
 			multiple: false
 		},
     	{
 			field: "categories",
 			label: "Categories",
-			allowedValues: CONFIG.ALLOWED_VALUES.CATEGORIES,
+			allowedValues: ParameterService.getList("Category"),
 			multiple: true
 		},
 		{
 			field: "registrationMode",
 			label: "RegistrationMode",
-			allowedValues: CONFIG.ALLOWED_VALUES.REGISTRATION_MODES,
+			allowedValues: ParameterService.getList("RegistrationMode"),
 			multiple: false
 		}
 	];
