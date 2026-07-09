@@ -174,6 +174,21 @@ Ces idées sont volontairement conservées sans engagement de développement.
 - Thème clair / sombre
 - Personnalisation des couleurs
 - Logo personnalisable
+- Partage de l'événement
+- Navigation événement (post V1)
+
+	Objectif :
+	Permettre l'accès direct à un événement via une URL stable.
+
+	Pré-requis :
+	- identifiant événement stable
+	- fiche événement
+	- gestion des paramètres WebApp
+
+	Usages possibles :
+	- partage
+	- Google Calendar
+	- liens externes
 
 ---
 
@@ -184,27 +199,33 @@ Ces idées sont volontairement conservées sans engagement de développement.
 - Tests automatisés de non-régression
 - Google Calendar (Permettre l'ajout d'un événement dans le calendrier personnel.)
 - Google Maps (Permettre l'ouverture directe du lieu de compétition dans Google Maps.)
-
-## Moyenne priorité 
-
-- Localisation intelligente
-- Filtres multi-valeurs
-- Export iCal
 - Fiche détaillée d'un événement (Afficher :
 * toutes les informations
 * statut
 * lien officiel
 * éventuellement une carte Google Maps)
 
-## Faible priorité
+Objectif :
+Séparer l'affichage synthétique (liste/cartes) des informations complètes d'un événement.
+La carte événement doit rester limitée aux informations nécessaires à la décision rapide.
 
+## Moyenne priorité 
+
+- Localisation intelligente
+- Filtres multi-valeurs
+
+
+
+
+## Faible priorité
+- Export iCal
 - Animations légères
 - Icônes améliorées
 - Personnalisation
 - catégories sous forme de badges ;
 - amélioration des statuts ;
 - amélioration des boutons d'action.
-- Partage de l'événement
+
 - tri métier enrichi ;
 - amélioration de l'expérience desktop ;
 - remplacement des émojis par des icônes ;
