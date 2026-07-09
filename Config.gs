@@ -9,6 +9,7 @@ const CONFIG = {
 
   SHEET_NAME: "Master",
   PARAMETERS_SHEET_NAME: "Parameters",
+  LOCATIONS_SHEET_NAME: "Locations",
 
   LOCALE: "fr-FR",
 
