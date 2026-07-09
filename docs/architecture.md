@@ -10,87 +10,176 @@ L'objectif est de conserver une architecture simple, maintenable et adaptée à 
 
 # Vue d'ensemble
 
-BadCalendar suit une architecture en trois couches.
+BadCalendar s'appuie sur une architecture en couches où chaque service possède une responsabilité unique.
 
 ```text
-                Google Spreadsheet
-                     (Master)
-                         │
-                         ▼
-          EventService.readNormalized()
-                         │
-            ┌────────────┴────────────┐
-            ▼                         ▼
-   ValidationService          EventService.read()
-            │                         │
-            ▼                         ▼
-   ValidationIssue[]          enrich_()
-            │                 sort_()
-            ▼                 serialize()
-    ReportService                  │
-            │                      ▼
-            ▼                  Code.gs
- Google Sheet (Contrôles)          │
-                                   ▼
-                            Frontend HTML / JS
+                 Google Spreadsheet
+        ┌──────────────┴──────────────┐
+        ▼                             ▼
+   Master (Events)             Parameters
+        │                             │
+        ▼                             ▼
+ EventService.readNormalized()   ParameterService.read()
+        │                             │
+        ├──────────────┬──────────────┤
+        ▼              ▼              ▼
+ValidationService   EventService   Référentiels métier
+        │              │
+        ▼              ▼
+ ValidationIssue[]  enrich_()
+                    sort_()
+                    serialize()
+        │              │
+        ▼              ▼
+ ReportService     Code.gs
+        │              │
+        ▼              ▼
+ Google Sheet      Frontend HTML / JS
+ (Contrôles)
 ```
 
 Chaque couche possède une responsabilité unique.
 
 ---
 
-# Architecture logique
-
-
-## 2. Backend Apps Script
+# Backend Apps Script
 
 Le backend est responsable de toute la logique métier.
 
 Cette logique est portée par :
 
-- Code.gs
-- Config.gs
-- EventService.gs
+* Code.gs
+* Config.gs
+* EventService.gs
+* ParameterService.gs
+* ValidationService.gs
+* ReportService.gs
 
-### Responsabilités
+---
 
-# Backend
+# Responsabilités
 
-Au niveau du backend, le traitement des événements s'effectue en plusieurs étapes :
+## Backend
 
-Pipeline WebApp :
-- lecture des données ;
-- transformation des données ;
-- enrichissement métier ;
-- calcule les statuts métier ;
-- tri ;
-- prépare les données destinées au frontend.
+Le traitement des événements s'effectue en plusieurs étapes.
+
+### Pipeline WebApp
+
+* lecture des événements ;
+* normalisation des données ;
+* lecture des référentiels métier ;
+* enrichissement métier ;
+* calcul des statuts métier ;
+* tri ;
+* sérialisation ;
+* préparation des données destinées au frontend.
 
 Le frontend ne doit jamais recalculer une information métier.
 
-Pipeline Administration :
-- lecture des données ;
-- valide les données ;
-- génère un rapport des contrôles en erreur ;
+### Pipeline Administration
+
+* lecture des événements ;
+* lecture des référentiels métier ;
+* validation des données ;
+* génération d'un rapport de contrôle.
 
 ---
 
 # Frontend
 
-Le frontend est volontairement "léger".
+Le frontend est volontairement léger.
 
 Il ne contient quasiment aucune logique métier.
 
-Sa responsabilité est :
+Sa responsabilité est de :
 
-- afficher les données
-- gérer les interactions utilisateur
-- appliquer les filtres
-- générer le HTML
+* afficher les données ;
+* gérer les interactions utilisateur ;
+* appliquer les filtres ;
+* générer le HTML.
 
 ---
 
 # Organisation des fichiers
+
+## Code.gs
+
+Point d'entrée des traitements Apps Script.
+
+Responsabilités :
+
+* exposer les fonctions appelées par la WebApp ;
+* coordonner les services métier.
+
+---
+
+## Config.gs
+
+Centralise les constantes techniques de l'application.
+
+Responsabilités :
+
+* identifiants des feuilles ;
+* constantes de configuration ;
+* paramètres techniques.
+
+Les listes métier n'y sont plus stockées.
+
+---
+
+## EventService.gs
+
+Responsabilités :
+
+* lecture du Master ;
+* normalisation des données ;
+* enrichissement métier ;
+* calcul des statuts ;
+* préparation des données envoyées au frontend.
+
+---
+
+## ParameterService.gs
+
+Responsabilités :
+
+* lecture de l'onglet `Parameters` ;
+* mise en cache des référentiels ;
+* accès centralisé aux listes métier.
+
+Aucun autre composant ne lit directement l'onglet `Parameters`.
+
+---
+
+## ValidationService.gs
+
+Responsabilités :
+
+* appliquer les règles de validation ;
+* vérifier la conformité avec les référentiels ;
+* produire une liste de `ValidationIssue` ;
+* ne réaliser aucun affichage.
+
+---
+
+## ReportService.gs
+
+Responsabilités :
+
+* générer le rapport de validation ;
+* créer ou mettre à jour l'onglet **Contrôles** ;
+* présenter les anomalies détectées.
+
+---
+
+## Menu.gs
+
+Responsabilités :
+
+* créer le menu BadCalendar ;
+* lancer les traitements d'administration.
+
+---
 
 ## Index.html
 
@@ -106,11 +195,11 @@ Contient exclusivement le CSS.
 
 Responsabilités :
 
-- responsive
-- cartes
-- badges
-- boutons
-- filtres
+* responsive ;
+* cartes ;
+* badges ;
+* boutons ;
+* filtres.
 
 Aucune logique JavaScript.
 
@@ -122,44 +211,40 @@ Contient les fonctions de rendu.
 
 Exemples :
 
-- renderCard()
-- renderEvents()
-- renderMonthHeader()
+* renderCard()
+* renderEvents()
+* renderMonthHeader()
 
-Ces fonctions ne calculent rien.
-
-Elles affichent uniquement les données fournies.
+Ces fonctions affichent uniquement les données fournies.
 
 ---
 
 ## Utils.html
 
-Fonctions utilitaires.
+Fonctions utilitaires d'affichage.
 
 Exemples :
 
-- formatDate()
-- shortDate()
-- eventButton()
-- getRegistrationMessage()
+* formatDate()
+* shortDate()
+* eventButton()
+* getRegistrationMessage()
 
-Ces fonctions peuvent produire des textes d'affichage mais ne recalculent jamais les états métier.
+Ces fonctions ne recalculent jamais les règles métier.
 
 ---
 
 ## Constants.html
 
-Centralise toutes les constantes utilisées par le frontend.
+Centralise les constantes utilisées par le frontend.
 
 Exemples :
 
-- textes UI
-- identifiants DOM
-- ordre des catégories
-- ordre des portées
-- statuts connus
-
-Cela évite les chaînes codées en dur.
+* textes UI ;
+* identifiants DOM ;
+* ordre des catégories ;
+* ordre des portées ;
+* statuts connus.
 
 ---
 
@@ -169,115 +254,79 @@ Point d'entrée JavaScript.
 
 Responsabilités :
 
-- chargement des données
-- initialisation
-- gestion des filtres
-- rendu
+* chargement des données ;
+* initialisation ;
+* gestion des filtres ;
+* rendu.
 
-Le fichier contient l'objet principal :
+L'objet principal de l'application est :
 
 ```text
 App
 ```
 
-qui pilote toute l'application.
-
----
-
-## ValidationService.gs
-
-Responsabilités :
-
-appliquer les règles de validation ;
-produire une liste de ValidationIssue ;
-ne réaliser aucun affichage.
-
----
-
-## ReportService.gs
-
-Responsabilités :
-
-générer le rapport de validation ;
-créer ou mettre à jour l'onglet Contrôles ;
-présenter les anomalies détectées.
-
----
-
-## Menu.gs
-
-Responsabilités :
-
-créer le menu BadCalendar ;
-lancer les traitements d'administration.
-
 ---
 
 # Flux de données
 
-## WebApp 
+## WebApp
 
+```text
 Master
-
-↓
-
-read()
-
-↓
-
+      │
+      ▼
 readNormalized()
-
-↓
-
+      │
+      ▼
+ParameterService.read()
+      │
+      ▼
 enrich_()
-
-↓
-
+      │
+      ▼
 serialize()
-
-↓
-
+      │
+      ▼
 Frontend
+```
 
+---
 
 ## Administration
 
+```text
 Master
-
-↓
-
+      │
+      ▼
 readNormalized()
-
-↓
-
+      │
+      ├──────────────► ParameterService.read()
+      │
+      ▼
 ValidationService
-
-↓
-
+      │
+      ▼
 ValidationIssue[]
-
-↓
-
+      │
+      ▼
 ReportService
-
-↓
-
+      │
+      ▼
 Onglet Contrôles
-
+```
 
 ---
 
 # Gestion des filtres
 
-Le frontend conserve l'état des filtres localement afin de conserver certaines préférences utilisateur.
-Préférences persistées :
-- barre de filtres repliée ;
-- affichage des compétitions terminées.
+Le frontend conserve localement certaines préférences utilisateur :
 
-Toute modification d'un filtre entraîne un nouveau rendu de la liste affichée.
+* barre de filtres repliée ;
+* affichage des compétitions terminées.
+
+Toute modification entraîne un nouveau rendu.
 
 Le filtrage est entièrement réalisé côté client à partir des données déjà enrichies fournies par le backend.
-
 
 ---
 
@@ -285,47 +334,58 @@ Le filtrage est entièrement réalisé côté client à partir des données déj
 
 ## Source de vérité unique
 
-Le Master est la seule source de données.
+Le Google Sheets Master constitue l'unique source des données métier.
+
+Les référentiels sont administrés dans l'onglet `Parameters`.
 
 ---
 
-## Une seule responsabilité par couche
+## Une seule responsabilité par service
 
-Backend :
+Chaque service possède un domaine clairement identifié :
 
-→ logique métier
-
-Frontend :
-
-→ affichage
-
-CSS :
-
-→ présentation
+* **EventService** : événements ;
+* **ParameterService** : référentiels ;
+* **ValidationService** : contrôles ;
+* **ReportService** : restitution des contrôles.
 
 ---
 
 ## Contrat entre le backend et le frontend
 
-Le backend fournit au frontend des données déjà validées, normalisées et enrichies.
+Le backend fournit au frontend des données :
 
-Le frontend doit considérer ces données comme la source de vérité.
+* normalisées ;
+* enrichies ;
+* validées ;
+* prêtes à être affichées.
 
 Le frontend ne doit jamais :
 
-- recalculer un statut ;
-- retraiter les catégories ;
-- retraiter les dates ;
-- réordonner les données métier.
+* recalculer un statut ;
+* appliquer une règle métier ;
+* enrichir les données ;
+* interpréter les référentiels.
 
-Le frontend applique également un filtrage sur les événements terminés à partir du champ eventStatus fourni par le backend.
+---
+
+## Référentiels centralisés
+
+Toutes les listes métier sont lues exclusivement via `ParameterService`.
+
+Aucun composant ne doit accéder directement à l'onglet `Parameters`.
+
+Cette règle garantit un point d'accès unique aux référentiels et facilite les futures évolutions.
 
 ---
 
 ## Données enrichies
 
 Le backend prépare les données afin de simplifier le frontend.
-Les transformations, normalisations et enrichissements nécessaires sont réalisés avant l'envoi des données au navigateur. (Voir data-model.md)
+
+Les transformations, normalisations et enrichissements nécessaires sont réalisés avant l'envoi des données au navigateur.
+
+Voir également `data-model.md`.
 
 ---
 
@@ -333,41 +393,33 @@ Les transformations, normalisations et enrichissements nécessaires sont réalis
 
 L'architecture est conçue pour permettre :
 
-- l'ajout de nouveaux champs métier ;
-- l'enrichissement des données ;
-- l'intégration de nouveaux modules.
+* l'ajout de nouveaux champs métier ;
+* l'enrichissement des référentiels ;
+* l'intégration de nouveaux services spécialisés.
 
-Les évolutions fonctionnelles détaillées sont décrites dans roadmap.md.
+Les évolutions fonctionnelles détaillées sont décrites dans `roadmap.md`.
 
 ---
 
 # Documents associés
 
-Modèle de données :
-data-model.md
-
-Règles métier :
-business_rules.md
-
-Décisions d'architecture :
-decisions.md
-
-Vision produit :
-vision.md
-
-Contexte du projet :
-project_context.md
+* `data-model.md`
+* `business_rules.md`
+* `decisions.md`
+* `vision.md`
+* `project_context.md`
 
 ---
 
 # Conclusion
 
-L'architecture actuelle est volontairement simple, mais déjà suffisamment structurée pour accompagner les évolutions prévues jusqu'à la version 1.0 et au-delà.
+L'architecture actuelle reste volontairement simple tout en étant désormais organisée autour de services spécialisés, chacun responsable d'un domaine fonctionnel clairement identifié.
 
 Les principes fondamentaux à préserver sont :
 
-- **une seule source de vérité (Master)** ;
-- **toute la logique métier dans le backend** ;
-- **un frontend limité à l'affichage et aux interactions** ;
-- **une séparation claire des responsabilités** ;
-- **un code modulaire, lisible et facilement testable**.
+* **une seule source de vérité (Master)** ;
+* **des référentiels centralisés (Parameters)** ;
+* **toute la logique métier dans le backend** ;
+* **un frontend limité à l'affichage et aux interactions** ;
+* **une séparation claire des responsabilités** ;
+* **un code modulaire, lisible et facilement testable**.

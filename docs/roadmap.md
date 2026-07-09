@@ -154,6 +154,106 @@ Statut : **Terminée**
 
 ---
 
+# ✅ V0.11 — Validation métier du Master
+
+## Objectif
+
+Renforcer la qualité des données du Master en mettant en place une validation métier complète avant toute utilisation des données.
+Cette version introduit un véritable moteur de validation permettant de détecter les erreurs bloquantes et les avertissements de qualité.
+
+---
+
+## Infrastructure
+
+- Création du modèle `ValidationIssue`
+- Introduction des niveaux de validation (`ERROR`, `WARNING`)
+- Validation générique basée sur des règles
+- Rapport de validation trié par ligne puis par champ
+
+---
+
+## Contrôles implémentés
+
+- Champs obligatoires
+- Valeurs autorisées
+- Cohérence des dates
+
+## Rapport de validation
+
+Le rapport présente les colonnes :
+
+- Niveau
+- Ligne
+- Champ
+- Message
+
+Les anomalies sont triées afin de faciliter leur correction.
+
+Statut : **Terminée**
+
+---
+
+# ✅ V0.12 — Externalisation des référentiels et évolution du modèle métier
+
+## Objectif
+
+Renforcer le socle technique de BadCalendar en externalisant les référentiels métier dans le Google Sheets et en faisant évoluer le modèle de localisation, sans modifier l'expérience utilisateur.
+
+Cette version prépare les futures évolutions (Google Maps, filtres géographiques, etc.) tout en conservant une architecture simple, maintenable et centrée sur le Master comme unique source de vérité.
+
+---
+
+## Architecture
+
+- Création du `ParameterService`
+- Introduction de l'onglet `Parameters`
+- Externalisation des référentiels métier
+- Suppression des listes codées en dur dans `Config.gs`
+- Lecture centralisée des paramètres métier
+
+---
+
+## Modèle de données
+
+Évolution du modèle de localisation :
+
+- ajout de `Region`
+- ajout de `Department`
+- ajout de `City`
+- conservation temporaire de `Location` afin d'assurer une migration progressive
+
+---
+
+## Validation
+
+Les contrôles métier utilisent désormais exclusivement les référentiels du Google Sheets.
+
+Validation des :
+
+- types
+- portées
+- catégories
+- modes de participation
+- régions
+- départements
+- villes
+
+---
+
+## Frontend
+
+Les nouveaux champs de localisation sont transmis jusqu'au navigateur.
+
+Aucune évolution visuelle n'est introduite.
+
+L'affichage continue d'utiliser le champ `Location` de manière transitoire.
+
+La stratégie d'affichage du lieu sera définie dans une version ultérieure.
+
+Statut : **Terminée**
+
+---
+
 ### Clarifier les filtres
 
 Aujourd'hui :
@@ -239,8 +339,6 @@ Créer un onglet Paramètres contenant notamment :
 
 Ville → Département
 
-Ville → Gymnase
-
 afin d'éviter les doublons dans le Master.
 
 ---
@@ -269,24 +367,9 @@ si cela améliore la compréhension du modèle métier.
 
 ---
 
-# V0.11 — Renforcement des contrôles métier
+# V0.X — Fonctionnalités à planifier
 
-Fonctionnalités envisagées :
-* Validation des dates
-* Validation des référentiels
-* Validation des URL
-* Tri des anomalies
 * Tests automatisés (non-régression)
-
----
-
-# V0.12 — Assistance à l'administration
-
-Fonctionnalités envisagées :
-* Navigation vers les lignes en erreur
-* Validation à la modification
-* Paramètres d'administration
-* Historique des contrôles
 
 ---
 
@@ -307,12 +390,17 @@ Fonctionnalités attendues :
 
 # Évolutions futures
 
-## Amélioration du modèle de localisation :
+## Amélioration de l'affichage des lieux
 
-- gestion de la région ;
-- gestion du département ;
-- gestion de la ville ;
-- référentiel des lieux. (avec gestion du google place id pour les besoins de google maps ?)
+Le modèle de données distingue désormais :
+
+- Region
+- Department
+- City
+
+Une future évolution définira la règle métier permettant de déterminer automatiquement le lieu affiché dans la WebApp selon le type d'événement et les informations disponibles.
+
+L'objectif est que le Frontend affiche une propriété métier unique (`displayLocation`) sans embarquer de logique de décision.
 
 ---
 
@@ -321,6 +409,18 @@ Fonctionnalités attendues :
 Permettre l'ajout d'un événement dans le calendrier personnel.
 
 ---
+
+## Localisation intelligente
+
+Définir une règle métier permettant de calculer automatiquement le lieu affiché à l'utilisateur.
+
+Exemples :
+
+- ville lorsque celle-ci est connue ;
+- département lorsque la ville n'est pas encore renseignée ;
+- région pour les compétitions inter-régionales.
+
+Cette logique sera implémentée dans le backend afin de conserver un Frontend purement dédié à l'affichage.
 
 ## Google Maps
 
@@ -334,8 +434,8 @@ Permettre l'ouverture directe du lieu de compétition dans Google Maps.
 
 ### Évolutions prévues
 
-- ajout d'un référentiel des lieux dans l'onglet Paramètres ;
-- association d'une ville à une requête Google Maps ;
+- ajout d'un référentiel dédié aux lieux (onglet spécifique)
+- association d'une ville à une requête Google Maps via un référentiel dédié
 - ajout d'un bouton « Ouvrir dans Google Maps » sur les événements ;
 - ouverture du lieu dans Google Maps sur mobile et desktop.
 
@@ -462,7 +562,11 @@ Une vue chronologique par mois est jugée plus simple et plus naturelle.
 
 ## Administration
 
-- [ ] Paramétrage avancé des listes de valeurs
+- [ ] Enrichissement des référentiels métier
+
+- gestion des villes
+- gestion des lieux
+- référentiels géographiques
 
 ## Consultation
 

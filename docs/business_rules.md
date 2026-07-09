@@ -23,7 +23,7 @@ Aucun autre critère de tri n'est actuellement pris en compte.
 
 L'affichage est organisé par :
 
-```
+```text
 Mois
     Événements...
 ```
@@ -36,25 +36,19 @@ Le changement de mois entraîne automatiquement l'affichage d'un nouvel en-tête
 
 Un événement peut concerner plusieurs catégories.
 
-Exemple :
-
-```
-Benjamin
-Minime
-Cadet
-```
-
 Le stockage dans le Master utilise le séparateur officiel :
 
-```
+```text
 ;
 ```
 
+Le backend transforme automatiquement cette valeur en tableau.
+
 ---
 
-# BR-006 — Une catégorie appartient toujours à l'ordre officiel
+# BR-006 — Les catégories suivent un ordre métier
 
-Ordre métier :
+Ordre officiel :
 
 1. Minibad
 2. Poussin
@@ -63,18 +57,13 @@ Ordre métier :
 5. Cadet
 6. Junior
 
-Cet ordre est utilisé pour :
-
-- les filtres ;
-- les affichages futurs.
-
-Cet ordre est obligatoire dans tous les affichages métier et filtres.
+Cet ordre est utilisé dans tous les affichages métier.
 
 Le tri alphabétique n'est jamais utilisé.
 
 ---
 
-# BR-007 — Les portées utilisent un ordre métier
+# BR-007 — Les portées suivent un ordre métier
 
 Ordre officiel :
 
@@ -83,7 +72,7 @@ Ordre officiel :
 3. Inter-Régionale
 4. Nationale
 
-Cet ordre est utilisé dans les listes de filtres.
+Cet ordre est utilisé dans les filtres.
 
 ---
 
@@ -91,7 +80,7 @@ Cet ordre est utilisé dans les listes de filtres.
 
 Chaque filtre possède une valeur représentant l'absence de filtrage :
 
-```
+```text
 Tous
 ```
 
@@ -101,158 +90,116 @@ Cette valeur ne correspond jamais à une donnée métier.
 
 # BR-009 — Les filtres sont combinés
 
-Lorsqu'un utilisateur applique plusieurs filtres, ceux-ci sont cumulés.
+Tous les filtres sont cumulés.
 
-Le résultat affiché doit satisfaire simultanément l'ensemble des critères.
-
-Exemple :
-
-```
-Type = TDJ
-ET
-
-Catégorie = Benjamin
-ET
-
-Mois = Janvier
-```
+Un événement doit satisfaire simultanément l'ensemble des critères sélectionnés.
 
 ---
 
 # BR-010 — La recherche textuelle est insensible à la casse
 
-La recherche compare en minuscules :
+La recherche est effectuée sans tenir compte des majuscules/minuscules.
 
-- titre ;
-- ville ;
-- catégories ;
-- type.
+Elle porte actuellement sur :
 
-La casse ne doit jamais influencer le résultat.
+* le titre ;
+* la localisation affichée ;
+* les catégories ;
+* le type.
 
 ---
 
 # BR-011 — Un événement sans URL ne propose aucune action
 
-Si :
-
-```
-eventUrl = vide
-```
-
-alors aucun bouton n'est affiché.
+Si `eventUrl` est vide, aucun bouton d'action n'est affiché.
 
 ---
 
 # BR-012 — Le bouton d'action dépend du contexte métier
 
-Le libellé du bouton est calculé automatiquement.
+| Situation             | Libellé              |
+| --------------------- | -------------------- |
+| Événement terminé     | Voir les résultats   |
+| Inscriptions ouvertes | S'inscrire           |
+| Autres cas            | Consulter le tournoi |
 
-Règles actuelles :
-
-| Situation | Libellé |
-|-----------|----------|
-| Événement terminé | Voir les résultats |
-| Inscriptions ouvertes | S'inscrire |
-| Autres cas | Consulter le tournoi |
-
-Le bouton n'apparaît que si une URL est disponible.
+Le bouton n'est affiché que lorsqu'une URL est disponible.
 
 ---
 
 # BR-013 — Les informations d'inscription sont affichées uniquement lorsqu'elles sont connues
 
-Si :
+Lorsque :
 
-```
+```text
 registrationStatus = UNKNOWN
 ```
 
-aucun message n'est affiché.
-
-Cela signifie que les modalités d'inscription ne sont pas encore connues.
+aucune information d'inscription n'est affichée.
 
 ---
 
 # BR-014 — Les statuts d'inscription sont calculés
 
-Les statuts ne sont jamais saisis.
-
-Ils sont calculés à partir :
-
-- de la date d'ouverture ;
-- de la date de fermeture ;
-- de la date du jour.
+Les statuts sont calculés automatiquement.
 
 Valeurs possibles :
 
-- UNKNOWN (Dates d'inscription absentes)
-- NOT_OPEN (Aujourd'hui < ouverture)
-- OPEN (Ouverture ≤ aujourd'hui ≤ fermeture)
-- CLOSED (Aujourd'hui > fermeture)
+* UNKNOWN
+* NOT_OPEN
+* OPEN
+* CLOSED
+
+Ils ne sont jamais saisis dans le Master.
 
 ---
 
 # BR-015 — Les statuts des événements sont calculés
 
-Le statut d'un événement est calculé automatiquement.
-
 Valeurs possibles :
 
-- UPCOMING (Aujourd'hui < Date début)
-- ONGOING (Date début ≤ Aujourd'hui ≤ Date fin)
-- FINISHED (Aujourd'hui > Date fin)
- 
-Aucun statut n'est saisi dans le Master.
+* UPCOMING
+* ONGOING
+* FINISHED
 
+Ils sont calculés automatiquement à partir des dates.
 
 ---
 
 # BR-019 — Les listes de filtres sont alimentées dynamiquement
 
-Les valeurs disponibles dans les filtres proviennent des événements présents dans le Master.
+Les filtres utilisent exclusivement les valeurs réellement présentes dans les événements.
 
-Aucune liste n'est codée en dur, à l'exception de l'ordre métier utilisé pour le tri.
+Les listes ne sont pas codées en dur, à l'exception des ordres métier.
 
 ---
 
 # BR-020 — Les événements inexistants sont explicitement signalés
 
-Si aucun événement ne correspond aux filtres actifs, l'application affiche un message dédié :
+Si aucun événement ne correspond aux filtres actifs, un message est affiché.
 
-```
-Aucun événement trouvé.
-```
-
-L'utilisateur ne doit jamais voir une page vide sans explication.
-
----
-
-# Principes
-
-Les règles décrites dans ce document constituent la référence fonctionnelle de BadCalendar.
-
-En cas de divergence entre le code et ce document, une revue devra être réalisée afin de déterminer si :
-
-- le code doit être corrigé ;
-- ou si la règle métier a évolué et nécessite une mise à jour de cette documentation.
+L'utilisateur ne doit jamais obtenir une page vide.
 
 ---
 
 # BR-025 — Les événements terminés sont masqués par défaut
 
-Par défaut, seuls les événements UPCOMING et ONGOING sont affichés.
+Par défaut :
 
-L'utilisateur peut explicitement demander l'affichage des événements FINISHED.
+* les événements UPCOMING sont affichés ;
+* les événements ONGOING sont affichés ;
+* les événements FINISHED sont masqués.
+
+L'utilisateur peut choisir de les afficher.
 
 ---
 
 # BR-026 — Les préférences utilisateur sont conservées
 
-Les préférences d'interface suivantes sont conservées :
+Les préférences suivantes sont mémorisées localement :
 
-- état de repli de la barre de filtres ;
-- affichage des compétitions terminées.
+* état de repli des filtres ;
+* affichage des compétitions terminées.
 
 ---
 
@@ -260,28 +207,85 @@ Les préférences d'interface suivantes sont conservées :
 
 Les champs suivants doivent obligatoirement être renseignés :
 
-StartDate
-EndDate
-Type
-Scope
+* Type
+* Scope
+* Title
+* StartDate
+* EndDate
+* Categories
+* RegistrationMode
 
-L'absence d'une de ces valeurs constitue une erreur bloquante.
+L'absence de l'un de ces champs constitue une erreur bloquante.
 
 ---
 
-# BR-028 — Certains champs sont recommandés
+# BR-028 — Les référentiels métier sont obligatoires
 
-Les champs suivants sont recommandés :
+Les valeurs suivantes doivent appartenir à leur référentiel respectif :
 
-Location
-EventUrl
+* Type
+* Scope
+* Category
+* RegistrationMode
+* Region
+* Department
+* City
 
-Leur absence génère un avertissement mais n'empêche pas la publication.
+Toute valeur absente du référentiel constitue une erreur de validation.
 
 ---
 
 # BR-029 — Les contrôles sont exécutés avant publication
 
-Les données du Master sont analysées avant leur publication.
+Les données du Master sont systématiquement analysées avant leur publication.
 
-Chaque anomalie détectée est restituée dans un rapport de contrôle.
+Chaque anomalie détectée est restituée dans le rapport de validation.
+
+---
+
+# BR-030 — Les référentiels sont administrés dans Parameters
+
+Les listes métier ne sont pas codées dans l'application.
+
+Elles sont administrées dans l'onglet `Parameters`, qui constitue l'unique source de vérité des référentiels.
+
+---
+
+# BR-031 — Le backend est responsable des règles métier
+
+Toutes les règles métier sont appliquées par le backend.
+
+Le frontend ne réalise aucun calcul métier.
+
+Il consomme uniquement des données déjà :
+
+* normalisées ;
+* enrichies ;
+* validées.
+
+---
+
+# BR-032 — Le modèle de localisation est progressif
+
+La localisation d'un événement peut être connue avec différents niveaux de précision.
+
+Le modèle distingue désormais :
+
+* Region ;
+* Department ;
+* City.
+
+Le champ historique `Location` est conservé temporairement afin d'assurer une migration progressive du modèle.
+
+Une future évolution définira la règle métier permettant de calculer automatiquement la localisation affichée à l'utilisateur.
+
+---
+
+# Principes
+
+Les règles décrites dans ce document constituent la référence fonctionnelle de BadCalendar.
+
+En cas de divergence entre le code et cette documentation, une revue doit déterminer si :
+
+* le code doit être corrigé ;
+* ou si la règle métier a évolué et nécessite une mise à jour de ce document.

@@ -2,16 +2,17 @@
 
 ## Objectif
 
-Le fichier **Master** est la source de données unique de BadCalendar.
+Le Google Sheets **Master** constitue la source de données unique des événements de BadCalendar.
 
-Il contient exclusivement les données métier des événements.
+Il contient exclusivement les données métier décrivant les compétitions, stages et autres événements.
 
-Toutes les informations affichées dans la Web App sont :
+Toutes les informations affichées dans la WebApp sont :
 
 * soit directement issues du Master ;
-* soit calculées automatiquement par le backend (`EventService`).
+* soit calculées automatiquement par le backend (`EventService`) ;
+* soit validées à partir des référentiels de l'onglet `Parameters`.
 
-Le Master ne doit jamais contenir de données de présentation (couleurs, badges, textes calculés, statuts…).
+Le Master ne doit jamais contenir de données de présentation (couleurs, badges, textes calculés, statuts, etc.).
 
 ---
 
@@ -20,26 +21,53 @@ Le Master ne doit jamais contenir de données de présentation (couleurs, badges
 > Le Master décrit uniquement **ce qu'est un événement**.
 >
 > Il ne décrit jamais **comment cet événement doit être affiché**.
->
-> Toute logique de présentation (couleurs, icônes, badges, textes, boutons, statuts affichés…) appartient exclusivement au frontend.
+
+Toute logique de présentation appartient exclusivement au backend ou au frontend.
 
 ---
 
-# Données sources (Google Sheets)
+# Données sources — Master
 
-| Ordre | Colonne                | Nom technique         | Type           | Obligatoire  |
-| ----: | ---------------------- | --------------------- | -------------- | :---------:  |
-|     1 | Type                   | Type                  | Liste          |      ✅      |
-|     2 | Portée                 | Scope                 | Liste          |      ✅      |
-|     3 | Titre                  | Title                 | Texte          |      ✅      |
-|     4 | Date début             | StartDate             | Date           |      ✅      |
-|     5 | Date fin               | EndDate               | Date           |      ✅      |
-|     6 | Ville                  | Location              | Texte          |      ✅      |
-|     7 | Catégories             | Categories            | Liste multiple |      ✅      |
-|     8 | Ouverture inscriptions | RegistrationOpenDate  | Date           |      ❌      |
-|     9 | Fermeture inscriptions | RegistrationCloseDate | Date           |      ❌      |
-|    10 | Mode inscription       | RegistrationMode      | Liste          |      ✅      |
-|    11 | Lien vers l'event      | EventUrl              | URL            |      ❌      |
+| Ordre | Colonne                  | Nom technique         | Type           | Obligatoire |
+| ----: | ------------------------ | --------------------- | -------------- | :---------: |
+|     1 | Type                     | Type                  | Liste          |      ✅      |
+|     2 | Portée                   | Scope                 | Liste          |      ✅      |
+|     3 | Titre                    | Title                 | Texte          |      ✅      |
+|     4 | Date début               | StartDate             | Date           |      ✅      |
+|     5 | Date fin                 | EndDate               | Date           |      ✅      |
+|     6 | Région                   | Region                | Liste          |      ❌      |
+|     7 | Département              | Department            | Liste          |      ❌      |
+|     8 | Ville                    | City                  | Liste          |      ❌      |
+|     9 | Location *(transitoire)* | Location              | Texte          |      ❌      |
+|    10 | Catégories               | Categories            | Liste multiple |      ✅      |
+|    11 | Ouverture inscriptions   | RegistrationOpenDate  | Date           |      ❌      |
+|    12 | Fermeture inscriptions   | RegistrationCloseDate | Date           |      ❌      |
+|    13 | Mode inscription         | RegistrationMode      | Liste          |      ✅      |
+|    14 | Lien vers l'événement    | EventUrl              | URL            |      ❌      |
+
+---
+
+# Référentiels — Onglet Parameters
+
+L'onglet `Parameters` contient l'ensemble des listes métier utilisées par l'application.
+
+Exemples :
+
+* Type
+* Scope
+* Category
+* RegistrationMode
+* Region
+* Department
+* City
+
+Ces référentiels sont lus exclusivement par `ParameterService`.
+
+Ils permettent :
+
+* l'administration des listes métier ;
+* la validation des données du Master ;
+* les futures évolutions fonctionnelles.
 
 ---
 
@@ -49,52 +77,27 @@ Le Master ne doit jamais contenir de données de présentation (couleurs, badges
 
 Nature de l'événement.
 
-### Valeurs autorisées
-
-* Stage
-* Promobad
-* CDJ
-* TDJ
-* TRJ
-* TIJ
-* CEJ
-* BAC
-* BNP
-* Interclub
-* Championnat
-
 Validation :
 
-* valeur appartenant à la liste.
+* obligatoire ;
+* valeur appartenant au référentiel `Type`.
 
 ---
 
-## Portée
+## Scope
 
 Rayonnement de l'événement.
 
-### Valeurs autorisées
-
-* Départementale
-* Régionale
-* Inter-Régionale
-* Nationale
-
 Validation :
 
-* valeur appartenant à la liste.
-
-Remarque :
+* obligatoire ;
+* valeur appartenant au référentiel `Scope`.
 
 La portée n'est jamais déduite du type.
 
-Exemple :
-
-Un Stage peut être départemental, régional ou national.
-
 ---
 
-## Titre
+## Title
 
 Nom officiel de l'événement.
 
@@ -105,7 +108,7 @@ Validation :
 
 ---
 
-## Date début
+## StartDate
 
 Premier jour de l'événement.
 
@@ -115,104 +118,114 @@ Validation :
 
 ---
 
-## Date fin
+## EndDate
 
 Dernier jour de l'événement.
 
 Validation :
 
 * obligatoire ;
-* supérieure ou égale à la date de début.
-
-Pour un événement sur une seule journée :
-
-Date début = Date fin.
+* supérieure ou égale à `StartDate`.
 
 ---
 
-## Ville
+## Region
 
-Ville dans laquelle se déroule l'événement.
+Région concernée par l'événement.
+
+Peut être renseignée avant que la localisation précise soit connue.
 
 Validation :
 
-* obligatoire ;
-* nom de ville uniquement.
-
-Le département, le gymnase et l'adresse seront obtenus ultérieurement via l'onglet Paramètres.
+* valeur appartenant au référentiel `Region`.
 
 ---
 
-## Catégories
+## Department
+
+Département concerné.
+
+Validation :
+
+* valeur appartenant au référentiel `Department`.
+
+---
+
+## City
+
+Commune dans laquelle se déroule l'événement.
+
+Validation :
+
+* valeur appartenant au référentiel `City`.
+
+Cette information servira ultérieurement à l'intégration avec Google Maps.
+
+---
+
+## Location *(transitoire)*
+
+Champ historique conservé uniquement afin d'assurer une migration progressive du modèle.
+
+Il continuera d'être utilisé par le frontend jusqu'à la mise en place d'une règle métier de calcul du lieu affiché.
+
+Ce champ a vocation à disparaître.
+
+---
+
+## Categories
 
 Catégories concernées par l'événement.
 
-Valeurs possibles :
+Le stockage est réalisé dans une seule cellule en utilisant le séparateur officiel :
 
-* Minibad
-* Poussin
-* Benjamin
-* Minime
-* Cadet
-* Junior
-
-Le stockage se fait dans une seule cellule.
+```text
+;
+```
 
 Exemple :
 
+```text
 Benjamin;Minime
-
-ou
-
-Minibad;Poussin;Benjamin
-
-Le séparateur officiel est le point-virgule (;).
+```
 
 Le backend transforme automatiquement cette chaîne en tableau.
 
+Validation :
+
+* toutes les valeurs doivent appartenir au référentiel `Category`.
+
 ---
 
-## Ouverture inscriptions
+## RegistrationOpenDate
 
 Date d'ouverture des inscriptions.
 
-Peut être vide si les inscriptions ne sont pas encore ouvertes.
+Peut être vide.
 
 ---
 
-## Fermeture inscriptions
+## RegistrationCloseDate
 
 Date de fermeture des inscriptions.
 
 Peut être vide.
 
-Si les deux dates sont absentes, cela signifie que les modalités d'inscription ne sont pas encore connues.
-
 ---
 
-## Mode inscription
+## RegistrationMode
 
-Valeurs autorisées :
-
-* Libre
-* Sur sélection
+Mode de participation.
 
 Validation :
 
-* valeur appartenant à la liste.
+* valeur appartenant au référentiel `RegistrationMode`.
 
 ---
 
-## Lien de l'évènement
+## EventUrl
 
-Lien associé à l'évènement.
-
-Exemples :
-
-* BadNet
-* Google Forms
-* Google Sheets
-* autre URL
+Lien associé à l'événement.
 
 Validation :
 
@@ -225,13 +238,10 @@ Le backend ne fait aucune hypothèse sur la plateforme utilisée.
 
 # Données enrichies (Backend)
 
-Les champs suivants n'existent pas dans le Master.
-
-Ils sont calculés automatiquement par EventService.
+Les champs suivants sont calculés automatiquement par `EventService`.
 
 | Champ              | Type    | Description                        |
 | ------------------ | ------- | ---------------------------------- |
-| id                 | Texte   | Identifiant technique calculé      |
 | month              | Texte   | Nom du mois                        |
 | monthNumber        | Nombre  | Numéro du mois                     |
 | year               | Nombre  | Année                              |
@@ -243,19 +253,23 @@ Ils sont calculés automatiquement par EventService.
 
 # Contrat Backend → Frontend
 
-Un objet réellement envoyé au frontend ressemble à : 
+Exemple simplifié :
 
+```json
 {
   "type": "TDJ",
   "scope": "Départementale",
   "title": "...",
-  "startDate": "2026-09-12T00:00:00.000Z",
-  "endDate": "2026-09-12T00:00:00.000Z",
+  "startDate": "...",
+  "endDate": "...",
+  "region": "Bretagne",
+  "department": "35",
+  "city": "Rennes",
   "location": "Rennes",
   "categories": "Benjamin;Minime",
   "categoriesArray": [
-     "Benjamin",
-     "Minime"
+    "Benjamin",
+    "Minime"
   ],
   "eventStatus": "UPCOMING",
   "registrationStatus": "OPEN",
@@ -265,12 +279,11 @@ Un objet réellement envoyé au frontend ressemble à :
   "registrationMode": "...",
   "registrationOpenDate": "...",
   "registrationCloseDate": "...",
-  "eventUrl": "...",
-  "categoriesArray": [...]
-
+  "eventUrl": "..."
 }
+```
 
-Toutes les dates sont transmises sous forme de chaînes ISO 8601.
+Toutes les dates sont transmises au frontend au format ISO-8601.
 
 ---
 
@@ -282,78 +295,24 @@ Le Master ne contient pas :
 * badges ;
 * textes d'affichage ;
 * icônes ;
-* gymnase ;
-* adresse ;
-* département ;
+* adresse complète ;
 * coordonnées GPS ;
 * lien Google Maps.
 
-Ces informations sont calculées ou obtenues via des tables de paramètres.
+Ces informations seront obtenues ultérieurement à partir de référentiels spécialisés.
 
 ---
 
-# Evolutions possibles du modèle
+# Évolutions prévues
 
-Le projet pourra contenir un onglet **Paramètres**.
+Le modèle de données est conçu pour évoluer sans remettre en cause la structure du Master.
 
-Il permettra notamment de gérer :
+Les principales évolutions envisagées sont :
 
-* villes ;
-* départements ;
-* gymnases ;
-* adresses ;
-* coordonnées GPS ;
-* liens Google Maps.
+* suppression définitive du champ `Location` ;
+* calcul d'un champ métier `displayLocation` par le backend ;
+* enrichissement des référentiels géographiques ;
+* intégration avec Google Maps ;
+* ajout éventuel d'informations complémentaires (coordonnées GPS, liens externes, etc.).
 
-Le Master restera centré uniquement sur les données métier des événements.
-
-Le modèle de données a été conçu pour permettre l'ajout futur de nouvelles informations sans remettre en cause la structure du Master.
-
-Exemples :
-
-* saison ;
-* coordonnées GPS ;
-* liens externes complémentaires.
-
-## Évolution de la localisation
-
-Le champ actuel `Location` représente la ville de l'événement.
-
-Une évolution future pourra introduire plusieurs niveaux de localisation :
-
-- Region
-- Department
-- Location (ville)
-
-Cette évolution vise à permettre la planification d'événements dont la localisation exacte n'est pas encore connue.
-
-Exemples :
-
-TRJ planifié :
-
-- Region = Bretagne
-- Department = vide
-- Location = vide
-
-CDJ planifié :
-
-- Region = Bretagne
-- Department = 35
-- Location = vide
-
-Événement attribué :
-
-- Region = Bretagne
-- Department = 35
-- Location = Rennes
-
-## Référentiel des lieux
-
-Un futur onglet Paramètres pourra permettre d'associer une ville à une information de localisation utilisée pour l'ouverture dans Google Maps.
-
-Exemple :
-
-Ville → Requête Google Maps
-
-Saint-Grégoire → Flume Ille Badminton Saint-Grégoire
-Rennes → Complexe des Gayeulles Rennes
+Le frontend continuera à consommer un modèle déjà enrichi sans embarquer de logique métier.
