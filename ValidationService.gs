@@ -3,6 +3,7 @@ const ValidationService = {
   validate(events) {
 
 	  const issues = [];
+	  const parameters = ParameterService.read();
 
 	  const requiredFields = [
 		{
@@ -114,25 +115,25 @@ const ValidationService = {
 		{
 			field: "type",
 			label: "Type",
-			allowedValues: ParameterService.getList("Type"),
+			allowedValues: parameters.getList("Type"),
 			multiple: false
 		 },
     	{
 			field: "scope",
 			label: "Scope",
-			allowedValues: ParameterService.getList("Scope"),
+			allowedValues: parameters.getList("Scope"),
 			multiple: false
 		},
     	{
 			field: "categories",
 			label: "Categories",
-			allowedValues: ParameterService.getList("Category"),
+			allowedValues: parameters.getList("Category"),
 			multiple: true
 		},
 		{
 			field: "registrationMode",
 			label: "RegistrationMode",
-			allowedValues: ParameterService.getList("RegistrationMode"),
+			allowedValues: parameters.getList("RegistrationMode"),
 			multiple: false
 		}
 	];
