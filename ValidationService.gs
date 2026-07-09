@@ -115,25 +115,25 @@ const ValidationService = {
 		{
 			field: "type",
 			label: "Type",
-			allowedValues: parameters.getList("Type"),
+			allowedValues: parameters.Type,
 			multiple: false
 		 },
     	{
 			field: "scope",
 			label: "Scope",
-			allowedValues: parameters.getList("Scope"),
+			allowedValues: parameters.Scope,
 			multiple: false
 		},
     	{
 			field: "categories",
 			label: "Categories",
-			allowedValues: parameters.getList("Category"),
+			allowedValues: parameters.Category,
 			multiple: true
 		},
 		{
 			field: "registrationMode",
 			label: "RegistrationMode",
-			allowedValues: parameters.getList("RegistrationMode"),
+			allowedValues: parameters.RegistrationMode,
 			multiple: false
 		}
 	];
