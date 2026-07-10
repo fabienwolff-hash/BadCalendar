@@ -387,3 +387,13 @@ adaptation aux usages mobiles.
 Cette version marque l'évolution de BadCalendar d'une simple liste d'événements vers une application centrée sur la prise de décision rapide.
 
 Les futures évolutions (fiche détaillée, Google Calendar, filtres avancés...) s'appuieront sur cette réflexion UX.
+
+---
+
+## V0.15
+
+### Backend
+
+- Ajout du champ Disciplines dans le modèle événement.
+- Ajout de la validation métier associée.
+- Ajout de disciplinesArray pour la présentation.

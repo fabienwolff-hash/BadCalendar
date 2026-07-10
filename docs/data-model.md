@@ -38,7 +38,7 @@ Toute logique de présentation appartient exclusivement au backend ou au fronten
 |     6 | Région                   | Region                | Liste          |      ❌      |
 |     7 | Département              | Department            | Liste          |      ❌      |
 |     8 | Ville                    | City                  | Liste          |      ❌      |
-|     9 | Disciplines (nouveau)    | Disciplines           | Liste multiple |      ❌      |
+|     9 | Disciplines              | Disciplines           | Liste multiple |      ❌      |
 |    10 | Catégories               | Categories            | Liste multiple |      ✅      |
 |    11 | Ouverture inscriptions   | RegistrationOpenDate  | Date           |      ❌      |
 |    12 | Fermeture inscriptions   | RegistrationCloseDate | Date           |      ❌      |
@@ -294,7 +294,7 @@ Exemple simplifié :
   "year": 2026,
   "displayLocation" : "...",
   "googleMapsUrl" : "...",
-  "disciplinesArray" : "..." (nouveau)
+  "disciplinesArray" : "..."
   "registrationMode": "...",
   "registrationOpenDate": "...",
   "registrationCloseDate": "...",
