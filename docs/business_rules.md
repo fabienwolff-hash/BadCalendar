@@ -351,3 +351,9 @@ Exemples :
 * CLOSED : affichage d'un message indiquant que les inscriptions sont closes.
 
 Le frontend ne détermine jamais ces règles. Il applique les informations fournies par le backend.
+
+---
+
+# BR-037 — Disciplines
+
+Un événement de type compétitif (i.e. hors stage) doit avoir au moins une discipline renseignée.
