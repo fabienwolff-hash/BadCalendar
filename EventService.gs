@@ -169,19 +169,27 @@ const EventService = {
   
 	buildDisplayLocation_(event) {
 
-	 if (event.city && event.city.trim()) {
-	    return event.city;
-	 }
+		if (event.city && event.city.trim()) {
 
-	  if (event.department && event.department.trim()) {
-		return event.department;
-	  }
+			if (event.department && event.department.trim()) {
+				return `${event.city} (${event.department})`;
+			}
+			return event.city;
+		}
 
-	  if (event.region && event.region.trim()) {
-		return event.region;
-	  }
+		if (event.department && event.department.trim()) {
+	
+			const departments = ParameterService.readDepartments();
+			
+			return departments[event.department]|| event.department;
 
-	  return "Lieu à définir";
+		}
+
+		if (event.region && event.region.trim()) {
+			return event.region;
+		}
+
+		return "Lieu à définir";
 	},
 	
 	buildDisplayDate_(event){

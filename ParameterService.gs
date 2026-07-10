@@ -1,6 +1,7 @@
 const ParameterService = {
 
   cache_: undefined,
+  departmentsCache_: undefined,
 
   read() {
 
@@ -42,6 +43,33 @@ const ParameterService = {
 
     return parameters;
   },
+  
+  readDepartments() {
+
+	  if (this.departmentsCache_) {
+		return this.departmentsCache_;
+	  }
+
+	  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+	  const sheet = ss.getSheetByName(CONFIG.DEPARTMENTS_SHEET_NAME);
+
+	  const values = sheet.getDataRange().getValues();
+
+	  const departments = {};
+
+	  values.slice(1).forEach(row => {
+
+		const code = String(row[0]).trim();
+		const label = String(row[1]).trim();
+
+		departments[code] = label;
+
+	  });
+
+	  this.departmentsCache_ = departments;
+
+	  return departments;
+  },
 
   getList(listName) {
 
@@ -50,6 +78,14 @@ const ParameterService = {
     return parameters[listName] || [];
 
   },
+  
+	getDepartmentLabel(departmentCode) {
+
+		const departments = this.readDepartments();
+
+		return departments[departmentCode] || null;
+
+	},
 
   hasValue(listName, value) {
 
@@ -62,7 +98,6 @@ const ParameterService = {
   clearCache() {
 
     this.cache_ = null;
-
+	this.departmentsCache_ = null;
   }
-
 };
