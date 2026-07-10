@@ -205,7 +205,7 @@ const EventService = {
 		return `${this.formatDateWithoutWeekday_(start)} - ${
 			this.formatDateWithoutWeekday_(end)
 		}`;
-	}
+	},
 
 	isSameDay_(a,b){
 
