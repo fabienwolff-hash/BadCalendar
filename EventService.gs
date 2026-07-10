@@ -235,6 +235,18 @@ const EventService = {
 			}
 		);
 	},
+	
+	formatDate_(date){
+
+		return date.toLocaleDateString(
+			CONFIG.LOCALE,
+			{
+				weekday:"short",
+				day:"numeric",
+				month:"short"
+			}
+		);
+	},
   
 	parseDate_(value) {
 
