@@ -90,6 +90,7 @@ const EventService = {
 	}
 	
 	const displayLocation = this.buildDisplayLocation_(event);
+	const displayDate = this.buildDisplayDate_(event);
 	
 	let registrationStatus;
 
@@ -124,6 +125,7 @@ const EventService = {
 	  eventStatus,
 	  registrationStatus,
 	  displayLocation,
+	  displayDate,
 	  googleMapsUrl: LocationService.buildGoogleMapsUrl(event.city),
 	  month: startDate.toLocaleString(
 		CONFIG.LOCALE,
@@ -165,7 +167,7 @@ const EventService = {
 
   },
   
-  buildDisplayLocation_(event) {
+	buildDisplayLocation_(event) {
 
 	 if (event.city && event.city.trim()) {
 	    return event.city;
@@ -181,45 +183,72 @@ const EventService = {
 
 	  return "Lieu à définir";
 	},
+	
+	buildDisplayDate_(event){
+
+		const start = event.startDate;
+		const end = event.endDate;
+
+		if (!end || this.isSameDay_(start,end)) {
+
+			return this.formatDate_(start);
+
+		}
+
+		return `${this.formatDate_(start)} - ${this.formatDate_(end)}`;
+
+	},	
+
+	isSameDay_(a,b){
+
+		return a.getFullYear() === b.getFullYear()
+			&& a.getMonth() === b.getMonth()
+			&& a.getDate() === b.getDate();
+
+	},
+	
+	formatDate_(date){
+
+		return date.toLocaleDateString(
+			CONFIG.LOCALE,
+			{
+				weekday:"short",
+				day:"numeric",
+				month:"short"
+			}
+		);
+	},
   
-  parseDate_(value) {
+	parseDate_(value) {
 
-    if (!value) {
+		if (!value) {
+			return null;
+		}
 
-		return null;
+		if (value instanceof Date) {
+		  return value;
+		}
 
+		if (typeof value === "string") {
+
+		  if (value.includes("-")) {
+			const [y, m, d] = value.split("-");
+
+			return new Date(Number(y), Number(m) - 1, Number(d));
+
+		  }
+
+		  if (value.includes("/")) {
+			const [d, m, y] = value.split("/");
+
+			return new Date(Number(y), Number(m) - 1, Number(d));
+		  }
+		}
+
+		const date = new Date(value);
+
+		return isNaN(date)
+		? null
+		: date;
 	}
-
-    if (value instanceof Date) {
-
-      return value;
-
-    }
-
-    if (typeof value === "string") {
-
-      if (value.includes("-")) {
-
-        const [y, m, d] = value.split("-");
-
-        return new Date(Number(y), Number(m) - 1, Number(d));
-
-      }
-
-      if (value.includes("/")) {
-
-        const [d, m, y] = value.split("/");
-
-        return new Date(Number(y), Number(m) - 1, Number(d));
-
-      }
-
-    }
-
-	const date = new Date(value);
-
-	return isNaN(date)
-    ? null
-    : date;
-
-}};
+};
