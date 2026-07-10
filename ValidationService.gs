@@ -153,6 +153,12 @@ const ValidationService = {
 			label: "City",
 			allowedValues: parameters.City,
 			multiple: false
+		},
+		{
+			 field:"disciplines",
+			 label:"Disciplines",
+			 allowedValues:parameters.Discipline,
+			 multiple:true
 		}
 	];
 		

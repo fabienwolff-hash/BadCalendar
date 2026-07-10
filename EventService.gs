@@ -57,6 +57,7 @@ const EventService = {
 	  department: raw.Department || "",
 	  city: raw.City || "",
 	  categories: raw.Categories || "",
+	  disciplines: raw.Disciplines || "",
 	  registrationMode: raw.RegistrationMode || "",
 	  registrationOpenDate: this.parseDate_(raw.RegistrationOpenDate),
 	  registrationCloseDate: this.parseDate_(raw.RegistrationCloseDate),
@@ -132,6 +133,11 @@ const EventService = {
 	  monthNumber: startDate.getMonth() + 1,
 
 	  year: startDate.getFullYear(),
+	  
+	  disciplinesArray: (event.disciplines || "")
+	    .split(";")
+	    .map(d => d.trim())
+	    .filter(Boolean),
 
 	  categoriesArray: (event.categories || "")
 		.split(";")
