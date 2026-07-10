@@ -189,7 +189,7 @@ const EventService = {
 		const end = event.endDate;
 
 		if (!end || this.isSameDay_(start, end)) {
-			return this.formatDate_(start);
+			return this.formatSingleDayDate_(start);
 		}
 
 		if (
@@ -236,7 +236,7 @@ const EventService = {
 		);
 	},
 	
-	formatDate_(date){
+	formatSingleDayDate_(date){
 
 		return date.toLocaleDateString(
 			CONFIG.LOCALE,
