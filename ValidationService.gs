@@ -343,26 +343,24 @@ const ValidationService = {
 	  return issues;
 	},
 
-	validateBusinessRule_(events, rules) {
+	validateBusinessRule_(events, rule) {
 
 	  const issues = [];
 
 	  events.forEach((event, index) => {
 
-		rules.forEach(rule => {
+		if (rule.isValid(event)) {
+		  return;
+		}
 
-		  if (rule.isValid(event)) {
-			return;
-		  }
+		issues.push(
+		  ValidationIssue.error(
+			index + 2,
+			rule.label,
+			rule.message
+		  )
+		);
 
-		  issues.push(
-			ValidationIssue.error(
-			  index + 2,
-			  rule.label,
-			  rule.message
-			)
-		  );
-		});
 	  });
 
 	  return issues;
