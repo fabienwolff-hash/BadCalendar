@@ -38,7 +38,7 @@ Toute logique de présentation appartient exclusivement au backend ou au fronten
 |     6 | Région                   | Region                | Liste          |      ❌      |
 |     7 | Département              | Department            | Liste          |      ❌      |
 |     8 | Ville                    | City                  | Liste          |      ❌      |
-|     9 | Location *(transitoire)* | Location              | Texte          |      ❌      |
+|     9 | Disciplines (nouveau)    | Disciplines           | Liste multiple |      ❌      |
 |    10 | Catégories               | Categories            | Liste multiple |      ✅      |
 |    11 | Ouverture inscriptions   | RegistrationOpenDate  | Date           |      ❌      |
 |    12 | Fermeture inscriptions   | RegistrationCloseDate | Date           |      ❌      |
@@ -163,13 +163,29 @@ Cette information servira ultérieurement à l'intégration avec Google Maps.
 
 ---
 
-## Location *(transitoire)*
+## Disciplines
 
-Champ historique conservé uniquement afin d'assurer une migration progressive du modèle.
+Disciplines proposées par l'événement.
 
-Il continuera d'être utilisé par le frontend jusqu'à la mise en place d'une règle métier de calcul du lieu affiché.
+Le stockage utilise une liste multiple séparée par le caractère :
 
-Ce champ a vocation à disparaître.
+;
+
+Exemple : Simple;Double
+
+---
+
+## Localisation
+
+Le Master décrit la localisation d'un événement de manière progressive.
+
+Selon les informations connues au moment de la publication, un événement peut renseigner :
+
+- uniquement la Région ;
+- la Région et le Département ;
+- ou la Ville.
+
+Le backend calcule automatiquement la propriété métier `displayLocation` destinée à l'affichage dans la WebApp.
 
 ---
 
@@ -276,10 +292,14 @@ Exemple simplifié :
   "month": "...",
   "monthNumber": 9,
   "year": 2026,
+  "displayLocation" : "...",
+  "googleMapsUrl" : "...",
+  "disciplinesArray" : "..." (nouveau)
   "registrationMode": "...",
   "registrationOpenDate": "...",
   "registrationCloseDate": "...",
   "eventUrl": "..."
+  
 }
 ```
 
@@ -287,19 +307,41 @@ Toutes les dates sont transmises au frontend au format ISO-8601.
 
 ---
 
-# Données volontairement absentes
+# Référentiel Locations
 
-Le Master ne contient pas :
+L'onglet `Locations` complète les informations géographiques.
 
-* couleurs ;
-* badges ;
-* textes d'affichage ;
-* icônes ;
-* adresse complète ;
-* coordonnées GPS ;
-* lien Google Maps.
+Chaque ville peut être associée à une requête Google Maps.
 
-Ces informations seront obtenues ultérieurement à partir de référentiels spécialisés.
+Exemple :
+
+| City | GoogleMapsQuery |
+|------|-----------------|
+| Rennes | Complexe Sportif Jean Prouff Rennes |
+
+Ce référentiel permet de construire automatiquement les liens Google Maps sans alourdir le Master.
+
+
+---
+
+# Séparation des responsabilités
+
+Le Master contient uniquement les données métier.
+
+Les informations calculées ou dérivées sont produites par le backend.
+
+Exemples :
+
+- displayLocation ;
+- googleMapsUrl ;
+- eventStatus ;
+- registrationStatus ;
+- month ;
+- year ;
+- catégories sous forme de tableau ;
+- disciplines sous forme de tableau.
+
+Le frontend consomme directement ces propriétés sans appliquer de logique métier.
 
 ---
 
@@ -309,10 +351,10 @@ Le modèle de données est conçu pour évoluer sans remettre en cause la struct
 
 Les principales évolutions envisagées sont :
 
-* suppression définitive du champ `Location` ;
-* calcul d'un champ métier `displayLocation` par le backend ;
-* enrichissement des référentiels géographiques ;
-* intégration avec Google Maps ;
-* ajout éventuel d'informations complémentaires (coordonnées GPS, liens externes, etc.).
+- enrichissement des référentiels géographiques ;
+- amélioration du référentiel Locations ;
+- ajout d'informations complémentaires sur les lieux (gymnase, salle, coordonnées GPS...) ;
+- personnalisation des cartes en fonction du profil utilisateur ;
+- enrichissement progressif de la fiche détaillée d'un événement.
 
-Le frontend continuera à consommer un modèle déjà enrichi sans embarquer de logique métier.
+Le modèle continuera de privilégier une séparation stricte entre les données métier, les données enrichies par le backend et les informations de présentation.

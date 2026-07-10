@@ -17,9 +17,12 @@ Ce document complète les documents :
 
 # 1. Philosophie
 
-BadCalendar est une application de consultation.
+BadCalendar est une application d'aide à la décision.
 
-L'utilisateur doit pouvoir trouver un tournoi en quelques secondes.
+La liste des événements constitue une vue synthétique permettant à un parent d'identifier rapidement les compétitions pertinentes pour son enfant.
+
+Les informations détaillées et les actions associées à un événement ne sont affichées qu'à la demande de l'utilisateur.
+
 
 Les principes de conception sont donc :
 
@@ -35,13 +38,12 @@ Chaque élément affiché doit avoir une utilité métier.
 
 # 2. Principes UX
 
-L'utilisateur doit toujours comprendre :
+L'utilisateur ne doit jamais être submergé par l'information.
 
-- où il est ;
-- quels filtres sont actifs ;
-- quelles actions sont possibles.
+Les informations nécessaires à la décision sont affichées immédiatement.
 
-L'interface doit limiter au maximum les ambiguïtés.
+Les informations complémentaires sont accessibles via le détail d'un événement.
+
 
 ---
 
@@ -92,11 +94,9 @@ Le header doit rester compact afin de maximiser la zone utile.
 
 # 6. Barre des filtres
 
-Les filtres sont placés sous le header.
+Les filtres disponibles évoluent avec les fonctionnalités de l'application.
 
-Ils restent visibles lors du scroll.
-
-Les filtres disponibles sont :
+Les principaux filtres sont actuellement :
 
 - Recherche
 - Type
@@ -104,7 +104,7 @@ Les filtres disponibles sont :
 - Catégorie
 - Mois
 
-Tous les filtres sont indépendants.
+Tous les filtres sont actuellement indépendants.
 
 ---
 
@@ -124,47 +124,56 @@ L'état replié est conservé pendant la navigation.
 
 ---
 
-# 8. Cartes événements
+# 8.1 Cartes événements
 
-Chaque événement est représenté par une carte.
+Chaque événement est représenté par une carte synthétique.
 
-Une carte ne doit jamais être surchargée.
+Cette carte doit permettre au parent de décider rapidement si l'événement mérite une consultation plus approfondie.
 
-Les informations sont présentées selon un ordre constant.
+Elle ne cherche pas à afficher toutes les informations disponibles.
 
-```
-Badge
+Les actions et informations secondaires sont volontairement reportées dans une fiche détaillée accessible depuis la carte.
 
-Date
+┌────────────────────────────────────┐
+│ TDJ                 Sam. 12 sept.  │
+│ TDJ de Guichen                    │
+│ Rennes (35)                       │
+│ Benjamin • Minime                 │
+│ Simple • Double                   │
+│ Ouverture : 25 août               │
+│                                    │
+│              ▼ Voir les détails    │
+└────────────────────────────────────┘
 
-Titre
+---
 
-Ville
+# 8.2 Vue détaillée d'un événement
 
-Catégories
+La vue détaillée complète la carte synthétique.
 
---------------------
+Elle contient les informations et actions utiles lorsque l'utilisateur souhaite approfondir un événement.
 
-Mode d'inscription
+Elle peut notamment afficher :
 
-Informations d'inscription
+- mode d'inscription ;
+- lien BadNet ;
+- ouverture Google Maps ;
+- ajout Google Calendar ;
+- informations complémentaires.
 
-Bouton
-```
+Cette vue est accessible par le bouton « Voir les détails ».
 
 ---
 
 # 9. Priorité visuelle
 
-L'œil doit naturellement lire :
-
-1. le type
-2. la date
-3. le titre
-4. le lieu
-5. les informations secondaires
-
-Les informations métier les plus importantes doivent toujours apparaître en premier.
+1. Type de compétition
+2. Date
+3. Titre
+4. Localisation
+5. Catégories concernées
+6. Disciplines proposées
+7. Statut d'inscription
 
 ---
 
@@ -217,21 +226,12 @@ Exemple :
 
 # 12. Boutons
 
-Un seul bouton d'action est affiché par carte.
+Les actions principales sont regroupées dans la vue détaillée.
 
-Le texte du bouton dépend du contexte métier.
+La carte synthétique ne présente qu'une action permettant d'accéder aux informations détaillées.
 
-Exemples :
+Les actions métier (BadNet, Google Maps, Google Calendar...) sont volontairement séparées de la prise de décision.
 
-```
-S'inscrire
-
-Consulter le tournoi
-
-Voir les résultats
-```
-
-Le bouton est toujours placé en bas de la carte.
 
 ---
 
@@ -315,8 +315,12 @@ Les améliorations identifiées sont :
 - compteur de filtres actifs ;
 - icônes Material Design ;
 - animations légères lors des interactions ;
-- amélioration de la densité d'affichage desktop ;
 - meilleure gestion des grands écrans.
+- fiche détaillée ;
+- profil utilisateur ;
+- filtres intelligents ;
+- badges catégories ;
+- badges disciplines ;
 
 ---
 
@@ -333,3 +337,47 @@ Toute nouvelle évolution de l'interface devra respecter les règles suivantes :
 - favoriser la lisibilité plutôt que la quantité d'informations.
 
 Ces principes constituent la référence de conception de l'interface utilisateur de BadCalendar.
+
+---
+
+# 21. Etat d'un évènement
+
+Un événement peut être présenté sous différents états :
+
+- annonce ;
+- inscriptions non ouvertes ;
+- inscriptions ouvertes ;
+- inscriptions closes ;
+- terminé.
+
+L'affichage s'adapte à chacun de ces états afin de présenter uniquement les informations utiles.
+
+---
+
+# 22. Localisation
+
+La localisation affichée est une information métier calculée par le backend.
+
+Elle peut représenter :
+
+- une ville ;
+- un département ;
+- une région ;
+- ou un texte indiquant que le lieu reste à définir.
+
+Le frontend ne contient aucune logique de décision concernant la localisation.
+
+---
+
+# 23. Informations affichées
+
+La carte synthétique privilégie les informations utiles à la décision :
+
+- type ;
+- date ;
+- localisation ;
+- catégories ;
+- disciplines ;
+- statut d'inscription.
+
+Les informations secondaires sont volontairement reportées dans la vue détaillée.

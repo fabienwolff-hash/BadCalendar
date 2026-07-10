@@ -504,3 +504,13 @@ Une future évolution du modèle pourra introduire :
 - Location ;
 
 sans remettre en cause Scope.
+
+---
+
+# DEC-025 — Principe UX retenu
+
+La liste principale doit rester une vue de décision rapide.
+
+Une carte ne doit afficher que les informations nécessaires pour permettre au parent de décider si un événement mérite d'être consulté plus en détail.
+
+Les actions (Google Maps, BadNet, Google Calendar, etc.) sont volontairement reportées dans la fiche détaillée afin de conserver une interface légère et adaptée à un usage mobile.

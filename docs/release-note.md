@@ -247,12 +247,7 @@ Cette version prépare les futures évolutions (Google Maps, filtres géographiq
 
 ## Modèle de données
 
-Évolution du modèle de localisation :
-
-- ajout de `Region`
-- ajout de `Department`
-- ajout de `City`
-- conservation temporaire de `Location` afin d'assurer une migration progressive
+Introduction du modèle de localisation progressif (Region, Department, City) en préparation de la future intégration de Google Maps.
 
 ---
 
@@ -289,3 +284,106 @@ La stratégie d'affichage du lieu sera définie dans une version ultérieure.
 Les versions mineures (0.x) permettent d'enrichir progressivement l'application tout en consolidant son architecture.
 
 La version **1.0** représentera la première version considérée comme stable, documentée et prête à être utilisée dans un contexte de production.
+
+---
+
+# V0.13 — Localisation intelligente
+
+## Objectif
+
+Préparer l'intégration de Google Maps tout en simplifiant le modèle de localisation et en renforçant la séparation entre les données métier et les données d'enrichissement.
+
+Cette version introduit une gestion centralisée de la localisation sans modifier l'expérience utilisateur.
+
+## Architecture
+
+- Création du LocationService
+- Introduction de l'onglet Locations
+- Séparation des référentiels métier (Parameters) et géographiques (Locations)
+- Centralisation de la construction des liens Google Maps dans le backend
+
+## Modèles de données
+
+Évolution du modèle de localisation :
+
+suppression définitive du champ Location
+introduction du champ enrichi displayLocation
+introduction du champ enrichi googleMapsUrl
+
+Le Master ne contient plus que les informations géographiques métier :
+
+Region
+Department
+City
+
+Le backend détermine automatiquement la localisation à afficher.
+
+## BackEnd
+
+Calcul automatique de displayLocation
+Construction automatique de googleMapsUrl
+Enrichissement des événements avant sérialisation
+Aucun calcul de localisation dans le frontend
+
+## FrontEnd
+
+Utilisation de displayLocation
+Ajout du bouton Ouvrir dans Google Maps
+Consommation directe de googleMapsUrl
+
+---
+
+# V0.14 — Conception de l'expérience utilisateur
+
+## Objectif
+
+Définir la future expérience utilisateur de BadCalendar avant toute implémentation.
+
+Cette version est entièrement consacrée à la réflexion produit afin de concevoir une interface réellement adaptée aux besoins des parents.
+
+Aucune fonctionnalité n'est développée.
+
+## Recherche utilisateur
+
+Analyse des principaux scénarios d'utilisation :
+
+recherche d'un tournoi adapté à l'enfant ;
+identification rapide des inscriptions ouvertes ;
+consultation mobile en quelques secondes.
+
+## Carte événement
+
+Définition d'une séparation entre :
+
+une vue synthétique, destinée à la prise de décision ;
+une vue détaillée, accessible à la demande.
+
+La carte synthétique conserve uniquement les informations essentielles.
+
+## Modèle fonctionnel
+
+Identification des informations utiles à la décision :
+
+type d'événement ;
+date ;
+localisation ;
+catégories ;
+disciplines ;
+statut des inscriptions.
+
+Les actions (BadNet, Google Maps, Google Calendar...) sont réservées à la vue détaillée.
+
+## Règles d'affichage
+
+Définition des règles de présentation :
+
+hiérarchie visuelle des informations ;
+gestion des événements sur plusieurs jours ;
+affichage progressif des informations selon le cycle de vie d'un événement ;
+adaptation aux usages mobiles.
+
+## Vision produit
+
+Cette version marque l'évolution de BadCalendar d'une simple liste d'événements vers une application centrée sur la prise de décision rapide.
+
+Les futures évolutions (fiche détaillée, Google Calendar, filtres avancés...) s'appuieront sur cette réflexion UX.

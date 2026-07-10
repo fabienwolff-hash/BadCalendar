@@ -14,28 +14,22 @@ BadCalendar s'appuie sur une architecture en couches où chaque service possède
 
 ```text
                  Google Spreadsheet
-        ┌──────────────┴──────────────┐
-        ▼                             ▼
-   Master (Events)             Parameters
-        │                             │
-        ▼                             ▼
- EventService.readNormalized()   ParameterService.read()
-        │                             │
-        ├──────────────┬──────────────┤
-        ▼              ▼              ▼
-ValidationService   EventService   Référentiels métier
-        │              │
-        ▼              ▼
- ValidationIssue[]  enrich_()
-                    sort_()
-                    serialize()
-        │              │
-        ▼              ▼
- ReportService     Code.gs
-        │              │
-        ▼              ▼
- Google Sheet      Frontend HTML / JS
- (Contrôles)
+      ┌────────────┬──────────────┬─────────────┐
+      ▼            ▼              ▼
+   Master      Parameters      Locations
+      │            │              │
+      ▼            ▼              ▼
+ EventService  ParameterService  LocationService
+      │            │              │
+      └────────────┴──────┬───────┘
+                           ▼
+                  enrichissement métier
+                           │
+                           ▼
+                     données enrichies
+                           │
+                           ▼
+                       Frontend
 ```
 
 Chaque couche possède une responsabilité unique.
@@ -66,10 +60,12 @@ Le traitement des événements s'effectue en plusieurs étapes.
 ### Pipeline WebApp
 
 * lecture des événements ;
+* lecture du référentiel Locations ;
 * normalisation des données ;
 * lecture des référentiels métier ;
 * enrichissement métier ;
 * calcul des statuts métier ;
+* construction des URLs Google Maps ;
 * tri ;
 * sérialisation ;
 * préparation des données destinées au frontend.
@@ -135,7 +131,10 @@ Responsabilités :
 * normalisation des données ;
 * enrichissement métier ;
 * calcul des statuts ;
-* préparation des données envoyées au frontend.
+* calcul de displayLocation ;
+* enrichissement avec googleMapsUrl ;
+* sérialisation
+
 
 ---
 
@@ -169,6 +168,19 @@ Responsabilités :
 * générer le rapport de validation ;
 * créer ou mettre à jour l'onglet **Contrôles** ;
 * présenter les anomalies détectées.
+
+---
+
+## LocationService.gs
+
+Responsabilités :
+
+* lecture de l'onglet `Locations` ;
+* mise en cache du référentiel géographique ;
+* construction des URL Google Maps ;
+* centralisation de la logique de localisation.
+
+Le frontend ne construit jamais lui-même une URL Google Maps.
 
 ---
 
@@ -389,13 +401,43 @@ Voir également `data-model.md`.
 
 ---
 
+## Backend orienté métier
+
+Le backend expose au frontend un modèle directement exploitable.
+
+Les informations calculées (statuts, localisation affichée, URL Google Maps, etc.) sont produites une seule fois côté serveur.
+
+Le frontend ne réalise aucun enrichissement des données.
+
+---
+
+## Référentiels spécialisés
+
+Chaque référentiel possède une responsabilité unique.
+
+• Parameters : listes métier
+• Locations : informations géographiques
+
+Cette séparation permet de faire évoluer indépendamment les données métier et les données d'enrichissement.
+
+---
+
 # Évolutions prévues
 
 L'architecture est conçue pour permettre :
 
-* l'ajout de nouveaux champs métier ;
 * l'enrichissement des référentiels ;
-* l'intégration de nouveaux services spécialisés.
+
+L'architecture est conçue pour accueillir de nouveaux services spécialisés sans remettre en cause les responsabilités existantes.
+
+Des services dédiés pourront notamment être ajoutés pour :
+
+* Google Calendar ;
+* notifications ;
+* synchronisation avec des sources externes ;
+* enrichissement des données géographiques.
+
+Chaque nouveau service devra conserver le principe de responsabilité unique.
 
 Les évolutions fonctionnelles détaillées sont décrites dans `roadmap.md`.
 
@@ -408,6 +450,31 @@ Les évolutions fonctionnelles détaillées sont décrites dans `roadmap.md`.
 * `decisions.md`
 * `vision.md`
 * `project_context.md`
+
+---
+
+# Architecture orientée enrichissement
+
+BadCalendar repose sur un modèle d'enrichissement progressif.
+
+Les données métier sont volontairement simples dans le Master.
+
+Chaque service backend ajoute ensuite les informations nécessaires à la consultation :
+
+Master
+    ↓
+données normalisées
+    ↓
+données enrichies
+    ↓
+données prêtes à afficher
+
+Cette approche permet :
+
+* de conserver un Master simple à administrer ;
+* de limiter les redondances ;
+* de centraliser les règles métier ;
+* de simplifier fortement le frontend.
 
 ---
 

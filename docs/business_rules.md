@@ -107,23 +107,28 @@ Elle porte actuellement sur :
 * les catégories ;
 * le type.
 
----
-
-# BR-011 — Un événement sans URL ne propose aucune action
-
-Si `eventUrl` est vide, aucun bouton d'action n'est affiché.
+La recherche s'effectue sur la propriété `displayLocation` calculée par le backend.
 
 ---
 
-# BR-012 — Le bouton d'action dépend du contexte métier
+# BR-011 — Les actions dépendent des données disponibles
 
-| Situation             | Libellé              |
-| --------------------- | -------------------- |
-| Événement terminé     | Voir les résultats   |
-| Inscriptions ouvertes | S'inscrire           |
-| Autres cas            | Consulter le tournoi |
+Chaque action est affichée uniquement lorsque les informations nécessaires sont disponibles.
 
-Le bouton n'est affiché que lorsqu'une URL est disponible.
+Exemples :
+
+* le bouton BadNet nécessite `eventUrl` ;
+* le bouton Google Maps nécessite `googleMapsUrl`.
+
+Le backend prépare les informations nécessaires afin que le frontend n'ait aucune logique métier à appliquer.
+
+---
+
+# BR-012 — Les actions disponibles dépendent du contexte métier
+
+Les actions proposées à l'utilisateur dépendent de l'état de l'événement et des données disponibles.
+
+Le backend détermine les informations nécessaires au frontend afin que celui-ci puisse afficher uniquement les actions pertinentes.
 
 ---
 
@@ -285,3 +290,64 @@ En cas de divergence entre le code et cette documentation, une revue doit déter
 
 * le code doit être corrigé ;
 * ou si la règle métier a évolué et nécessite une mise à jour de ce document.
+
+---
+
+# BR-033 — Un événement peut proposer plusieurs disciplines
+
+Un événement peut proposer une ou plusieurs disciplines.
+
+Exemples :
+
+* Simple
+* Double
+* Mixte
+
+Le stockage dans le Master utilise le séparateur officiel :
+
+```text
+;
+```
+
+Elle sera le pendant de BR-005 pour les catégories.
+
+---
+
+# BR-034 — La localisation affichée est calculée
+
+La localisation affichée (`displayLocation`) est calculée par le backend.
+
+La règle actuelle est :
+
+1. City si elle est connue ;
+2. sinon Department ;
+3. sinon Region ;
+4. sinon "Lieu à définir".
+
+Le frontend utilise uniquement cette propriété et ne réalise aucun choix concernant la localisation.
+
+
+---
+
+# BR-035 — La carte synthétique est une aide à la décision
+
+La carte d'un événement présente uniquement les informations nécessaires à la prise de décision.
+
+Les informations complémentaires ainsi que les actions sont accessibles via la vue détaillée de l'événement.
+
+Cette séparation garantit une consultation rapide, en particulier sur mobile.
+
+---
+
+# BR-036 — Les informations affichées dépendent du statut d'inscription
+
+Les informations présentées à l'utilisateur dépendent du statut d'inscription de l'événement.
+
+Exemples :
+
+* UNKNOWN : aucune information d'inscription ;
+* NOT_OPEN : affichage de la date d'ouverture ;
+* OPEN : affichage de la date de clôture ;
+* CLOSED : affichage d'un message indiquant que les inscriptions sont closes.
+
+Le frontend ne détermine jamais ces règles. Il applique les informations fournies par le backend.

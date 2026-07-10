@@ -19,6 +19,9 @@ L'administration de l'application reposera exclusivement sur Google Sheets afin 
 - V0.10
 - V0.11
 - V0.12
+- V0.13
+- V0.14
+
 
 Voir release-note.md pour le détail.
 
@@ -55,9 +58,22 @@ Une vue chronologique par mois est jugée plus simple et plus naturelle.
 
 ## Affichage
 
-- [ ] Afficher les catégories sous forme de badges
-- [ ] Amélioration de l'affichage des statuts d'inscription
-- [ ] Utiliser des couleurs ou icônes pour représenter les statuts d'événement
+- [ ] Refonte des cartes événements selon les règles UX définies
+- [ ] Vue synthétique optimisée pour mobile
+- [ ] Dépliement d'une fiche détaillée par événement
+- [ ] Affichage intelligent de la localisation
+- [ ] Affichage des disciplines
+- [ ] Amélioration des statuts d'inscription
+- [ ] Utilisation d'icônes adaptées
+- [ ] Bouton "Ouvrir dans Google Maps"
+- [ ] Ajouter au Google Calendar
+
+## UX
+
+- [ ] Accordéon de détail des événements
+- [ ] Optimisation de la lecture mobile
+- [ ] Réduction de la densité d'information
+- [ ] Amélioration de l'accessibilité
 
 ## Qualité
 
@@ -116,6 +132,17 @@ Une vue chronologique par mois est jugée plus simple et plus naturelle.
 - [ ] clôture prochaine
 - [ ] modification d'un tournoi
 
+## Profil utilisateur
+
+À étudier :
+
+Permettre au parent de renseigner le profil de son enfant :
+
+- catégorie
+- niveau
+- disciplines pratiquées
+
+afin de proposer automatiquement des filtres adaptés.
 
 
 ## Amélioration de l'affichage des lieux
@@ -136,13 +163,6 @@ L'objectif est que le Frontend affiche une propriété métier unique (`displayL
 - éviter la saisie répétée des informations de localisation ;
 - conserver le Master centré sur les données métier des événements.
 
-### Évolutions prévues
-
-- ajout d'un référentiel dédié aux lieux (onglet spécifique)
-- association d'une ville à une requête Google Maps via un référentiel dédié
-- ajout d'un bouton « Ouvrir dans Google Maps » sur les événements ;
-- ouverture du lieu dans Google Maps sur mobile et desktop.
-
 ### Principes
 
 - le Master conserve les informations de localisation métier (Region, Department, City).
@@ -157,6 +177,20 @@ Synchronisation automatique avec :
 * BadNet
 * Google Sheets
 * autres sources éventuelles
+
+## Fiche détaillée
+
+Objectif :
+
+Afficher les informations utiles uniquement lorsque le parent souhaite approfondir un événement.
+
+La fiche détaillée pourra notamment contenir :
+
+- informations complémentaires
+- disciplines proposées
+- lien BadNet
+- ouverture Google Maps
+- ajout Google Calendar
 
 ---
 
@@ -174,6 +208,8 @@ Ces idées sont volontairement conservées sans engagement de développement.
 - Thème clair / sombre
 - Personnalisation des couleurs
 - Logo personnalisable
+- Vue calendrier
+- Vue agenda
 - Partage de l'événement
 - Navigation événement (post V1)
 
@@ -186,8 +222,6 @@ Ces idées sont volontairement conservées sans engagement de développement.
 	- gestion des paramètres WebApp
 
 	Usages possibles :
-	- partage
-	- Google Calendar
 	- liens externes
 
 ---
@@ -195,15 +229,11 @@ Ces idées sont volontairement conservées sans engagement de développement.
 # Backlog validé
 
 ## Haute priorité
-
+- Google Calendar
 - Tests automatisés de non-régression
-- Google Calendar (Permettre l'ajout d'un événement dans le calendrier personnel.)
-- Google Maps (Permettre l'ouverture directe du lieu de compétition dans Google Maps.)
-- Fiche détaillée d'un événement (Afficher :
-* toutes les informations
-* statut
-* lien officiel
-* éventuellement une carte Google Maps)
+- Filtres multi-valeurs
+- Refonte UX des cartes
+- Fiche détaillée d'un événement
 
 Objectif :
 Séparer l'affichage synthétique (liste/cartes) des informations complètes d'un événement.
@@ -212,10 +242,7 @@ La carte événement doit rester limitée aux informations nécessaires à la d�
 ## Moyenne priorité 
 
 - Localisation intelligente
-- Filtres multi-valeurs
-
-
-
+- Profil utilisateur
 
 ## Faible priorité
 - Export iCal
