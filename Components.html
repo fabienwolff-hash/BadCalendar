@@ -60,16 +60,18 @@ function renderCard(event) {
 		</div>
 		` : ""}
 
+		<button 
+			class="card-toggle"
+			type="button">
+
+			Voir les détails ▼
+
+		</button>
+
 
 	</div>
 	<div class="card-details">
-		<!--
-          Future fiche détaillée :
-          - inscription
-          - BadNet
-          - Google Maps
-          - Google Calendar
-        -->
+
 		${eventButton(event)}
 		
 		${googleMapsButton(event)}
@@ -146,6 +148,37 @@ function renderEvents(events){
     });
 
     container.innerHTML=html;
+	
+	bindCardDetailsEvents();
+
+}
+
+function bindCardDetailsEvents(){
+
+    document
+        .querySelectorAll(".card-toggle")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const card =
+                        button.closest(".card");
+
+                    const expanded =
+                        card.classList.toggle("expanded");
+
+
+                    button.textContent =
+                        expanded
+                        ? "Masquer les détails ▲"
+                        : "Voir les détails ▼";
+
+                }
+            );
+
+        });
 
 }
 

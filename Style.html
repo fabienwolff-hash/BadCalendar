@@ -259,7 +259,11 @@ header h1{
 }
 
 .card-details{
-    margin-top:16px;
+    display:none;
+}
+
+.card.expanded .card-details{
+    display:block;
 }
 
 @media (hover:hover){
@@ -409,6 +413,23 @@ header h1{
 .button:hover{
     background:#1565C0;
     transform:translateY(-1px);
+}
+
+.card-toggle{
+    margin-top:12px;
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:#ECEFF1;
+    color:#424242;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.card-toggle:hover{
+    background:#E0E0E0;
 }
 
 
