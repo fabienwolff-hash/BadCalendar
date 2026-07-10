@@ -179,6 +179,33 @@ const ValidationService = {
 	  );
 
 	});
+	
+	const businessRules = [
+	  {
+		field: "disciplines",
+		label: "Disciplines",
+		message: "Disciplines obligatoire pour ce type d'événement",
+
+		isValid: (event) => {
+
+		  if (event.type === "Stage") {
+			return true;
+		  }
+
+		  return (
+			event.disciplines &&
+			event.disciplines.trim() !== ""
+		  );
+		}
+	  }
+	];
+	
+	businessRules.forEach(rule => {
+
+	  issues.push(
+		...this.validateBusinessRule_(events, rule)
+	  );
+	});
 
 	issues.sort((a, b) => {
 
@@ -305,6 +332,31 @@ const ValidationService = {
 			)
 		  );
 		}
+	  });
+
+	  return issues;
+	},
+
+	validateBusinessRule_(events, rules) {
+
+	  const issues = [];
+
+	  events.forEach((event, index) => {
+
+		rules.forEach(rule => {
+
+		  if (rule.isValid(event)) {
+			return;
+		  }
+
+		  issues.push(
+			ValidationIssue.error(
+			  index + 2,
+			  rule.label,
+			  rule.message
+			)
+		  );
+		});
 	  });
 
 	  return issues;
