@@ -17,50 +17,61 @@ function renderCard(event) {
 
 <div class="card ${cardClass}">
 
-    <div class="card-header">
+	<div class="card-summary">
+		<div class="card-header">
 
-        <div class="badge ${event.type.toLowerCase()}">
-            ${event.type}
-        </div>
+			<div class="badge ${event.type.toLowerCase()}">
+				${event.type}
+			</div>
 
-        <div class="event-date">
-            ${shortDate(event.startDate)}
-        </div>
+			<div class="event-date">
+				${shortDate(event.startDate)}
+			</div>
 
-    </div>
+		</div>
 
-    <h2 class="event-title">
-        ${event.title}
-    </h2>
+		<h2 class="event-title">
+			${event.title}
+		</h2>
 
-    <div class="info">
-        📍 ${event.displayLocation}
-    </div>
+		<div class="info">
+			📍 ${event.displayLocation}
+		</div>
 
-    <div class="info">
-        👦 ${event.categoriesArray.join(" • ")}
-    </div>
-	
-	<div class="info">
-        🏸 ${event.disciplinesArray.join(" • ")}
-    </div>
+		<div class="info">
+			👦 ${event.categoriesArray.join(" • ")}
+		</div>
+		
+		<div class="info">
+			🏸 ${event.disciplinesArray.join(" • ")}
+		</div>
 
-    <div class="separator"></div>
+		<div class="separator"></div>
 
-    <div class="info">
-        👥 ${event.registrationMode}
-    </div>
+		<div class="info">
+			👥 ${event.registrationMode}
+		</div>
 
-    ${registrationInfo ? `
-    <div class="registration">
-        📝 ${registrationInfo}
-    </div>
-    ` : ""}
+		${registrationInfo ? `
+		<div class="registration">
+			📝 ${registrationInfo}
+		</div>
+		` : ""}
 
-    ${eventButton(event)}
-	
-	${googleMapsButton(event)}
 
+	</div>
+	<div class="card-details">
+		<!--
+          Future fiche détaillée :
+          - inscription
+          - BadNet
+          - Google Maps
+          - Google Calendar
+        -->
+		${eventButton(event)}
+		
+		${googleMapsButton(event)}
+	</div>
 </div>
 
 `;
