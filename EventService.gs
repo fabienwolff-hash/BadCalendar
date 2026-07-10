@@ -185,19 +185,27 @@ const EventService = {
 	},
 	
 	buildDisplayDate_(event){
-
 		const start = event.startDate;
 		const end = event.endDate;
 
-		if (!end || this.isSameDay_(start,end)) {
-
+		if (!end || this.isSameDay_(start, end)) {
 			return this.formatDate_(start);
-
 		}
 
-		return `${this.formatDate_(start)} - ${this.formatDate_(end)}`;
+		if (
+			start.getMonth() === end.getMonth()
+			&&
+			start.getFullYear() === end.getFullYear()
+		) {
+			return `${start.getDate()} - ${end.getDate()} ${
+				this.formatMonth_(start)
+			}`;
+		}
 
-	},	
+		return `${this.formatDateWithoutWeekday_(start)} - ${
+			this.formatDateWithoutWeekday_(end)
+		}`;
+	}
 
 	isSameDay_(a,b){
 
@@ -207,12 +215,21 @@ const EventService = {
 
 	},
 	
-	formatDate_(date){
+	formatMonth_(date){
 
 		return date.toLocaleDateString(
 			CONFIG.LOCALE,
 			{
-				weekday:"short",
+				month:"short"
+			}
+		);
+	},
+
+	formatDateWithoutWeekday_(date){
+
+		return date.toLocaleDateString(
+			CONFIG.LOCALE,
+			{
 				day:"numeric",
 				month:"short"
 			}
