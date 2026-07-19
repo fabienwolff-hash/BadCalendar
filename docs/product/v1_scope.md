@@ -221,4 +221,19 @@ La version 1.0 privilégie :
 
 Chaque fonctionnalité présente doit apporter une valeur immédiate au parent.
 
-Tout ce qui ajoute de la complexité sans bénéfice clair est volontairement repoussé.
+Tout ce qui ajoute de la complexité sans bénéfice clair est volontairement repoussé 
+
+---
+
+# Ce que BadCalendar n'est pas
+
+BadCalendar n'a pas vocation à remplacer BadNet.
+
+BadCalendar complète BadNet.
+
+Son rôle est de faciliter la découverte des compétitions et la planification de la saison.
+
+Les inscriptions, les résultats et les informations sportives détaillées restent gérés par BadNet.
+
+
+é.
