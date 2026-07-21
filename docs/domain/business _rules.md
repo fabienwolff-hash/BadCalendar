@@ -343,6 +343,16 @@ Cette séparation garantit une consultation rapide, en particulier sur mobile.
 
 Les informations présentées à l'utilisateur dépendent du statut d'inscription de l'événement.
 
+---
+
+# BR-037 - Définition d'un nouveau tournoi
+
+Un tournoi est considéré comme nouveau lorsqu'il apparaît pour la première fois dans le Master.
+
+Cette date est enregistrée dans la propriété CreationDate.
+
+Les modifications ultérieures (adresse, catégories, dates d'inscription, informations complémentaires...) ne modifient jamais cette date et ne rendent pas le tournoi à nouveau "nouveau".
+
 Exemples :
 
 * UNKNOWN : aucune information d'inscription ;
@@ -354,6 +364,6 @@ Le frontend ne détermine jamais ces règles. Il applique les informations fourn
 
 ---
 
-# BR-037 — Disciplines
+# BR-038 — Disciplines
 
 Un événement de type compétitif (i.e. hors stage) doit avoir au moins une discipline renseignée.
