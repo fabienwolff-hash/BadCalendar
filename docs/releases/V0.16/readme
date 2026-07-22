@@ -1,0 +1,161 @@
+# Version v0.16 — Usage Metrics
+
+## Objectif de la version
+
+La version **v0.16** introduit un système de collecte de métriques d'utilisation anonymes.
+
+Son objectif est de mieux comprendre comment BadCalendar est utilisé pendant la phase pilote afin d'orienter les futures évolutions du produit.
+
+Aucune donnée personnelle n'est collectée.
+
+---
+
+# Pourquoi cette version ?
+
+Les retours utilisateurs sont essentiels mais souvent subjectifs.
+
+Les Usage Metrics permettent de compléter ces retours par des données objectives.
+
+Cette version répond notamment aux questions suivantes :
+
+- quelles fonctionnalités sont réellement utilisées ?
+- quels filtres sont les plus populaires ?
+- combien de compétitions sont consultées ?
+- combien d'ouvertures BadNet sont réalisées ?
+- combien d'exports Google Calendar sont effectués ?
+- quelles sont les fonctionnalités peu utilisées ?
+
+Ces informations permettront de prioriser les évolutions après la publication de la v1.0.
+
+---
+
+# Objectifs
+
+Les objectifs de cette version sont :
+
+- enregistrer les événements d'utilisation ;
+- garantir l'anonymat des utilisateurs ;
+- construire automatiquement un tableau de bord Google Sheets ;
+- fournir des indicateurs simples d'utilisation ;
+- limiter l'impact sur les performances.
+
+---
+
+# Sous-issues
+
+| Id | Sous-issue | Statut |
+|----|------------|--------|
+| BC-16.1 | Modèle de collecte des métriques | ☐ |
+| BC-16.2 | Instrumentation de l'application | ☐ |
+| BC-16.3 | Tableau de bord Google Sheets | ☐ |
+| BC-16.4 | Finalisation et stabilisation | ☐ |
+
+---
+
+# Ordre de réalisation
+
+Les sous-issues doivent être réalisées dans l'ordre suivant :
+
+```
+BC-16.1
+      ↓
+BC-16.2
+      ↓
+BC-16.3
+      ↓
+BC-16.4
+```
+
+Chaque étape dépend de la précédente.
+
+---
+
+# Documents de référence
+
+Avant de commencer une sous-issue, consulter les documents suivants.
+
+## Produit
+
+- vision.md
+- philosophy.md
+- product_principles.md
+
+## Analytics
+
+- usage_metrics.md
+- dashboard.md
+
+## Architecture
+
+- architecture.md
+- coding_guidelines.md
+
+## Gestion du projet
+
+- roadmap.md
+- release_checklist.md
+- release_note.md
+
+---
+
+# Méthode de développement
+
+Chaque sous-issue suit le processus suivant :
+
+1. Lire le document de la sous-issue.
+2. Identifier les impacts.
+3. Implémenter la fonctionnalité.
+4. Réaliser les validations fonctionnelles.
+5. Vérifier les critères d'acceptation.
+6. Mettre à jour la documentation.
+7. Valider la Release Checklist.
+8. Clôturer la sous-issue.
+
+Une seule sous-issue est développée à la fois.
+
+---
+
+# Principes de la version
+
+La v0.16 respecte les principes suivants :
+
+- anonymat complet ;
+- aucune création de compte ;
+- aucune donnée personnelle ;
+- faible impact sur les performances ;
+- simplicité de mise en œuvre ;
+- tableau de bord automatique.
+
+---
+
+# Hors périmètre
+
+La v0.16 ne comprend pas :
+
+- Google Analytics ;
+- Firebase Analytics ;
+- cookies ;
+- profils utilisateurs ;
+- suivi individuel ;
+- A/B testing.
+
+---
+
+# Critères de sortie de la version
+
+La version est considérée terminée lorsque :
+
+- les événements sont correctement enregistrés ;
+- le dashboard est entièrement alimenté ;
+- les indicateurs sont calculés automatiquement ;
+- les données restent anonymes ;
+- la documentation est synchronisée ;
+- la Release Checklist est validée.
+
+---
+
+# Livrable attendu
+
+À l'issue de la v0.16, BadCalendar dispose d'un système complet de métriques d'utilisation.
+
+L'application fournit des indicateurs fiables permettant d'analyser les usages observés pendant la phase pilote et de préparer les évolutions des versions futures.
