@@ -52,6 +52,7 @@ const EventService = {
     });
 
    return {
+	  tournamentId: raw.TournamentId || "",
 	  type: raw.Type || "",
 	  scope: raw.Scope || "",
 	  title: raw.Title || "",
