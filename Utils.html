@@ -95,6 +95,24 @@ function getRegistrationMessage(event){
 	}
 }
 
+function getRegistrationClass(event) {
+
+    switch (event.registrationStatus) {
+
+        case STATUS.REGISTRATION.OPEN:
+            return "registration-open";
+
+        case STATUS.REGISTRATION.NOT_OPEN:
+            return "registration-not-open";
+
+        case STATUS.REGISTRATION.CLOSED:
+            return "registration-closed";
+
+        default:
+            return "";
+    }
+}
+
 function shortDate(date){
 
     const d=new Date(date);

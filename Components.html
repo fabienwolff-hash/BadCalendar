@@ -53,11 +53,11 @@ function renderCard(event) {
 		<div class="separator"></div>
 
 		${registrationInfo ? `
-		<div class="registration">
+		<div class="registration ${getRegistrationClass(event)}">
 			📝 ${registrationInfo}
 		</div>
 		` : ""}
-
+		
 		<button 
 			class="card-toggle"
 			type="button">
