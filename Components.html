@@ -77,17 +77,14 @@ function renderCard(event) {
 			👥 ${event.registrationMode}
 		</div>
 		
-		<div class="card-actions">
+		${eventButton(event)}
 
-			${eventButton(event)}
+		<div class="secondary-actions">
 
-			<div class="secondary-actions">
+			${googleMapsButton(event)}
 
-				${googleMapsButton(event)}
+			${googleCalendarButton(event)}
 
-				${googleCalendarButton(event)}
-
-			</div>
 		</div>
 	</div>
 </div>
