@@ -236,6 +236,9 @@ const App = {
 
 			const creationDate = new Date(event.creationDate);
 			const expirationDate = new Date(creationDate);
+			
+			console.log("creationDate : "+creationDate);
+			console.log("expirationDate : "+expirationDate);
 
 			expirationDate.setDate(expirationDate.getDate() + NEW_DURATION_DAYS);
 
