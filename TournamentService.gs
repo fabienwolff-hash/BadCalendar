@@ -195,6 +195,17 @@ const TournamentService = {
     return `${this.formatWeekday_(start)} - ${this.formatWeekday_(end)}`;
   },
 
+	buildSites_(row) {
+
+	const site = this.buildSite_(row);
+
+	if (!site.city && !site.gymnasium) {
+		return [];
+	}
+
+	return [site];
+	},
+
 	buildSite_(row) {
 
 	  return {
