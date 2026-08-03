@@ -127,6 +127,7 @@ const EventService = {
 	  displayLocation,
 	  displayDate,
 	  googleMapsUrl: LocationService.buildGoogleMapsUrl(event.city),
+	  googleCalendarUrl: CalendarService.buildGoogleCalendarUrl(event),
 	  month: startDate.toLocaleString(
 		CONFIG.LOCALE,
 		{ month: "long" }

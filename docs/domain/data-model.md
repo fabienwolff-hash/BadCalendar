@@ -261,6 +261,7 @@ Les champs suivants sont calculés automatiquement par `EventService`.
 | month              | Texte   | Nom du mois                        |
 | monthNumber        | Nombre  | Numéro du mois                     |
 | year               | Nombre  | Année                              |
+| googleCalendarUrl  | URL     | URL pour Google Calendar           |
 | categoriesArray    | Tableau | Liste des catégories               |
 | eventStatus        | Enum    | UPCOMING / ONGOING / FINISHED      |
 | registrationStatus | Enum    | UNKNOWN / NOT_OPEN / OPEN / CLOSED |
@@ -294,6 +295,7 @@ Exemple simplifié :
   "year": 2026,
   "displayLocation" : "...",
   "googleMapsUrl" : "...",
+  "googleCalendarUrl" : "...",
   "disciplinesArray" : "..."
   "registrationMode": "...",
   "registrationOpenDate": "...",
