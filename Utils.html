@@ -26,10 +26,10 @@ function eventButton(event){
                     label = UI.BUTTONS.VIEW_EVENT;
             }
     }
-
+	
     return `
         <a
-            class="button"
+            class="button button-primary"
             href="${event.eventUrl}"
             target="_blank"
         >
@@ -45,7 +45,7 @@ function googleMapsButton(event) {
     }
     return `
         <a
-            class="button secondary"
+            class="button button-secondary"
             href="${event.googleMapsUrl}"
             target="_blank"
             rel="noopener noreferrer">
@@ -61,7 +61,7 @@ function googleCalendarButton(event) {
     }
     return `
         <a
-            class="button secondary"
+            class="button button-secondary"
             href="${event.googleCalendarUrl}"
             target="_blank"
             rel="noopener noreferrer">
