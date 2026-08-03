@@ -60,6 +60,26 @@ function googleMapsButton(event) {
 
 }
 
+function googleCalendarButton(event) {
+
+    if (!event.googleCalendarUrl) {
+        return "";
+    }
+    return `
+        <a
+            class="button secondary"
+            href="${event.googleCalendarUrl}"
+            target="_blank"
+            rel="noopener noreferrer">
+            ${UI.BUTTONS.GOOGLE_MAPS}
+        </a>
+    `;
+
+}
+
+
+
+
 function getRegistrationMessage(event){
 
     switch (event.registrationStatus) {

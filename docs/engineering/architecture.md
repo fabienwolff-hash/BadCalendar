@@ -184,6 +184,16 @@ Le frontend ne construit jamais lui-même une URL Google Maps.
 
 ---
 
+## CalendarService.gs
+
+Responsabilités :
+
+* construction des URLs Google Calendar
+
+Le frontend ne construit jamais lui-même une URL Google Calendar.
+
+---
+
 ## Menu.gs
 
 Responsabilités :
