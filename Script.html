@@ -92,6 +92,16 @@ const App = {
 		
 		Storage.saveLastVisit(new Date().toISOString());
 		
+		console.log("LastVisit", this.state.lastVisit);
+
+		console.table(
+			this.events.map(e => ({
+				title: e.title,
+				creationDate: e.creationDate,
+				isNew: e.isNew
+			}))
+		);
+		
 		this.showApplication();
 	},
 	
