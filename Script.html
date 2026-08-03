@@ -35,7 +35,15 @@ const Storage = {
 
     saveScope(value) {
         localStorage.setItem(STORAGE_KEYS.SCOPE,value);
-    }
+    },
+	
+	loadLastVisit() {
+		return localStorage.getItem(STORAGE_KEYS.LAST_VISIT);
+	},
+
+	saveLastVisit(value) {
+		localStorage.setItem(STORAGE_KEYS.LAST_VISIT,value);
+	}
 };
 
 const App = {
@@ -49,7 +57,8 @@ const App = {
 		scope: UI.FILTERS.ALL,
 		month: UI.FILTERS.ALL,
 		filtersCollapsed: false,
-		showFinished: false
+		showFinished: false,
+		lastVisit: null
     },
 
     init(events) {
@@ -74,13 +83,16 @@ const App = {
 		this.populateFilters();
 
 		this.restoreState();
+		
+		this.markNewEvents();
 
 		this.bindEvents();
-
+		
 		this.render();
-
+		
+		Storage.saveLastVisit(new Date().toISOString());
+		
 		this.showApplication();
-
 	},
 	
 	restoreState() {
@@ -88,6 +100,7 @@ const App = {
 		this.state.showFinished = Storage.loadShowFinished();
 		this.state.category = Storage.loadCategory() || UI.FILTERS.ALL;
 		this.state.scope = Storage.loadScope() || UI.FILTERS.ALL;
+		this.state.lastVisit = Storage.loadLastVisit();
 		
 		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
 		$(DOM.FILTER_CATEGORY).value = this.state.category;
@@ -220,6 +233,21 @@ const App = {
             return true;
         });
     },
+	
+	markNewEvents() {
+
+		if (!this.state.lastVisit) {
+			return;
+		}
+
+		const lastVisit = new Date(this.state.lastVisit);
+
+		this.events.forEach(event => {
+			event.isNew =
+				event.creationDate &&
+				new Date(event.creationDate) > lastVisit;
+		});
+	},
 
 	getFiltersSummary() {
 
@@ -376,6 +404,8 @@ function sortByOrder(values, order){
     });
 
 }
+
+
 
 function $(id){
     return document.getElementById(id);
