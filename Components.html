@@ -26,6 +26,12 @@ function renderCard(event) {
 						${event.type}
 					</div>
 					
+					${event.isNew ? `
+						<div class="badge-new">
+							Nouveau
+						</div>
+					` : ""}
+					
 					<h2 class="event-title">
 						${event.title}
 					</h2>
