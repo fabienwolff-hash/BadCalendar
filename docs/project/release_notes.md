@@ -397,3 +397,28 @@ Les futures évolutions (fiche détaillée, Google Calendar, filtres avancés...
 - Ajout du champ Disciplines dans le modèle événement.
 - Ajout de la validation métier associée.
 - Ajout de disciplinesArray pour la présentation.
+
+---
+
+## V0.16 
+
+### Google Calendar
+
+#### Architecture
+
+- création de CalendarService
+
+#### Backend
+
+- génération de googleCalendarUrl
+- gestion des événements multi-jours
+
+#### Frontend
+
+- ajout du bouton "Ajouter au calendrier"
+
+#### Fonctionnel
+
+- création d'un événement Google Calendar pré-rempli
+- reprise du lieu (displayLocation)
+- reprise du lien BadNet

@@ -46,6 +46,7 @@ Cette logique est portée par :
 * Config.gs
 * EventService.gs
 * ParameterService.gs
+* CalendarService.gs
 * ValidationService.gs
 * ReportService.gs
 
@@ -189,6 +190,8 @@ Le frontend ne construit jamais lui-même une URL Google Maps.
 Responsabilités :
 
 * construction des URLs Google Calendar
+* gestion du format Google Calendar ;
+* gestion des événements multi-jours ;
 
 Le frontend ne construit jamais lui-même une URL Google Calendar.
 
