@@ -7,6 +7,10 @@ const ValidationService = {
 
 	  const requiredFields = [
 		{
+		  field: "tournamentId",
+		  label: "TournamentId"
+		},
+		{
 		  field: "type",
 		  label: "Type"
 		},
@@ -212,6 +216,10 @@ const ValidationService = {
 		...this.validateBusinessRule_(events, rule)
 	  );
 	});
+	
+	issues.push(
+		...this.validateTournamentConsistency_(events)
+	);
 
 	issues.sort((a, b) => {
 
@@ -362,6 +370,108 @@ const ValidationService = {
 		);
 
 	  });
+
+	  return issues;
+	},
+	
+	validateTournamentConsistency_(events) {
+
+	  const issues = [];
+
+	  const groups = {};
+
+	  events.forEach((event, index) => {
+
+		if (!event.tournamentId) {
+		  return;
+		}
+
+		if (!groups[event.tournamentId]) {
+		  groups[event.tournamentId] = [];
+		}
+
+		groups[event.tournamentId].push({
+		  row: index + 2,
+		  event
+		});
+
+	  });
+
+	  const fields = [
+		{
+		  field: "title",
+		  label: "Title"
+		},
+		{
+		  field: "type",
+		  label: "Type"
+		},
+		{
+		  field: "scope",
+		  label: "Scope"
+		},
+		{
+		  field: "registrationMode",
+		  label: "RegistrationMode"
+		},
+		{
+		  field: "registrationOpenDate",
+		  label: "RegistrationOpenDate"
+		},
+		{
+		  field: "registrationCloseDate",
+		  label: "RegistrationCloseDate"
+		},
+		{
+		  field: "eventUrl",
+		  label: "EventUrl"
+		}
+	  ];
+
+	  Object.entries(groups).forEach(
+		([tournamentId, rows]) => {
+
+		  if (rows.length < 2) {
+			return;
+		  }
+
+		  const reference =
+			rows[0].event;
+
+		  fields.forEach(rule => {
+
+			rows.slice(1).forEach(current => {
+
+			  const left =
+				reference[rule.field];
+
+			  const right =
+				current.event[rule.field];
+
+			  const leftValue =
+				left instanceof Date
+				  ? left.getTime()
+				  : String(left || "");
+
+			  const rightValue =
+				right instanceof Date
+				  ? right.getTime()
+				  : String(right || "");
+
+			  if (leftValue !== rightValue) {
+
+				issues.push(
+				  ValidationIssue.error(
+					current.row,
+					rule.label,
+					`Tournament ${tournamentId} : ${rule.label} incohérent`
+				  )
+				);
+			  }
+			});
+		  });
+		}
+	  );
 
 	  return issues;
 	}
