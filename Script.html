@@ -19,7 +19,7 @@ const Storage = {
 
     saveShowFinished(value) {
         localStorage.setItem(STORAGE_KEYS.SHOW_FINISHED,value);
-    }
+    },
 	
     loadCategory() {
         return localStorage.getItem(STORAGE_KEYS.CATEGORY) || "";
