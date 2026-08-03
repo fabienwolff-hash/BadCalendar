@@ -131,7 +131,7 @@ const EventService = {
 	  ...enrichedEvent,
 
 	  googleMapsUrl: LocationService.buildGoogleMapsUrl(event.city),
-	  googleCalendarUrl: CalendarService.buildGoogleCalendarUrl(event),
+	  googleCalendarUrl: CalendarService.buildGoogleCalendarUrl(enrichedEvent),
 	  month: startDate.toLocaleString(
 		CONFIG.LOCALE,
 		{ month: "long" }
