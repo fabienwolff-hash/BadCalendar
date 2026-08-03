@@ -35,15 +35,7 @@ const Storage = {
 
     saveScope(value) {
         localStorage.setItem(STORAGE_KEYS.SCOPE,value);
-    },
-	
-	loadLastVisit() {
-		return localStorage.getItem(STORAGE_KEYS.LAST_VISIT);
-	},
-
-	saveLastVisit(value) {
-		localStorage.setItem(STORAGE_KEYS.LAST_VISIT,value);
-	}
+    }
 };
 
 const App = {
@@ -57,8 +49,7 @@ const App = {
 		scope: UI.FILTERS.ALL,
 		month: UI.FILTERS.ALL,
 		filtersCollapsed: false,
-		showFinished: false,
-		lastVisit: null
+		showFinished: false
     },
 
     init(events) {
@@ -89,8 +80,6 @@ const App = {
 		this.bindEvents();
 		
 		this.render();
-		
-		Storage.saveLastVisit(new Date().toISOString());
 			
 		this.showApplication();
 	},
@@ -100,7 +89,6 @@ const App = {
 		this.state.showFinished = Storage.loadShowFinished();
 		this.state.category = Storage.loadCategory() || UI.FILTERS.ALL;
 		this.state.scope = Storage.loadScope() || UI.FILTERS.ALL;
-		this.state.lastVisit = Storage.loadLastVisit();
 		
 		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
 		$(DOM.FILTER_CATEGORY).value = this.state.category;
@@ -235,17 +223,24 @@ const App = {
     },
 	
 	markNewEvents() {
-
-		if (!this.state.lastVisit) {
-			return;
-		}
-
-		const lastVisit = new Date(this.state.lastVisit);
-
+		
+		// Par défaut un tournoi est marqué nouveau pendant 30 jours par rapport à sa date de création
+		const NEW_DURATION_DAYS = 30;
+		
 		this.events.forEach(event => {
+
+			if (!event.creationDate) {
+				event.isNew = false;
+				return;
+			}
+
+			const creationDate = new Date(event.creationDate);
+			const expirationDate = new Date(creationDate);
+
+			expirationDate.setDate(expirationDate.getDate() + NEW_DURATION_DAYS);
+
 			event.isNew =
-				event.creationDate &&
-				new Date(event.creationDate) > lastVisit;
+				new Date() <= expirationDate;
 		});
 	},
 
