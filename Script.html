@@ -237,14 +237,9 @@ const App = {
 			const creationDate = new Date(event.creationDate);
 			const expirationDate = new Date(creationDate);
 			
-			console.log("creationDate : "+creationDate);
-
 			expirationDate.setDate(expirationDate.getDate() + NEW_DURATION_DAYS);
-			console.log("expirationDate : "+expirationDate);
-			console.log("today : "+new Date());
 
-			event.isNew =
-				new Date() <= expirationDate;
+			event.isNew = new Date() <= expirationDate;
 		});
 	},
 
