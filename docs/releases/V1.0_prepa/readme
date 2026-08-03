@@ -1,0 +1,283 @@
+# Version v1.0 — Release Candidate
+
+## Objectif de la version
+
+La version **v1.0** prépare la première publication officielle de BadCalendar.
+
+Cette version a pour objectif de transformer les fonctionnalités développées dans les versions précédentes en un produit stable, cohérent et prêt à être utilisé par les parents de joueurs de badminton.
+
+La v1.0 ne doit pas introduire de nouvelles fonctionnalités majeures.
+
+Elle se concentre sur :
+
+* l’intégration finale ;
+* les tests fonctionnels ;
+* la phase pilote ;
+* les corrections ;
+* la documentation ;
+* la publication officielle.
+
+---
+
+# Pourquoi cette version ?
+
+Les versions précédentes ont permis de construire les principales fonctionnalités de BadCalendar :
+
+* nouveau modèle métier ;
+* Google Calendar ;
+* améliorations UX ;
+* filtres avancés ;
+* Usage Metrics.
+
+Avant de publier officiellement l’application, il est nécessaire de :
+
+* vérifier que toutes les fonctionnalités fonctionnent ensemble ;
+* recueillir les retours des utilisateurs pilotes ;
+* corriger les anomalies bloquantes ;
+* finaliser la documentation ;
+* préparer le déploiement final.
+
+La v1.0 constitue donc une **Release Candidate**.
+
+---
+
+# Objectifs
+
+Les objectifs de cette version sont :
+
+* valider l’intégration complète de l’application ;
+* organiser la campagne pilote ;
+* collecter les retours utilisateurs ;
+* corriger les anomalies identifiées ;
+* finaliser la documentation ;
+* préparer le déploiement officiel ;
+* publier BadCalendar v1.0.
+
+---
+
+# Sous-issues
+
+| Id     | Sous-issue                                     | Statut |
+| ------ | ---------------------------------------------- | ------ |
+| BC-1.1 | Intégration finale et validation fonctionnelle | ☐      |
+| BC-1.2 | Campagne pilote                                | ☐      |
+| BC-1.3 | Corrections issues du pilote                   | ☐      |
+| BC-1.4 | Préparation de la publication                  | ☐      |
+| BC-1.5 | Publication officielle                         | ☐      |
+
+---
+
+# Ordre de réalisation
+
+Les sous-issues doivent être réalisées dans l’ordre suivant :
+
+```
+BC-1.1
+      ↓
+BC-1.2
+      ↓
+BC-1.3
+      ↓
+BC-1.4
+      ↓
+BC-1.5
+```
+
+Chaque étape dépend de la précédente.
+
+---
+
+# Documents de référence
+
+Avant de commencer une sous-issue, consulter les documents suivants.
+
+## Produit
+
+* vision.md
+* philosophy.md
+* product_principles.md
+* user_journey.md
+* v1_scope.md
+
+## Fonctionnalités
+
+* function_specification.md
+* filters.md
+* navigation.md
+* usage_metrics.md
+* dashboard.md
+
+## Architecture
+
+* architecture.md
+* domain_model.md
+* business_rules.md
+* coding_guidelines.md
+
+## Gestion du projet
+
+* roadmap.md
+* release_checklist.md
+* release_note.md
+* pilot_feedback.md
+
+---
+
+# Méthode de développement
+
+Chaque sous-issue suit le processus suivant :
+
+1. Lire le document de la sous-issue.
+2. Identifier les impacts.
+3. Réaliser les validations nécessaires.
+4. Corriger les anomalies identifiées.
+5. Vérifier les critères d’acceptation.
+6. Mettre à jour la documentation.
+7. Valider la Release Checklist.
+8. Clôturer la sous-issue.
+
+Une seule sous-issue est réalisée à la fois.
+
+---
+
+# Principes de la version
+
+La v1.0 respecte les principes suivants :
+
+* stabilité avant nouveauté ;
+* simplicité ;
+* fiabilité ;
+* cohérence ;
+* documentation synchronisée ;
+* corrections priorisées selon l’impact utilisateur.
+
+Aucune nouvelle fonctionnalité majeure ne doit être ajoutée pendant cette version.
+
+Les retours du pilote servent uniquement à corriger ou améliorer l’existant.
+
+---
+
+# Périmètre de la v1.0
+
+La v1.0 inclut :
+
+* TournamentService ;
+* Google Calendar ;
+* améliorations UX ;
+* nouveaux tournois ;
+* filtres multi-valeurs ;
+* Usage Metrics ;
+* dashboard Google Sheets ;
+* documentation utilisateur et technique.
+
+---
+
+# Hors périmètre
+
+La v1.0 ne comprend pas :
+
+* comptes utilisateurs ;
+* authentification ;
+* favoris ;
+* notifications ;
+* synchronisation avancée ;
+* application mobile native ;
+* fonctionnalités sociales ;
+* statistiques sportives ;
+* résultats ;
+* convocations.
+
+Ces évolutions seront étudiées après la publication de la v1.0.
+
+---
+
+# Campagne pilote
+
+La campagne pilote constitue une étape obligatoire avant la publication officielle.
+
+Elle doit permettre de :
+
+* vérifier l’intuitivité de l’application ;
+* identifier les anomalies ;
+* recueillir des retours constructifs ;
+* mesurer les usages réels ;
+* confirmer le périmètre de la v1.0.
+
+Les retours sont analysés avant toute publication officielle.
+
+---
+
+# Critères de sortie de la version
+
+La version est considérée terminée lorsque :
+
+* les cinq sous-issues sont clôturées ;
+* toutes les fonctionnalités prévues fonctionnent ensemble ;
+* les tests fonctionnels manuels sont validés ;
+* la campagne pilote est terminée ;
+* les anomalies bloquantes sont corrigées ;
+* la documentation est synchronisée ;
+* la Release Checklist est validée ;
+* le déploiement final est vérifié ;
+* la version v1.0.0 est publiée.
+
+---
+
+# Livrable attendu
+
+À l’issue de la v1.0, BadCalendar dispose :
+
+* d’une application stable ;
+* d’une interface simple et utilisable sur mobile ;
+* d’un système de filtres avancés ;
+* d’un export Google Calendar ;
+* d’un suivi des nouveaux tournois ;
+* d’un tableau de bord d’usage ;
+* d’une documentation à jour ;
+* d’un déploiement officiel accessible aux utilisateurs.
+
+---
+
+# Définition du succès
+
+La v1.0 sera considérée comme réussie si un parent peut, sans apprentissage :
+
+* retrouver rapidement les compétitions qui l’intéressent ;
+* filtrer les résultats selon ses besoins ;
+* identifier les nouveaux tournois ;
+* savoir si les inscriptions sont ouvertes ;
+* accéder à BadNet ;
+* ouvrir Google Maps ;
+* ajouter une compétition à son calendrier ;
+* utiliser l’application depuis son téléphone.
+
+---
+
+# Philosophie
+
+La v1.0 privilégie :
+
+* la simplicité ;
+* la fiabilité ;
+* la rapidité d’utilisation ;
+* la stabilité ;
+* la valeur immédiate pour le parent.
+
+Tout ce qui ajoute de la complexité sans bénéfice utilisateur clair est volontairement repoussé après la v1.0.
+
+---
+
+# Ce que BadCalendar n’est pas
+
+BadCalendar n’a pas vocation à remplacer BadNet.
+
+BadCalendar complète BadNet.
+
+Son rôle est de faciliter :
+
+* la découverte des compétitions ;
+* la planification de la saison ;
+* le suivi des inscriptions ;
+* l’accès rapide aux informations utiles.
+
+Les inscriptions, les résultats et les informations sportives détaillées restent gérés par BadNet.

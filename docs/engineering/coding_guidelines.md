@@ -338,6 +338,27 @@ Les conventions suivantes sont utilisées dans le projet :
 
 ---
 
+# Business Model First
+
+Toute nouvelle fonctionnalité doit commencer par vérifier si le modèle métier représente correctement le besoin.
+
+Lorsque le modèle est incomplet, celui-ci doit évoluer avant toute implémentation.
+
+Le code doit refléter le modèle métier, jamais l'inverse.
+
+---
+
+# Business Logic
+
+Toute logique métier appartient au backend.
+
+Le frontend consomme uniquement un modèle déjà enrichi.
+
+Toute règle métier présente dans le frontend constitue une anomalie de conception.
+
+
+---
+
 # Conclusion
 
 BadCalendar privilégie une architecture simple, lisible et évolutive.

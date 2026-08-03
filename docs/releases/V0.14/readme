@@ -1,0 +1,172 @@
+# Version v0.14 — Navigation & Expérience utilisateur
+
+## Objectif de la version
+
+La version **v0.14** améliore l'expérience utilisateur de BadCalendar afin de rendre la consultation des compétitions plus simple, plus rapide et plus intuitive.
+
+Cette version n'introduit pas de nouvelles fonctionnalités métier majeures.
+
+Son objectif est d'améliorer l'utilisation quotidienne de l'application en réduisant les manipulations inutiles et en mettant davantage en valeur les informations importantes.
+
+---
+
+# Pourquoi cette version ?
+
+Les premiers retours utilisateurs montrent qu'une application utile doit avant tout être simple à parcourir.
+
+Les principales attentes sont :
+
+- retrouver rapidement les compétitions intéressantes ;
+- limiter les manipulations répétitives ;
+- identifier immédiatement les nouvelles compétitions ;
+- améliorer la lisibilité des cartes ;
+- conserver une interface adaptée au mobile.
+
+Cette version répond à ces besoins sans complexifier l'application.
+
+---
+
+# Objectifs
+
+Les objectifs de cette version sont :
+
+- améliorer la navigation générale ;
+- mémoriser les filtres les plus pertinents ;
+- améliorer la lisibilité des cartes de compétition ;
+- mettre en évidence les nouveaux tournois ;
+- homogénéiser l'expérience entre mobile et desktop.
+
+---
+
+# Sous-issues
+
+| Id | Sous-issue | Statut |
+|----|------------|--------|
+| BC-14.1 | Navigation et persistance des filtres | ☐ |
+| BC-14.2 | Amélioration des cartes de compétition | ☐ |
+| BC-14.3 | Gestion des nouveaux tournois | ☐ |
+| BC-14.4 | Finalisation et stabilisation UX | ☐ |
+
+---
+
+# Ordre de réalisation
+
+Les sous-issues doivent être réalisées dans l'ordre suivant :
+
+```
+BC-14.1
+      ↓
+BC-14.2
+      ↓
+BC-14.3
+      ↓
+BC-14.4
+```
+
+Chaque étape dépend de la précédente.
+
+---
+
+# Documents de référence
+
+Avant de commencer une sous-issue, consulter les documents suivants.
+
+## Produit
+
+- vision.md
+- philosophy.md
+- product_principles.md
+- user_journey.md
+
+## UX
+
+- ux_audit.md
+- navigation.md
+- filters.md
+
+## Métier
+
+- business_rules.md
+- glossary.md
+
+## Architecture
+
+- architecture.md
+- coding_guidelines.md
+
+## Gestion du projet
+
+- roadmap.md
+- release_checklist.md
+- release_note.md
+
+---
+
+# Méthode de développement
+
+Chaque sous-issue suit le processus suivant :
+
+1. Lire le document de la sous-issue.
+2. Identifier les impacts.
+3. Implémenter la fonctionnalité.
+4. Réaliser les validations fonctionnelles.
+5. Vérifier les critères d'acceptation.
+6. Mettre à jour la documentation.
+7. Valider la Release Checklist.
+8. Clôturer la sous-issue.
+
+Une seule sous-issue est développée à la fois.
+
+---
+
+# Principes de la version
+
+La v0.14 respecte les principes suivants :
+
+- Mobile First ;
+- KISS ;
+- Single Source of Truth ;
+- Frontend responsable uniquement de l'expérience utilisateur ;
+- Backend responsable de la logique métier ;
+- Documentation synchronisée avec le code.
+
+Toute amélioration doit apporter un bénéfice immédiat au parent.
+
+---
+
+# Hors périmètre
+
+La v0.14 ne comprend pas :
+
+- nouveaux filtres métier ;
+- Google Calendar ;
+- Usage Metrics ;
+- optimisation des performances ;
+- comptes utilisateurs ;
+- synchronisation avec BadNet.
+
+Ces évolutions seront traitées dans les versions suivantes.
+
+---
+
+# Critères de sortie de la version
+
+La version est considérée terminée lorsque :
+
+- les quatre sous-issues sont clôturées ;
+- les filtres permanents sont correctement mémorisés ;
+- les cartes sont plus lisibles ;
+- les nouveaux tournois sont clairement identifiables ;
+- le comportement est cohérent sur mobile et desktop ;
+- la documentation est synchronisée ;
+- la Release Checklist est validée.
+
+---
+
+# Livrable attendu
+
+À l'issue de la v0.14, BadCalendar offre une navigation plus fluide et une expérience utilisateur plus agréable.
+
+Les parents retrouvent plus rapidement les compétitions qui les intéressent, identifient immédiatement les nouveaux tournois et utilisent l'application avec moins de manipulations.
+
+Cette version constitue la dernière grande amélioration ergonomique avant l'intégration des fonctionnalités avancées de la v1.0.

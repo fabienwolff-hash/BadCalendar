@@ -9,6 +9,7 @@ L'objectif est de fournir une consultation moderne, responsive et toujours à jo
 Chaque événement est présenté sous la forme d'une fiche synthétique conçue pour permettre aux utilisateurs d'identifier rapidement les informations essentielles, puis d'accéder aux informations complémentaires et aux actions disponibles uniquement lorsqu'elles sont utiles.
 
 BadCalendar est un produit de consultation. Son objectif n'est pas de gérer l'organisation des compétitions, les inscriptions ou les résultats, mais de faciliter l'accès à l'information pour ses utilisateurs.
+BadCalendar complète BadNet en proposant une vision de la saison sportive adaptée aux parents de jeunes joueurs. Il permet de préparer la saison et d'identifier les compétitions pertinentes avant de rediriger, lorsque cela est nécessaire, vers BadNet pour les fonctionnalités de gestion des compétitions et des inscriptions.
 
 Le projet est volontairement centré sur la simplicité d'administration, la qualité des données, la maintenabilité du code et la pérennité de la solution.
 
@@ -16,7 +17,7 @@ Le projet est volontairement centré sur la simplicité d'administration, la qua
 
 # Problème à résoudre
 
-Les calendriers sportifs sont souvent diffusés sous forme de documents PDF, tableaux Excel ou pages Web statiques.
+Les informations sont souvent réparties entre plusieurs supports (PDF, Google Sheets, BadNet, sites web des ligues ou des comités), obligeant les familles à naviguer entre plusieurs sources pour préparer une saison sportive.
 
 Ces supports sont difficiles à maintenir, rapidement obsolètes et peu adaptés à une consultation sur mobile.
 
@@ -40,7 +41,7 @@ BadCalendar poursuit plusieurs objectifs.
 
 ## Promesse utilisateur
 
-BadCalendar doit permettre à un utilisateur de retrouver en quelques secondes les informations essentielles d'un événement sportif sans avoir à consulter plusieurs documents ou plateformes.
+BadCalendar doit permettre à un utilisateur de prendre rapidement une décision sans avoir à consulter plusieurs documents ou plateformes.
 
 La fiche événement doit permettre au parent de déterminer rapidement si une compétition correspond à son enfant, avant de lui proposer les informations complémentaires et les actions disponibles.
 
@@ -94,7 +95,11 @@ Le Master demeure l'unique source de vérité du système.
 
 # Public cible
 
-Bien que BadCalendar puisse être utilisée par l'ensemble des acteurs d'une organisation sportive, la conception du produit privilégie avant tout les besoins de consultation des parents et des jeunes licenciés.
+La première cible de BadCalendar est constituée des parents de jeunes joueurs de badminton.
+
+Le produit est conçu en priorité pour les compétitions jeunes organisées par le Comité Départemental d'Ille-et-Vilaine et la Ligue de Bretagne.
+
+Son architecture permet néanmoins une adaptation à d'autres territoires en faisant évoluer uniquement le contenu du fichier Master.
 
 Les choix d'ergonomie, d'affichage et de navigation sont prioritairement pensés pour accompagner ce public dans le choix d'une compétition adaptée au profil de leur enfant.
 
@@ -115,6 +120,7 @@ BadCalendar est conçu autour de quelques principes simples :
 * référentiels administrables ;
 * architecture simple et modulaire ;
 * évolutivité ;
+* complémentarité avec Badnet ;
 * documentation maintenue.
 
 ---
@@ -123,11 +129,12 @@ BadCalendar est conçu autour de quelques principes simples :
 
 À terme, BadCalendar a vocation à devenir une plateforme générique de publication de calendriers sportifs.
 
-Le Google Sheets Master reste le point d'entrée unique des données.
+Le Google Sheets Master reste le point d'entrée unique des données. Il décrit la saison sportive ; BadCalendar la met en valeur.
 
 L'application s'appuie sur des services spécialisés, chacun responsable d'un domaine fonctionnel clairement identifié :
 
 * lecture des événements ;
+* modélisation des tournois ;
 * validation des données ;
 * lecture des référentiels métier ;
 * enrichissement du modèle ;
@@ -149,3 +156,18 @@ Le succès de BadCalendar se mesure par sa capacité à fournir une information 
 Une évolution est considérée comme réussie lorsqu'elle enrichit l'expérience utilisateur sans alourdir la consultation des événements.
 
 Le succès se mesure également par la capacité du projet à évoluer progressivement, sans complexifier son architecture ni remettre en cause les choix techniques fondateurs.
+
+---
+
+# Ce que BadCalendar n'est pas
+
+BadCalendar n'a pas vocation à :
+
+- gérer les inscriptions ;
+- gérer les tableaux ;
+- publier les résultats ;
+- remplacer BadNet ;
+- gérer les licences ;
+- gérer les clubs.
+
+Ces fonctionnalités relèvent d'autres outils spécialisés.

@@ -20,7 +20,11 @@ Il n'existe aucune contrainte de délai.
 
 Les décisions techniques sont prises uniquement dans l'intérêt de la qualité du produit.
 
-L'application est aujourd'hui en version 0.8.
+L'application est actuellement en phase de conception avancée de la v0.12.
+
+La documentation d'architecture, du domaine métier et de la roadmap constitue la référence du projet.
+
+Toute évolution doit s'appuyer sur cette documentation avant de proposer une implémentation.
 
 L'objectif est d'atteindre progressivement une version 1.0 stable.
 
@@ -89,6 +93,52 @@ Tu évites les gros refactorings lorsqu'ils n'apportent pas de valeur immédiate
 
 ---
 
+# Méthode de travail
+
+BadCalendar privilégie une approche "documentation first".
+
+Avant toute implémentation significative :
+
+- le besoin est formalisé ;
+- les décisions d'architecture sont prises ;
+- la sous-issue est documentée ;
+- les impacts sont identifiés ;
+- les critères d'acceptation sont définis.
+
+Le développement est la traduction en code d'une conception validée.
+
+L'IA doit privilégier cette approche et éviter de proposer directement du code lorsqu'une phase de conception est nécessaire.
+
+---
+
+## Développement par sous-issue
+
+Chaque sous-issue importante possède son propre dossier de conception.
+
+Ces documents constituent la référence principale pour le développement.
+
+Ils décrivent notamment :
+
+- le contexte ;
+- les décisions ;
+- les impacts ;
+- les critères d'acceptation ;
+- les éléments hors périmètre.
+
+Lors d'une nouvelle conversation, l'IA doit considérer ces documents comme la source principale de contexte.
+
+---
+
+# Qualité
+
+L'IA doit privilégier l'automatisation des tests plutôt que la multiplication des procédures manuelles.
+
+Toute règle métier importante doit être couverte par des tests automatisés.
+
+Chaque correction d'anomalie doit, lorsque cela est pertinent, être accompagnée d'un test de non-régression.
+
+---
+
 # Philosophie de développement
 
 Le projet suit les principes suivants :
@@ -102,6 +152,16 @@ Le projet suit les principes suivants :
 - Frontend responsable uniquement de l'affichage
 
 Le frontend ne doit jamais recalculer une règle métier.
+
+---
+
+# Recherche de simplicité
+
+L'IA doit toujours rechercher la solution la plus simple répondant correctement au besoin métier.
+
+Les patterns d'architecture (Factory, Builder, Repository, etc.) ne doivent être proposés que lorsqu'ils apportent un bénéfice démontré.
+
+La simplicité est une qualité du produit.
 
 ---
 

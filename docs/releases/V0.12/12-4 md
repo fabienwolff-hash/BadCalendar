@@ -1,0 +1,234 @@
+# BC-12.4 — Migration du frontend vers le modèle Tournament
+
+## Version
+
+v0.12
+
+---
+
+# Contexte
+
+La version v0.12 introduit un nouveau modèle métier centré sur les entités :
+
+- Tournament
+- Program
+- Site
+
+Le backend ne fournit plus une liste d'Event mais une liste de Tournament.
+
+Le frontend doit être adapté afin de consommer ce nouveau modèle sans modifier l'expérience utilisateur.
+
+Cette sous-issue constitue une migration technique.
+
+---
+
+# Objectif
+
+Adapter le frontend afin qu'il utilise le nouveau modèle fourni par TournamentService.
+
+L'utilisateur ne doit constater aucun changement fonctionnel.
+
+Les évolutions de l'interface seront réalisées dans des versions ultérieures.
+
+---
+
+# Documents de référence
+
+- architecture.md
+- domain_model.md
+- data_model.md
+- ui_guidelines.md
+- coding_guidelines.md
+- BC-12.1-domain-model.md
+- BC-12.2-tournament-service.md
+
+---
+
+# Principes
+
+Le frontend reste responsable uniquement :
+
+- de l'affichage ;
+- des interactions utilisateur ;
+- du filtrage des données déjà enrichies.
+
+Le frontend ne réalise aucun calcul métier.
+
+Toutes les informations nécessaires sont fournies par TournamentService.
+
+---
+
+# Évolutions attendues
+
+## Chargement des données
+
+Le frontend consomme désormais :
+
+```
+Tournament[]
+```
+
+au lieu de :
+
+```
+Event[]
+```
+
+---
+
+## Construction des cartes
+
+Chaque carte est désormais construite à partir d'un Tournament.
+
+Les informations affichées restent identiques :
+
+- type ;
+- titre ;
+- date ;
+- ville ;
+- catégories ;
+- état des inscriptions ;
+- boutons d'action.
+
+---
+
+## Program
+
+Le frontend exploite les Programs afin de déterminer :
+
+- les disciplines ;
+- les catégories ;
+- les dates.
+
+Ces informations sont déjà préparées par le backend.
+
+Aucune logique supplémentaire n'est introduite.
+
+---
+
+## Site
+
+Le frontend affiche :
+
+- la ville ;
+- le gymnase lorsque nécessaire.
+
+Si un seul Site est présent, l'affichage reste identique à aujourd'hui.
+
+---
+
+## Filtres
+
+Le comportement des filtres reste inchangé.
+
+Les filtres exploitent simplement les propriétés du Tournament au lieu de celles de l'Event.
+
+---
+
+## Tri
+
+Le frontend ne réalise aucun tri supplémentaire.
+
+L'ordre fourni par TournamentService est conservé.
+
+---
+
+# Suppression de logique métier
+
+Cette migration est l'occasion de supprimer toute logique métier résiduelle présente dans le frontend.
+
+Exemples :
+
+- calcul de statut ;
+- déduction d'un libellé ;
+- calcul d'une date ;
+- enrichissement d'une information.
+
+Ces traitements appartiennent exclusivement au backend.
+
+---
+
+# Compatibilité
+
+L'interface utilisateur doit rester strictement identique.
+
+Les utilisateurs ne doivent constater :
+
+- aucun changement graphique ;
+- aucune nouvelle fonctionnalité ;
+- aucune perte de fonctionnalité.
+
+---
+
+# Impact Backend
+
+Aucun.
+
+TournamentService fournit déjà toutes les informations nécessaires.
+
+---
+
+# Impact Documentation
+
+Mettre à jour si nécessaire :
+
+- architecture.md
+- data_model.md
+- glossary.md
+
+---
+
+# Tests
+
+Vérifier notamment :
+
+- affichage correct des cartes ;
+- affichage des catégories ;
+- affichage des disciplines ;
+- affichage des Sites ;
+- fonctionnement des filtres ;
+- ouverture des liens BadNet ;
+- ouverture de Google Maps ;
+- export Google Calendar.
+
+Vérifier également qu'aucune logique métier n'est exécutée côté frontend.
+
+---
+
+# Hors périmètre
+
+Cette sous-issue ne comprend pas :
+
+- amélioration graphique ;
+- nouveaux filtres ;
+- nouvelles vues ;
+- optimisation des performances ;
+- analytics.
+
+Ces évolutions seront réalisées dans les versions suivantes.
+
+---
+
+# Critères d'acceptation
+
+- Le frontend consomme Tournament[].
+- Les cartes sont correctement affichées.
+- Aucun calcul métier n'est réalisé côté frontend.
+- Toutes les fonctionnalités existantes restent opérationnelles.
+- Aucun changement visible pour l'utilisateur.
+- Les tests sont passants.
+- La documentation est mise à jour.
+
+---
+
+# Dépendances
+
+## Dépend de
+
+- BC-12.1 — Nouveau modèle métier
+- BC-12.2 — TournamentService
+- BC-12.3 — ValidationService
+
+## Débloque
+
+- BC-12.5 — Nettoyage et finalisation

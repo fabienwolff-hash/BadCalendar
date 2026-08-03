@@ -59,7 +59,7 @@ Responsabilités :
 
 ## Carte (Card)
 
-Bloc affiché dans la Web App représentant un événement.
+Bloc affiché dans la Web App représentant un Tournament.
 
 Une carte contient notamment :
 
@@ -140,24 +140,23 @@ Affichage destiné aux écrans d'ordinateur.
 
 ## Event
 
-Objet métier représentant un événement sportif.
+Ancien modèle métier utilisé dans les premières versions de BadCalendar.
 
-Il est construit par `EventService`.
+À partir de l'introduction de TournamentService, le modèle métier est structuré autour des entités :
+
+- Tournament
+- Program
+- Site
+
+Le terme "Event" reste utilisé uniquement pour certains objets techniques hérités de l'architecture initiale.
 
 ---
 
 ## EventService
 
-Service métier principal du backend.
+Service historique chargé de la lecture des données du Master.
 
-Responsabilités :
-
-- lecture du Master ;
-- normalisation ;
-- enrichissement ;
-- tri ;
-- calcul des états.
-
+À terme, ses responsabilités seront progressivement transférées vers TournamentService afin de refléter le nouveau modèle métier.
 ---
 
 ## EventStatus
@@ -202,6 +201,18 @@ Composée des fichiers HTML :
 - Constants
 
 Le frontend ne contient aucune logique métier.
+
+---
+
+# G
+
+## Gymnasium
+
+Nom d'un équipement sportif.
+
+Le gymnase est optionnel.
+
+Lorsque le Tournament ne comporte qu'un seul site dans une ville, seul le nom de la ville est affiché.
 
 ---
 
@@ -270,7 +281,44 @@ Accessible à des joueurs débutants.
 
 ---
 
+## Program
+
+Partie d'un Tournament correspondant à une discipline ou à un ensemble d'épreuves disputées selon un même programme sportif.
+
+Un Tournament contient un ou plusieurs Programs.
+
+Un Program possède notamment :
+
+- une ou plusieurs dates ;
+- une ou plusieurs disciplines ;
+- un ou plusieurs Sites.
+
+Exemple :
+
+Championnat Départemental
+
+Program 1
+→ Simple
+
+Program 2
+→ Double
+
+---
+
 # R
+
+## Registration
+
+Ensemble des informations relatives à l'inscription à un Tournament.
+
+Comprend notamment :
+
+- le mode d'inscription ;
+- la date d'ouverture ;
+- la date de fermeture ;
+- l'URL d'inscription.
+
+---
 
 ## RegistrationStatus
 
@@ -313,6 +361,19 @@ Exemple :
 
 ---
 
+## Site
+
+Lieu physique où se déroule un Program.
+
+Un Site est défini par :
+
+- une ville ;
+- éventuellement un gymnase.
+
+Un Program peut comporter plusieurs Sites.
+
+---
+
 ## Stage
 
 Événement de formation.
@@ -334,6 +395,34 @@ Compétition départementale.
 Trophée Interrégional Jeunes.
 
 Compétition interrégionale.
+
+---
+
+## Tournament
+
+Entité métier principale de BadCalendar.
+
+Un Tournament représente une compétition ou un événement sportif identifié de manière unique par un `TournamentId`.
+
+Un Tournament regroupe un ou plusieurs Programs.
+
+Les propriétés communes (titre, URL d'inscription, dates d'inscription, type, portée, etc.) sont portées par le Tournament.
+
+Exemples :
+
+- TRJ 3 Guichen Simple
+- Championnat Départemental Jeunes
+- Stage Départemental Minimes
+
+---
+
+## TournamentId
+
+Identifiant fonctionnel d'un Tournament.
+
+Toutes les lignes appartenant au même Tournament possèdent le même TournamentId.
+
+Il permet de reconstruire le modèle métier à partir du Master.
 
 ---
 
@@ -448,22 +537,3 @@ Les termes suivants sont considérés comme les références officielles du proj
 | SSOT | Single Source of Truth |
 | UX | User Experience |
 | URL | Uniform Resource Locator |
-
----
-
-# Évolutions prévues du glossaire
-
-Le glossaire sera enrichi lors des prochaines versions avec les notions suivantes :
-
-- organisateur ;
-- club ;
-- gymnase ;
-- adresse ;
-- géolocalisation ;
-- Google Maps ;
-- favoris ;
-- export calendrier ;
-- filtre multi-sélection ;
-- vue agenda ;
-- vue calendrier ;
-- paramètres utilisateur.

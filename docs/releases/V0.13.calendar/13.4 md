@@ -1,0 +1,175 @@
+# BC-13.4 — Finalisation et stabilisation
+
+# Objectif
+
+Cette sous-issue finalise la version v0.13.
+
+Elle consiste à valider le bon fonctionnement de l'export Google Calendar, vérifier sa conformité avec les spécifications fonctionnelles et mettre à jour la documentation du projet.
+
+Aucune nouvelle fonctionnalité n'est développée dans cette sous-issue.
+
+---
+
+# Contexte
+
+Les sous-issues précédentes ont permis :
+
+- la création de CalendarService ;
+- l'implémentation de la génération d'un événement Google Calendar ;
+- l'intégration dans le frontend.
+
+Cette dernière étape vise à garantir la qualité globale de la fonctionnalité avant la clôture de la version.
+
+---
+
+# Vérifications fonctionnelles
+
+Les scénarios suivants doivent être validés.
+
+## Création d'un événement
+
+Vérifier qu'un clic sur **Ajouter au calendrier** ouvre Google Calendar avec un événement prérempli.
+
+---
+
+## Titre
+
+Vérifier que le titre correspond au nom du tournoi.
+
+---
+
+## Dates
+
+Vérifier que :
+
+- la date de début est correcte ;
+- la date de fin est correcte ;
+- un tournoi de plusieurs jours est correctement représenté.
+
+---
+
+## Toute la journée
+
+Vérifier que l'événement est créé en mode :
+
+```text
+Toute la journée
+```
+
+---
+
+## Lieu
+
+Lorsque les informations sont disponibles, vérifier que :
+
+- le gymnase est présent ;
+- l'adresse est correcte ;
+- la ville est correctement renseignée.
+
+---
+
+## Description
+
+Vérifier que la description contient :
+
+- le lien BadNet ;
+- le lien Google Maps lorsqu'il est disponible ;
+- la mention d'origine de l'événement.
+
+---
+
+## Données incomplètes
+
+Vérifier le comportement lorsque :
+
+- le lieu est absent ;
+- l'adresse est absente ;
+- Google Maps n'est pas disponible.
+
+L'événement doit être généré sans erreur.
+
+---
+
+## Mobile
+
+Vérifier le fonctionnement sur smartphone.
+
+Le parcours utilisateur doit rester identique.
+
+---
+
+## Desktop
+
+Vérifier le fonctionnement sur navigateur desktop.
+
+---
+
+# Robustesse
+
+Vérifier notamment que :
+
+- aucune erreur JavaScript n'est générée ;
+- BadCalendar reste ouvert après l'ouverture de Google Calendar ;
+- plusieurs ouvertures successives fonctionnent correctement.
+
+---
+
+# Documentation
+
+Mettre à jour si nécessaire :
+
+- function_specification.md ;
+- release_note.md ;
+- roadmap.md ;
+- release_checklist.md.
+
+La documentation doit être synchronisée avec le code.
+
+---
+
+# Release Checklist
+
+Avant de clôturer la sous-issue, vérifier notamment :
+
+- la fonctionnalité est entièrement opérationnelle ;
+- les critères d'acceptation de BC-13.1 à BC-13.3 sont validés ;
+- aucun comportement régressif n'a été observé ;
+- la documentation est à jour.
+
+---
+
+# Hors périmètre
+
+Cette sous-issue ne comprend pas :
+
+- synchronisation Google Calendar ;
+- export ICS ;
+- instrumentation Analytics ;
+- nouvelles évolutions UX.
+
+Toute évolution supplémentaire sera planifiée dans une version ultérieure.
+
+---
+
+# Critères d'acceptation
+
+La sous-issue est considérée terminée lorsque :
+
+- tous les scénarios fonctionnels sont validés ;
+- le comportement est identique sur desktop et mobile ;
+- aucune anomalie bloquante n'est identifiée ;
+- la documentation est synchronisée ;
+- la Release Checklist est validée.
+
+La version v0.13 peut alors être clôturée.
+
+---
+
+# Livrable attendu
+
+À l'issue de cette sous-issue :
+
+- l'utilisateur peut ajouter une compétition dans Google Calendar en un clic ;
+- l'événement généré est conforme aux spécifications ;
+- la documentation est à jour ;
+- la version v0.13 est prête à être livrée.
