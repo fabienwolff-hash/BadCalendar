@@ -156,9 +156,6 @@ const TournamentService = {
   buildProgram_(row) {
 
     return {
-      name:
-        this.buildProgramName_(row),
-
       startDate:
         row.startDate,
 
@@ -176,43 +173,44 @@ const TournamentService = {
     };
   },
 
-  buildProgramName_(row) {
-
-    const start =
-      row.startDate;
-
-    const end =
-      row.endDate;
-
-    if (!start) {
-      return "";
-    }
-
-    if (!end || this.isSameDay_(start, end)) {
-      return this.formatWeekday_(start);
-    }
-
-    return `${this.formatWeekday_(start)} - ${this.formatWeekday_(end)}`;
-  },
-
 	buildSites_(row) {
 
-	const site = this.buildSite_(row);
+	  const site =
+		this.buildSite_(row);
 
-	if (!site.city && !site.gymnasium) {
+	  if (
+		!site.region &&
+		!site.department &&
+		!site.city &&
+		!site.gymnasium
+	  ) {
 		return [];
-	}
+	  }
 
-	return [site];
-	},
+	  return [site];
+	}
 
 	buildSite_(row) {
 
+	  const city =
+		row.city || "";
+
 	  return {
-		region: row.region || "",
-		department: row.department || "",
-		city: row.city || "",
-		gymnasium: row.gymnasium || ""
+		region:
+		  row.region || "",
+
+		department:
+		  row.department || "",
+
+		city,
+
+		gymnasium:
+		  row.gymnasium || "",
+
+		googleMapsUrl:
+		  city
+			? LocationService.buildGoogleMapsUrl(city)
+			: ""
 	  };
 	},
 
@@ -275,11 +273,6 @@ const TournamentService = {
 
     return {
       ...enrichedTournament,
-
-      googleMapsUrl:
-        LocationService.buildGoogleMapsUrl(
-          this.getPrimaryCity_(enrichedTournament)
-        ),
 
       googleCalendarUrl:
         CalendarService.buildGoogleCalendarUrl(
@@ -390,26 +383,12 @@ const TournamentService = {
     return CONFIG.STATUS.EVENT.ONGOING;
   },
 
-  buildDisplayLocation_(tournament) {
+ buildDisplayLocation_(tournament) {
 
-    const cities =
-      this.getUniqueCities_(tournament);
+  const sites =
+    this.getUniqueSites_(tournament);
 
-    if (cities.length === 1) {
-
-      const department =
-        this.getSingleDepartment_(tournament);
-
-      if (department) {
-        return `${cities[0]} (${department})`;
-      }
-
-      return cities[0];
-    }
-
-    if (cities.length > 1) {
-      return "Plusieurs lieux";
-    }
+  if (sites.length === 0) {
 
     const department =
       this.getSingleDepartment_(tournament);
@@ -430,7 +409,66 @@ const TournamentService = {
     }
 
     return "Lieu à définir";
-  },
+  }
+
+  if (sites.length === 1) {
+
+    const site =
+      sites[0];
+
+    if (site.city && site.department) {
+      return `${site.city} (${site.department})`;
+    }
+
+    if (site.city) {
+      return site.city;
+    }
+
+    if (site.department) {
+
+      const departments =
+        ParameterService.readDepartments();
+
+      return departments[site.department] || site.department;
+    }
+
+    if (site.region) {
+      return site.region;
+    }
+
+    return "Lieu à définir";
+  }
+
+  return `${sites.length} sites de compétition`;
+}
+
+getUniqueSites_(tournament) {
+
+  const seen = {};
+  const sites = [];
+
+  tournament.programs.forEach(program => {
+
+    program.sites.forEach(site => {
+
+      const key = [
+        site.region || "",
+        site.department || "",
+        site.city || "",
+        site.gymnasium || ""
+      ].join("|");
+
+      if (!seen[key]) {
+        seen[key] = true;
+        sites.push(site);
+      }
+
+    });
+
+  });
+
+  return sites;
+}
 
   getUniqueCities_(tournament) {
 
@@ -446,16 +484,6 @@ const TournamentService = {
     });
 
     return [...cities];
-  },
-
-  getPrimaryCity_(tournament) {
-
-    const cities =
-      this.getUniqueCities_(tournament);
-
-    return cities.length === 1
-      ? cities[0]
-      : "";
   },
 
 	getSingleDepartment_(tournament) {
@@ -640,16 +668,6 @@ const TournamentService = {
     return a.getFullYear() === b.getFullYear() &&
       a.getMonth() === b.getMonth() &&
       a.getDate() === b.getDate();
-  },
-
-  formatWeekday_(date) {
-
-    return date.toLocaleDateString(
-      CONFIG.LOCALE,
-      {
-        weekday: "long"
-      }
-    );
   },
 
   formatMonth_(date) {
