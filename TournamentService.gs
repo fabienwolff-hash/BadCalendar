@@ -188,7 +188,7 @@ const TournamentService = {
 	  }
 
 	  return [site];
-	}
+	},
 
 	buildSite_(row) {
 
