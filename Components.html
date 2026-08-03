@@ -52,10 +52,6 @@ function renderCard(event) {
 
 		<div class="separator"></div>
 
-		<div class="info">
-			👥 ${event.registrationMode}
-		</div>
-
 		${registrationInfo ? `
 		<div class="registration">
 			📝 ${registrationInfo}
@@ -74,6 +70,10 @@ function renderCard(event) {
 	</div>
 	<div class="card-details">
 
+		<div class="info">
+			👥 ${event.registrationMode}
+		</div>
+		
 		${eventButton(event)}
 		
 		${googleMapsButton(event)}
