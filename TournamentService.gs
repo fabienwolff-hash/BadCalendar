@@ -1,210 +1,719 @@
 const TournamentService = {
 
-    read() {
+  read() {
 
-	  const tournaments = this
-		.readNormalized()
-		.map(tournament => this.enrich_(tournament));
+    const rows =
+      this.readRows_();
 
-	  this.sort_(tournaments);
+    const tournaments =
+      this.buildTournaments_(rows)
+        .map(tournament => this.enrich_(tournament));
 
-	  return tournaments.map(tournament => this.serialize_(tournament));
+    this.sort_(tournaments);
 
-	},
-	
-	readNormalized() {
+    return tournaments.map(tournament =>
+      this.serialize_(tournament)
+    );
+  },
 
-	  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-	  const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
+  readRows_() {
 
-	  const values = sheet.getDataRange().getValues();
+    const ss =
+      SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
 
-	  const headers = values[0];
-	  const rows = values.slice(1);
+    const sheet =
+      ss.getSheetByName(CONFIG.SHEET_NAME);
 
-	  const normalizedRows = rows
-		.filter(row => !this.isEmptyRow_(row))
-		.map(row => this.normalizeRow_(headers, row));
+    const values =
+      sheet.getDataRange().getValues();
 
-	  const tournaments = this.groupByTournamentId_(normalizedRows);
+    const headers =
+      values[0];
 
-	  return tournaments.map(group => this.buildTournament_(group));
+    const rows =
+      values.slice(1);
 
-	},
-	
-	/**
-	 * Transforme une ligne du Master en objet normalisé.
-	 *
-	 * Aucune logique métier n'est appliquée ici.
-	 * Les agrégations (Program, Site, disciplines, etc.)
-	 * sont réalisées ultérieurement par TournamentService.
-	 */
-	normalizeRow_(headers, row) {
+    return rows
+      .filter(row => !this.isEmptyRow_(row))
+      .map(row => this.normalizeRow_(headers, row));
+  },
 
-	  const raw = {};
+  normalizeRow_(headers, row) {
 
-	  headers.forEach((header, index) => {
-		raw[header] = row[index];
-	  });
+    const raw = {};
+
+    headers.forEach((header, index) => {
+      raw[header] = row[index];
+    });
+
+    return {
+      tournamentId: raw.TournamentId || "",
+
+      type: raw.Type || "",
+      scope: raw.Scope || "",
+      title: raw.Title || "",
+
+      startDate: this.parseDate_(raw.StartDate),
+      endDate: this.parseDate_(raw.EndDate),
+
+      region: raw.Region || "",
+      department: raw.Department || "",
+      city: raw.City || "",
+      gymnasium: raw.Gymnasium || "",
+
+      disciplines: raw.Disciplines || "",
+      categories: raw.Categories || "",
+
+      registrationMode: raw.RegistrationMode || "",
+      registrationOpenDate:
+        this.parseDate_(raw.RegistrationOpenDate),
+      registrationCloseDate:
+        this.parseDate_(raw.RegistrationCloseDate),
+
+      creationDate:
+        this.parseDate_(raw.CreationDate),
+
+      eventUrl: raw.EventUrl || ""
+    };
+  },
+
+  buildTournaments_(rows) {
+
+    const groups =
+      this.groupByTournamentId_(rows);
+
+    return Object.keys(groups).map(tournamentId =>
+      this.buildTournament_(
+        tournamentId,
+        groups[tournamentId]
+      )
+    );
+  },
+
+  groupByTournamentId_(rows) {
+
+    const groups = {};
+
+    rows.forEach(row => {
+
+      if (!groups[row.tournamentId]) {
+        groups[row.tournamentId] = [];
+      }
+
+      groups[row.tournamentId].push(row);
+    });
+
+    return groups;
+  },
+
+  buildTournament_(tournamentId, rows) {
+
+    const firstRow =
+      rows[0];
+
+    const programs =
+      this.buildPrograms_(rows);
+
+    return {
+      tournamentId,
+
+      title: firstRow.title,
+      type: firstRow.type,
+      scope: firstRow.scope,
+
+      registration:
+        this.buildRegistration_(firstRow),
+
+      eventUrl:
+        firstRow.eventUrl,
+
+      creationDate:
+        firstRow.creationDate,
+
+      programs
+    };
+  },
+
+  buildRegistration_(row) {
+
+    return {
+      mode: row.registrationMode,
+      openDate: row.registrationOpenDate,
+      closeDate: row.registrationCloseDate
+    };
+  },
+
+  buildPrograms_(rows) {
+
+    const programs =
+      rows.map(row => this.buildProgram_(row));
+
+    this.sortPrograms_(programs);
+
+    return programs;
+  },
+
+  buildProgram_(row) {
+
+    return {
+      name:
+        this.buildProgramName_(row),
+
+      startDate:
+        row.startDate,
+
+      endDate:
+        row.endDate,
+
+      disciplines:
+        this.splitList_(row.disciplines),
+
+      categories:
+        this.splitList_(row.categories),
+
+      sites:
+        this.buildSites_(row)
+    };
+  },
+
+  buildProgramName_(row) {
+
+    const start =
+      row.startDate;
+
+    const end =
+      row.endDate;
+
+    if (!start) {
+      return "";
+    }
+
+    if (!end || this.isSameDay_(start, end)) {
+      return this.formatWeekday_(start);
+    }
+
+    return `${this.formatWeekday_(start)} - ${this.formatWeekday_(end)}`;
+  },
+
+	buildSite_(row) {
 
 	  return {
-
-		// Clé métier
-		tournamentId: raw.TournamentId || "",
-
-		// Informations communes au Tournament
-		type: raw.Type || "",
-		scope: raw.Scope || "",
-		title: raw.Title || "",
-
-		// Programme
-		startDate: this.parseDate_(raw.StartDate),
-		endDate: this.parseDate_(raw.EndDate),
-
-		disciplines: raw.Disciplines || "",
-		categories: raw.Categories || "",
-
-		// Site
-		region: raw.Region || "",
-		department: raw.Department || "",
-		city: raw.City || "",
-
-		// Inscriptions
-		registrationMode: raw.RegistrationMode || "",
-		registrationOpenDate: this.parseDate_(raw.RegistrationOpenDate),
-		registrationCloseDate: this.parseDate_(raw.RegistrationCloseDate),
-
-		// Divers
-		eventUrl: raw.EventUrl || ""
-
+		region: row.region || "",
+		department: row.department || "",
+		city: row.city || "",
+		gymnasium: row.gymnasium || ""
 	  };
-
 	},
-	
-	/**
-	 * Regroupe les lignes normalisées par TournamentId.
-	 *
-	 * Chaque groupe correspond à un futur Tournament.
-	 */
-	groupByTournamentId_(rows) {
 
-	  const groups = {};
+  enrich_(tournament) {
 
-	  rows.forEach(row => {
+    const startDate =
+      this.getTournamentStartDate_(tournament);
 
-		if (!groups[row.tournamentId]) {
-		  groups[row.tournamentId] = {
-			tournamentId: row.tournamentId,
-			rows: []
-		  };
-		}
+    const endDate =
+      this.getTournamentEndDate_(tournament);
 
-		groups[row.tournamentId].rows.push(row);
+    const registrationStatus =
+      this.computeRegistrationStatus_(
+        tournament.registration.openDate,
+        tournament.registration.closeDate
+      );
 
+    const tournamentStatus =
+      this.computeTournamentStatus_(
+        startDate,
+        endDate
+      );
+
+    const enrichedTournament = {
+      ...tournament,
+
+      startDate,
+      endDate,
+
+      tournamentStatus,
+      registrationStatus,
+
+      displayDate:
+        this.buildDisplayDate_({
+          startDate,
+          endDate
+        }),
+
+      displayLocation:
+        this.buildDisplayLocation_(tournament),
+
+      month:
+        startDate
+          ? startDate.toLocaleString(
+              CONFIG.LOCALE,
+              { month: "long" }
+            )
+          : "",
+
+      monthNumber:
+        startDate
+          ? startDate.getMonth() + 1
+          : null,
+
+      year:
+        startDate
+          ? startDate.getFullYear()
+          : null
+    };
+
+    return {
+      ...enrichedTournament,
+
+      googleMapsUrl:
+        LocationService.buildGoogleMapsUrl(
+          this.getPrimaryCity_(enrichedTournament)
+        ),
+
+      googleCalendarUrl:
+        CalendarService.buildGoogleCalendarUrl(
+          enrichedTournament
+        )
+    };
+  },
+
+  getTournamentStartDate_(tournament) {
+
+    const dates =
+      tournament.programs
+        .map(program => program.startDate)
+        .filter(Boolean);
+
+    if (dates.length === 0) {
+      return null;
+    }
+
+    return new Date(
+      Math.min.apply(
+        null,
+        dates.map(date => date.getTime())
+      )
+    );
+  },
+
+  getTournamentEndDate_(tournament) {
+
+    const dates =
+      tournament.programs
+        .map(program => program.endDate)
+        .filter(Boolean);
+
+    if (dates.length === 0) {
+      return null;
+    }
+
+    return new Date(
+      Math.max.apply(
+        null,
+        dates.map(date => date.getTime())
+      )
+    );
+  },
+
+  computeRegistrationStatus_(open, close) {
+
+    if (!open || !close) {
+      return CONFIG.STATUS.REGISTRATION.UNKNOWN;
+    }
+
+    const today =
+      new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const openDate =
+      new Date(open);
+
+    openDate.setHours(0, 0, 0, 0);
+
+    const closeDate =
+      new Date(close);
+
+    closeDate.setHours(0, 0, 0, 0);
+
+    if (today < openDate) {
+      return CONFIG.STATUS.REGISTRATION.NOT_OPEN;
+    }
+
+    if (today > closeDate) {
+      return CONFIG.STATUS.REGISTRATION.CLOSED;
+    }
+
+    return CONFIG.STATUS.REGISTRATION.OPEN;
+  },
+
+  computeTournamentStatus_(startDate, endDate) {
+
+    if (!startDate || !endDate) {
+      return CONFIG.STATUS.EVENT.UPCOMING;
+    }
+
+    const today =
+      new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const start =
+      new Date(startDate);
+
+    start.setHours(0, 0, 0, 0);
+
+    const end =
+      new Date(endDate);
+
+    end.setHours(0, 0, 0, 0);
+
+    if (today < start) {
+      return CONFIG.STATUS.EVENT.UPCOMING;
+    }
+
+    if (today > end) {
+      return CONFIG.STATUS.EVENT.FINISHED;
+    }
+
+    return CONFIG.STATUS.EVENT.ONGOING;
+  },
+
+  buildDisplayLocation_(tournament) {
+
+    const cities =
+      this.getUniqueCities_(tournament);
+
+    if (cities.length === 1) {
+
+      const department =
+        this.getSingleDepartment_(tournament);
+
+      if (department) {
+        return `${cities[0]} (${department})`;
+      }
+
+      return cities[0];
+    }
+
+    if (cities.length > 1) {
+      return "Plusieurs lieux";
+    }
+
+    const department =
+      this.getSingleDepartment_(tournament);
+
+    if (department) {
+
+      const departments =
+        ParameterService.readDepartments();
+
+      return departments[department] || department;
+    }
+
+    const region =
+      this.getSingleRegion_(tournament);
+
+    if (region) {
+      return region;
+    }
+
+    return "Lieu à définir";
+  },
+
+  getUniqueCities_(tournament) {
+
+    const cities =
+      new Set();
+
+    tournament.programs.forEach(program => {
+      program.sites.forEach(site => {
+        if (site.city) {
+          cities.add(site.city);
+        }
+      });
+    });
+
+    return [...cities];
+  },
+
+  getPrimaryCity_(tournament) {
+
+    const cities =
+      this.getUniqueCities_(tournament);
+
+    return cities.length === 1
+      ? cities[0]
+      : "";
+  },
+
+	getSingleDepartment_(tournament) {
+
+	  const departments =
+		new Set();
+
+	  tournament.programs.forEach(program => {
+		program.sites.forEach(site => {
+		  if (site.department) {
+			departments.add(site.department);
+		  }
+		});
 	  });
 
-	  return Object.values(groups);
+	  return departments.size === 1
+		? [...departments][0]
+		: "";
 	},
-	
-	
-	buildTournament_(group) {
 
-	  const firstRow = group.rows[0];
+	getSingleRegion_(tournament) {
 
-	  return {
+	  const regions =
+		new Set();
 
-		// Identité
-		tournamentId: firstRow.tournamentId,
-
-		// Informations générales
-		title: firstRow.title,
-		type: firstRow.type,
-		scope: firstRow.scope,
-
-		// Inscriptions
-		registration: {
-		  mode: firstRow.registrationMode,
-		  openDate: firstRow.registrationOpenDate,
-		  closeDate: firstRow.registrationCloseDate
-		},
-
-		// Lien
-		eventUrl: firstRow.eventUrl,
-
-		// Modèle métier
-		programs: this.buildPrograms_(group.rows)
-
-	  };
-	},
-	
-	buildPrograms_(rows) {
-
-	  const groups = {};
-
-	  rows.forEach(row => {
-
-		const signature = this.buildProgramSignature_(row);
-
-		if (!groups[signature]) {
-		  groups[signature] = [];
-		}
-
-		groups[signature].push(row);
-
+	  tournament.programs.forEach(program => {
+		program.sites.forEach(site => {
+		  if (site.region) {
+			regions.add(site.region);
+		  }
+		});
 	  });
 
-	  const programs = Object
-		.values(groups)
-		.map(group => this.buildProgram_(group));
-
-	  programs.sort((a, b) =>
-		a.startDate.getTime() - b.startDate.getTime()
-	  );
-
-	  return programs;
+	  return regions.size === 1
+		? [...regions][0]
+		: "";
 	},
-	
-	
-	buildProgramSignature_(row) {
 
-	  return [
-		row.startDate ? row.startDate.getTime() : "",
-		row.endDate ? row.endDate.getTime() : "",
-		row.city,
-		row.gymnasium
-	  ].join("|");
-	},
-	
-	buildProgram_(rows) {
+  buildDisplayDate_(eventLike) {
 
-	  const firstRow = rows[0];
+    const start =
+      eventLike.startDate;
 
-	  return {
+    const end =
+      eventLike.endDate;
 
-		name: this.buildProgramName_(firstRow),
+    if (!start) {
+      return "";
+    }
 
-		startDate: firstRow.startDate,
-		endDate: firstRow.endDate,
+    if (!end || this.isSameDay_(start, end)) {
+      return this.formatSingleDayDate_(start);
+    }
 
-		disciplines: this.buildDisciplines_(rows),
+    if (
+      start.getMonth() === end.getMonth() &&
+      start.getFullYear() === end.getFullYear()
+    ) {
+      return `${start.getDate()} - ${end.getDate()} ${this.formatMonth_(start)}`;
+    }
 
-		categories: this.buildCategories_(rows),
+    return `${this.formatDateWithoutWeekday_(start)} - ${
+      this.formatDateWithoutWeekday_(end)
+    }`;
+  },
 
-		sites: this.buildSites_(rows)
-	  };
-	},
-	
-	
-	buildProgramName_(row) {
+  sort_(tournaments) {
 
-	  const start = row.startDate;
-	  const end = row.endDate;
+    tournaments.sort((a, b) => {
 
-	  if (!start || !end || this.isSameDay_(start, end)) {
-		return this.formatWeekday_(start);
-	  }
+      if (!a.startDate && !b.startDate) {
+        return 0;
+      }
 
-	  return `${this.formatWeekday_(start)} - ${this.formatWeekday_(end)}`;
-	},
+      if (!a.startDate) {
+        return 1;
+      }
+
+      if (!b.startDate) {
+        return -1;
+      }
+
+      return a.startDate.getTime() -
+        b.startDate.getTime();
+    });
+  },
+
+  sortPrograms_(programs) {
+
+    programs.sort((a, b) => {
+
+      if (!a.startDate && !b.startDate) {
+        return 0;
+      }
+
+      if (!a.startDate) {
+        return 1;
+      }
+
+      if (!b.startDate) {
+        return -1;
+      }
+
+      return a.startDate.getTime() -
+        b.startDate.getTime();
+    });
+  },
+
+  serialize_(tournament) {
+
+    return {
+      ...tournament,
+
+      startDate:
+        this.serializeDate_(tournament.startDate),
+
+      endDate:
+        this.serializeDate_(tournament.endDate),
+
+      creationDate:
+        this.serializeDate_(tournament.creationDate),
+
+      registration: {
+        ...tournament.registration,
+
+        openDate:
+          this.serializeDate_(
+            tournament.registration.openDate
+          ),
+
+        closeDate:
+          this.serializeDate_(
+            tournament.registration.closeDate
+          )
+      },
+
+      programs:
+        tournament.programs.map(program =>
+          this.serializeProgram_(program)
+        )
+    };
+  },
+
+  serializeProgram_(program) {
+
+    return {
+      ...program,
+
+      startDate:
+        this.serializeDate_(program.startDate),
+
+      endDate:
+        this.serializeDate_(program.endDate)
+    };
+  },
+
+  serializeDate_(date) {
+
+    return date
+      ? date.toISOString()
+      : null;
+  },
+
+  splitList_(value) {
+
+    return (value || "")
+      .split(";")
+      .map(value => value.trim())
+      .filter(Boolean);
+  },
+
+  isEmptyRow_(row) {
+
+    return !row ||
+      row.every(cell =>
+        String(cell).trim() === ""
+      );
+  },
+
+  isSameDay_(a, b) {
+
+    return a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate() === b.getDate();
+  },
+
+  formatWeekday_(date) {
+
+    return date.toLocaleDateString(
+      CONFIG.LOCALE,
+      {
+        weekday: "long"
+      }
+    );
+  },
+
+  formatMonth_(date) {
+
+    return date.toLocaleDateString(
+      CONFIG.LOCALE,
+      {
+        month: "short"
+      }
+    );
+  },
+
+  formatDateWithoutWeekday_(date) {
+
+    return date.toLocaleDateString(
+      CONFIG.LOCALE,
+      {
+        day: "numeric",
+        month: "short"
+      }
+    );
+  },
+
+  formatSingleDayDate_(date) {
+
+    return date.toLocaleDateString(
+      CONFIG.LOCALE,
+      {
+        weekday: "short",
+        day: "numeric",
+        month: "short"
+      }
+    );
+  },
+
+  parseDate_(value) {
+
+    if (!value) {
+      return null;
+    }
+
+    if (value instanceof Date) {
+      return value;
+    }
+
+    if (typeof value === "string") {
+
+      if (value.includes("-")) {
+        const [y, m, d] =
+          value.split("-");
+
+        return new Date(
+          Number(y),
+          Number(m) - 1,
+          Number(d)
+        );
+      }
+
+      if (value.includes("/")) {
+        const [d, m, y] =
+          value.split("/");
+
+        return new Date(
+          Number(y),
+          Number(m) - 1,
+          Number(d)
+        );
+      }
+    }
+
+    const date =
+      new Date(value);
+
+    return isNaN(date)
+      ? null
+      : date;
+  }
 };
-
