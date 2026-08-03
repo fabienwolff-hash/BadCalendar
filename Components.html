@@ -19,20 +19,22 @@ function renderCard(event) {
 
 	<div class="card-summary">
 		<div class="card-header">
+			<div class="card-header-left">
 
-			<div class="badge ${event.type.toLowerCase()}">
-				${event.type}
+				<div class="badge ${event.type.toLowerCase()}">
+					${event.type}
+				</div>
+				
+				<h2 class="event-title">
+					${event.title}
+				</h2>
 			</div>
-
+			
 			<div class="event-date">
 				${event.displayDate}
 			</div>
-
 		</div>
-
-		<h2 class="event-title">
-			${event.title}
-		</h2>
+		
 
 		<div class="info">
 			📍 ${event.displayLocation}
