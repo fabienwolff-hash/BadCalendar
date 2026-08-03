@@ -11,7 +11,6 @@ function eventButton(event){
     let label;
 
     switch(event.eventStatus){
-
         case STATUS.EVENT.FINISHED:
             label = UI.BUTTONS.VIEW_RESULTS;
             break;
@@ -19,16 +18,13 @@ function eventButton(event){
         default:
 
             switch(event.registrationStatus){
-
                 case STATUS.REGISTRATION.OPEN:
                     label = UI.BUTTONS.REGISTER;
                     break;
 
                 default:
                     label = UI.BUTTONS.VIEW_EVENT;
-
             }
-
     }
 
     return `
@@ -40,7 +36,6 @@ function eventButton(event){
             ${label}
         </a>
     `;
-
 }
 
 function googleMapsButton(event) {
@@ -57,7 +52,6 @@ function googleMapsButton(event) {
             ${UI.BUTTONS.GOOGLE_MAPS}
         </a>
     `;
-
 }
 
 function googleCalendarButton(event) {
@@ -71,14 +65,10 @@ function googleCalendarButton(event) {
             href="${event.googleCalendarUrl}"
             target="_blank"
             rel="noopener noreferrer">
-            ${UI.BUTTONS.GOOGLE_MAPS}
+            ${UI.BUTTONS.GOOGLE_CALENDAR}
         </a>
     `;
-
 }
-
-
-
 
 function getRegistrationMessage(event){
 
