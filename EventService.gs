@@ -117,15 +117,19 @@ const EventService = {
 				CONFIG.STATUS.REGISTRATION.OPEN;
 		}
 	}
-
-	return {
-
+	
+	const enrichedEvent = {
 	  ...event,
-
 	  eventStatus,
 	  registrationStatus,
 	  displayLocation,
-	  displayDate,
+	  displayDate
+	};
+
+	return {
+
+	  ...enrichedEvent,
+
 	  googleMapsUrl: LocationService.buildGoogleMapsUrl(event.city),
 	  googleCalendarUrl: CalendarService.buildGoogleCalendarUrl(event),
 	  month: startDate.toLocaleString(
