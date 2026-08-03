@@ -21,6 +21,10 @@ const EventService = {
       event.registrationCloseDate
         ? event.registrationCloseDate.toISOString()
         : null,
+	  creationDate:
+	  event.creationDate
+		? event.creationDate.toISOString()
+		: null
 	}));
 
   },
@@ -61,6 +65,7 @@ const EventService = {
 	  registrationMode: raw.RegistrationMode || "",
 	  registrationOpenDate: this.parseDate_(raw.RegistrationOpenDate),
 	  registrationCloseDate: this.parseDate_(raw.RegistrationCloseDate),
+	  creationDate: this.parseDate_(raw.CreationDate),
 	  eventUrl: raw.EventUrl || ""	  
 	};
   },
