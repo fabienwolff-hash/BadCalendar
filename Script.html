@@ -20,6 +20,22 @@ const Storage = {
     saveShowFinished(value) {
         localStorage.setItem(STORAGE_KEYS.SHOW_FINISHED,value);
     }
+	
+    loadCategory() {
+        return localStorage.getItem(STORAGE_KEYS.CATEGORY) || "";
+    },
+
+    saveCategory(value) {
+        localStorage.setItem(STORAGE_KEYS.CATEGORY,value);
+    },
+
+    loadScope() {
+        return localStorage.getItem(STORAGE_KEYS.SCOPE) || "";
+    },
+
+    saveScope(value) {
+        localStorage.setItem(STORAGE_KEYS.SCOPE,value);
+    }
 };
 
 const App = {
@@ -70,9 +86,14 @@ const App = {
 	restoreState() {
 		this.state.filtersCollapsed =  Storage.loadFiltersCollapsed();
 		this.state.showFinished = Storage.loadShowFinished();
+		this.state.category = Storage.loadCategory() || UI.FILTERS.ALL;
+		this.state.scope = Storage.loadScope() || UI.FILTERS.ALL;
+		
 		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
+		$(DOM.FILTER_CATEGORY).value = this.state.category;
+		$(DOM.FILTER_SCOPE).value = this.state.scope;
 	},
-
+	
     populateFilters() {
 
         fillSelect(
@@ -116,12 +137,14 @@ const App = {
         $(DOM.FILTER_CATEGORY)
             .addEventListener("change", e => {
                 this.state.category = e.target.value;
+				Storage.saveCategory(this.state.category);
                 this.render();
             });
 			
 		$(DOM.FILTER_SCOPE)
 			.addEventListener("change", e => {
 				this.state.scope = e.target.value;
+				Storage.saveScope(this.state.scope);
 				this.render();
 			});	
 
