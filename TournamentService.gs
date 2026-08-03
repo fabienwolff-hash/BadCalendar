@@ -440,7 +440,7 @@ const TournamentService = {
   }
 
   return `${sites.length} sites de compétition`;
-}
+},
 
 getUniqueSites_(tournament) {
 
@@ -468,7 +468,7 @@ getUniqueSites_(tournament) {
   });
 
   return sites;
-}
+},
 
   getUniqueCities_(tournament) {
 
