@@ -11,10 +11,6 @@ function include(filename) {
     .getContent();
 }
 
-function readEvents() {
-  return EventService.read();
-}
-
 function readTournaments() {
   return TournamentService.read();
 };

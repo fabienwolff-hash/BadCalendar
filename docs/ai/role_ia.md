@@ -173,7 +173,7 @@ Le projet est organisé autour de :
 
 - Google Sheets (Master)
 - Google Apps Script
-- EventService
+- TournamentService
 - HTML/CSS/JavaScript
 
 Le backend enrichit les données.
