@@ -11,9 +11,11 @@ const TournamentService = {
 
     this.sort_(tournaments);
 
-    return tournaments.map(tournament =>
-      this.serialize_(tournament)
-    );
+	return tournaments.map(tournament =>
+	  this.serialize_(
+		this.toDto_(tournament)
+	  )
+	);
   },
 
   readRows_() {
@@ -233,12 +235,21 @@ const TournamentService = {
         startDate,
         endDate
       );
+	  
+	const categoriesArray = this.buildCategoriesArray_(tournament);
+
+	const disciplinesArray = this.buildDisciplinesArray_(tournament);
+
+	const siteCount = this.getUniqueSites_(tournament).length;  
 
     const enrichedTournament = {
       ...tournament,
 
       startDate,
       endDate,
+	  categoriesArray,
+	  disciplinesArray,
+	  siteCount,
 
       tournamentStatus,
       registrationStatus,
@@ -280,6 +291,38 @@ const TournamentService = {
         )
     };
   },
+
+	buildCategoriesArray_(tournament) {
+
+	  const categories =
+		new Set();
+
+	  tournament.programs.forEach(program => {
+
+		program.categories.forEach(category => {
+		  categories.add(category);
+		});
+
+	  });
+
+	  return [...categories].sort();
+	}
+	
+	buildDisciplinesArray_(tournament) {
+
+	  const disciplines =
+		new Set();
+
+	  tournament.programs.forEach(program => {
+
+		program.disciplines.forEach(discipline => {
+		  disciplines.add(discipline);
+		});
+
+	  });
+
+	  return [...disciplines].sort();
+	}
 
   getTournamentStartDate_(tournament) {
 
@@ -744,5 +787,79 @@ getUniqueSites_(tournament) {
     return isNaN(date)
       ? null
       : date;
-  }
+  },
+  
+  toDto_(tournament) {
+
+	  return {
+		tournamentId:
+		  tournament.tournamentId,
+
+		title:
+		  tournament.title,
+
+		type:
+		  tournament.type,
+
+		scope:
+		  tournament.scope,
+
+		startDate:
+		  tournament.startDate,
+
+		endDate:
+		  tournament.endDate,
+
+		displayDate:
+		  tournament.displayDate,
+
+		displayLocation:
+		  tournament.displayLocation,
+
+		month:
+		  tournament.month,
+
+		monthNumber:
+		  tournament.monthNumber,
+
+		year:
+		  tournament.year,
+
+		categoriesArray:
+		  tournament.categoriesArray,
+
+		disciplinesArray:
+		  tournament.disciplinesArray,
+
+		registrationMode:
+		  tournament.registration.mode,
+
+		registrationOpenDate:
+		  tournament.registration.openDate,
+
+		registrationCloseDate:
+		  tournament.registration.closeDate,
+
+		registrationStatus:
+		  tournament.registrationStatus,
+
+		eventStatus:
+		  tournament.tournamentStatus,
+
+		eventUrl:
+		  tournament.eventUrl,
+
+		creationDate:
+		  tournament.creationDate,
+
+		googleCalendarUrl:
+		  tournament.googleCalendarUrl,
+
+		siteCount:
+		  tournament.siteCount,
+
+		programs:
+		  tournament.programs
+	  };
+	}
 };
