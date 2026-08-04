@@ -414,6 +414,6 @@ if (DEBUG.SIMULATE_INIT_ERROR) {
 	google.script.run
 		.withSuccessHandler(App.init.bind(App))
 		.withFailureHandler(App.initError.bind(App))
-		.readEvents();
+		.readTournaments();
 }
 </script>

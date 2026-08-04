@@ -13,4 +13,8 @@ function include(filename) {
 
 function readEvents() {
   return EventService.read();
+}
+
+function readTournaments() {
+  return TournamentService.read();
 };
