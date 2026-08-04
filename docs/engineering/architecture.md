@@ -19,7 +19,7 @@ BadCalendar s'appuie sur une architecture en couches où chaque service possède
    Master      Parameters      Locations
       │            │              │
       ▼            ▼              ▼
- EventService  ParameterService  LocationService
+ TournamentService  ParameterService  LocationService
       │            │              │
       └────────────┴──────┬───────┘
                            ▼
@@ -44,7 +44,7 @@ Cette logique est portée par :
 
 * Code.gs
 * Config.gs
-* EventService.gs
+* TournamentService.gs
 * ParameterService.gs
 * CalendarService.gs
 * ValidationService.gs
@@ -124,7 +124,7 @@ Les listes métier n'y sont plus stockées.
 
 ---
 
-## EventService.gs
+## TournamentService.gs
 
 Responsabilités :
 
@@ -369,7 +369,7 @@ Les référentiels sont administrés dans l'onglet `Parameters`.
 
 Chaque service possède un domaine clairement identifié :
 
-* **EventService** : événements ;
+* **TournamentService** : tournois ;
 * **ParameterService** : référentiels ;
 * **ValidationService** : contrôles ;
 * **ReportService** : restitution des contrôles.

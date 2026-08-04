@@ -9,7 +9,7 @@ Il contient exclusivement les données métier décrivant les compétitions, sta
 Toutes les informations affichées dans la WebApp sont :
 
 * soit directement issues du Master ;
-* soit calculées automatiquement par le backend (`EventService`) ;
+* soit calculées automatiquement par le backend (`TournamentService`) ;
 * soit validées à partir des référentiels de l'onglet `Parameters`.
 
 Le Master ne doit jamais contenir de données de présentation (couleurs, badges, textes calculés, statuts, etc.).
@@ -254,7 +254,7 @@ Le backend ne fait aucune hypothèse sur la plateforme utilisée.
 
 # Données enrichies (Backend)
 
-Les champs suivants sont calculés automatiquement par `EventService`.
+Les champs suivants sont calculés automatiquement par `TournamentService`.
 
 | Champ              | Type    | Description                        |
 | ------------------ | ------- | ---------------------------------- |
