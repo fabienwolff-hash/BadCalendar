@@ -20,22 +20,33 @@ const Storage = {
     saveShowFinished(value) {
         localStorage.setItem(STORAGE_KEYS.SHOW_FINISHED,value);
     },
+		
+	loadCategories() {
+
+		const value = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
+
+		return value
+			? JSON.parse(value)
+			: [];
+	},
 	
-    loadCategory() {
-        return localStorage.getItem(STORAGE_KEYS.CATEGORY) || "";
-    },
+	saveCategories(values) {
+		localStorage.setItem(STORAGE_KEYS.CATEGORIES,JSON.stringify(values));
+	},
+	
+	loadScopes() {
 
-    saveCategory(value) {
-        localStorage.setItem(STORAGE_KEYS.CATEGORY,value);
-    },
+		const value = localStorage.getItem(STORAGE_KEYS.SCOPES);
 
-    loadScope() {
-        return localStorage.getItem(STORAGE_KEYS.SCOPE) || "";
-    },
-
-    saveScope(value) {
-        localStorage.setItem(STORAGE_KEYS.SCOPE,value);
-    }
+		return value
+			? JSON.parse(value)
+			: [];
+	},
+	
+	saveScopes(values) {
+		localStorage.setItem(STORAGE_KEYS.SCOPES,JSON.stringify(values));
+	},
+	
 };
 
 const App = {
@@ -43,13 +54,12 @@ const App = {
     events: [],
 
     state: {
-        search: "",
-		type: UI.FILTERS.ALL,
-		category: UI.FILTERS.ALL,
-		scope: UI.FILTERS.ALL,
-		month: UI.FILTERS.ALL,
-		filtersCollapsed: false,
-		showFinished: false
+		categories: [],
+		scopes: [],
+		types: [],
+		showFinished: false,
+		showNewOnly: false,
+		filtersCollapsed: false
     },
 
     init(events) {
@@ -60,17 +70,19 @@ const App = {
 		);
 
         this.events = events;
-		
-		console.log(events);
-				
+						
 		this.initialize();
     },
 	
 	initialize() {
 
-		this.populateFilters();
-
 		this.restoreState();
+
+		this.populateFilters();
+		
+		this.bindCategoryFilter();
+		this.bindScopeFilter();
+		this.bindTypeFilter();
 		
 		this.markNewEvents();
 
@@ -84,74 +96,215 @@ const App = {
 	restoreState() {
 		this.state.filtersCollapsed =  Storage.loadFiltersCollapsed();
 		this.state.showFinished = Storage.loadShowFinished();
-		this.state.category = Storage.loadCategory() || UI.FILTERS.ALL;
-		this.state.scope = Storage.loadScope() || UI.FILTERS.ALL;
-		
+		this.state.categories = Storage.loadCategories();
+		this.state.scopes = Storage.loadScopes();
+							
 		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
-		$(DOM.FILTER_CATEGORY).value = this.state.category;
-		$(DOM.FILTER_SCOPE).value = this.state.scope;
 	},
 	
     populateFilters() {
-
-        fillSelect(
-            DOM.FILTER_TYPE,
-            [...new Set(this.events.map(e => e.type))].sort()
-        );
-
-		fillSelect(
-			DOM.FILTER_CATEGORY,sortByOrder(
-			[...new Set(this.events.flatMap(event => getCategories(event)))],
-			ORDER.CATEGORIES)
-		);
-		
-		fillSelect(
-			DOM.FILTER_SCOPE,sortByOrder(
-			[...new Set(this.events.map(e => e.scope))],
-			ORDER.SCOPES)
-		);
-
-		fillSelect(
-			DOM.FILTER_MONTH,
-			[...new Set(this.events.map(e => e.month))]
-		);
-
+		this.populateCategoryFilter();
+		this.populateScopeFilter();
+		this.populateTypeFilter();
     },
+	
+	populateCategoryFilter() {
+
+		const container = $(DOM.FILTER_CATEGORIES);
+		
+		container.innerHTML = "";
+
+		const categories =
+			sortByOrder(
+				[...new Set(
+					this.events.flatMap(
+						event => getCategories(event)
+					)
+				)],
+				ORDER.CATEGORIES
+			);
+
+		categories.forEach(category => {
+
+			const checked =
+				this.state.categories.includes(category);
+
+			container.innerHTML += `
+				<label class="checkbox-label">
+
+					<input
+						type="checkbox"
+						value="${category}"
+						${checked ? "checked" : ""}>
+
+					<span>${category}</span>
+
+				</label>
+			`;
+		});
+	},
+	
+	populateScopeFilter() {
+
+		const container = $(DOM.FILTER_SCOPES);
+		container.innerHTML = "";
+
+		const scopes =
+			sortByOrder(
+				[...new Set(
+					this.events.map(
+						event => event.scope
+					)
+				)],
+				ORDER.SCOPES
+			);
+
+		scopes.forEach(scope => {
+
+			const checked =	this.state.scopes.includes(scope);
+
+			container.innerHTML += `
+				<label class="checkbox-label">
+
+					<input
+						type="checkbox"
+						value="${scope}"
+						${checked ? "checked" : ""}>
+
+					<span>${scope}</span>
+
+				</label>
+			`;
+		});
+	},
+	
+	populateTypeFilter() {
+
+		const container = $(DOM.FILTER_TYPES);
+		container.innerHTML = "";
+
+		const availableTypes = this.getAvailableTypes();
+
+		availableTypes.forEach(type => {
+			const checked =
+				this.state.types.includes(type);
+
+			container.innerHTML += `
+				<label class="checkbox-label">
+
+					<input
+						type="checkbox"
+						value="${type}"
+						${checked ? "checked" : ""}>
+
+					<span>${type}</span>
+
+				</label>
+			`;
+		});
+	},
+	
+	getAvailableTypes() {
+
+		if (this.state.scopes.length === 0) {
+
+			return [
+				...new Set(
+					this.events.map(event => event.type)
+				)
+			].sort();
+		}
+
+		return [
+			...new Set(
+				this.events
+					.filter(event =>
+						this.state.scopes.includes(
+							event.scope
+						)
+					)
+					.map(event => event.type)
+			)
+		].sort();
+	},
+	
+	bindCategoryFilter() {
+		document.querySelectorAll(
+				"#filterCategories input[type='checkbox']"
+			)
+			.forEach(checkbox => {
+				checkbox.addEventListener(
+					"change",
+					() => {
+						this.state.categories =
+							[...document.querySelectorAll(
+								"#filterCategories input:checked"
+							)]
+							.map(input => input.value);
+
+						Storage.saveCategories(this.state.categories);
+						this.render();
+					}
+				);
+			});
+	},
+	
+	bindScopeFilter() {
+
+		document.querySelectorAll(
+				"#filterScopes input[type='checkbox']"
+			)
+			.forEach(checkbox => {
+				checkbox.addEventListener(
+					"change",
+					() => {
+						this.state.scopes =
+							[...document.querySelectorAll(
+								"#filterScopes input:checked"
+							)]
+							.map(
+								input => input.value
+							);
+
+						Storage.saveScopes(this.state.scopes);
+						const availableTypes = this.getAvailableTypes();
+
+						this.state.types = this.state.types.filter(
+								type =>	availableTypes.includes(type));
+								
+						this.populateTypeFilter();
+						this.bindTypeFilter();
+						
+						this.render();
+					}
+				);
+			});
+	},
+	
+	bindTypeFilter() {
+
+		document.querySelectorAll(
+				"#filterTypes input[type='checkbox']"
+			)
+			.forEach(checkbox => {
+				checkbox.addEventListener(
+					"change",
+					() => {
+						this.state.types =
+							[...document.querySelectorAll(
+								"#filterTypes input:checked"
+							)]
+							.map(
+								input => input.value
+							);
+						this.render();
+					}
+				);
+			});
+	},
 
     bindEvents() {
-
-       $(DOM.SEARCH)
-            .addEventListener("input", e => {
-                this.state.search = e.target.value;
-                this.render();
-            });
-
-        $(DOM.FILTER_TYPE)
-            .addEventListener("change", e => {
-                this.state.type = e.target.value;
-                this.render();
-            });
-
-        $(DOM.FILTER_CATEGORY)
-            .addEventListener("change", e => {
-                this.state.category = e.target.value;
-				Storage.saveCategory(this.state.category);
-                this.render();
-            });
-			
-		$(DOM.FILTER_SCOPE)
-			.addEventListener("change", e => {
-				this.state.scope = e.target.value;
-				Storage.saveScope(this.state.scope);
-				this.render();
-			});	
-
-        $(DOM.FILTER_MONTH)
-            .addEventListener("change", e => {
-                this.state.month = e.target.value;
-                this.render();
-            });
-
+	
 		$(DOM.FILTERS_TOGGLE)
 			.addEventListener("click", () => {
 
@@ -176,45 +329,30 @@ const App = {
 
         return this.events.filter(event => {
 
-            if (this.state.type !== UI.FILTERS.ALL
-                && event.type !== this.state.type)
-                return false;
-
-            if (this.state.category !== UI.FILTERS.ALL 
-				&& !getCategories(event).includes(this.state.category))
+			if (this.state.types.length > 0 &&
+				!this.state.types.includes(event.type)
+			) {
 				return false;
-				
-			if (this.state.scope !== UI.FILTERS.ALL &&
-				event.scope !== this.state.scope){
-					return false;
-				}
-
-			if (this.state.month !== UI.FILTERS.ALL &&
-				event.month !== this.state.month)
-					return false;
+			}
+	
+			if (this.state.categories.length > 0 &&
+				!this.state.categories.some(category =>	getCategories(event).includes(category))
+			) {
+				return false;
+			}	
+								
+			if (this.state.scopes.length > 0 &&
+				!this.state.scopes.includes(event.scope)
+			){
+				return false;
+			}
 
 			if (!this.state.showFinished &&
 				event.tournamentStatus === STATUS.EVENT.FINISHED){
 					return false;
 				}
 
-            if (this.state.search !== "") {
-                const txt = (
-                    event.title +
-                    " " +
-                    event.displayLocation +
-                    " " +
-                    event.categories +
-						" " +
-                    event.type
-                ).toLowerCase();
 
-                if (!txt.includes(
-                    this.state.search.toLowerCase()
-                )) {
-                    return false;
-                }
-            }
             return true;
         });
     },
@@ -244,24 +382,16 @@ const App = {
 
 		const summary = [];
 
-		if (this.state.search !== "") {
-			summary.push(`Recherche : ${this.state.search}`);
+		if (this.state.categories.length > 0) {
+			summary.push(this.state.categories.join(", "));
+		}
+		
+		if (this.state.types.length > 0) {
+			summary.push(this.state.types.join(", "));
 		}
 
-		if (this.state.type !== UI.FILTERS.ALL) {
-			summary.push(this.state.type);
-		}
-
-		if (this.state.scope !== UI.FILTERS.ALL) {
-			summary.push(this.state.scope);
-		}
-
-		if (this.state.category !== UI.FILTERS.ALL) {
-			summary.push(this.state.category);
-		}
-
-		if (this.state.month !== UI.FILTERS.ALL) {
-			summary.push(this.state.month);
+		if (this.state.scopes.length > 0) {
+			summary.push(this.state.scopes.join(", "));
 		}
 
 		return summary;
@@ -311,29 +441,38 @@ const App = {
 	
 	resetFilters(){
 
-		this.state.search = "";
-		this.state.type = UI.FILTERS.ALL;
-		this.state.scope = UI.FILTERS.ALL;
-		this.state.category = UI.FILTERS.ALL;
-		this.state.month = UI.FILTERS.ALL;
+		this.state.categories = [];
+		this.state.types = [];
+		this.state.scopes = [];
 
+		document.querySelectorAll(
+			"#filterCategories input[type='checkbox']")
+				.forEach(input => {
+					input.checked = false;
+				});
+
+		document.querySelectorAll(
+			"#filterScopes input[type='checkbox']")
+				.forEach(input => {
+					input.checked = false;
+				});
+			
+		document.querySelectorAll(
+			"#filterTypes input[type='checkbox']")
+				.forEach(input => {
+					input.checked = false;
+				});
+		
 		this.state.filtersCollapsed = false;
-
-		$(DOM.SEARCH).value = "";
-
-		$(DOM.FILTER_TYPE).value = UI.FILTERS.ALL;
-		$(DOM.FILTER_SCOPE).value = UI.FILTERS.ALL;
-		$(DOM.FILTER_CATEGORY).value = UI.FILTERS.ALL;
-		$(DOM.FILTER_MONTH).value = UI.FILTERS.ALL;
-
-		this.state.filtersCollapsed = false;
+		
 		this.state.showFinished = false;
-
 		$(DOM.SHOW_FINISHED).checked = false;
 
 		Storage.saveFiltersCollapsed(this.state.filtersCollapsed);
 		Storage.saveShowFinished(this.state.showFinished);
-
+		Storage.saveCategories([]);
+		Storage.saveScopes([]);
+		
 		this.render();
 	},
 	
@@ -361,15 +500,6 @@ const App = {
 		this.showError();
 	}
 };
-
-function fillSelect(id, values) {
-    const select = document.getElementById(id);
-    select.innerHTML = `<option>${UI.FILTERS.ALL}</option>`;
-    values.forEach(value => {
-        select.innerHTML +=
-            `<option>${value}</option>`;
-    });
-}
 
 function sortByOrder(values, order){
 
