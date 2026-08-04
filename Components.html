@@ -43,28 +43,26 @@ function renderCard(event) {
 			</div>
 		</div>
 		
-
 		<div class="info">
 			📍 ${event.displayLocation}
+			${
+				getDisciplines(event).length > 0
+					? ` • 🏸 ${getDisciplines(event).join(" • ")}`
+					: ""
+			}
 		</div>
 
 		<div class="info">
 			👦 ${getCategories(event).join(" • ")}
 		</div>
-		
-		${getDisciplines(event).length > 0 ? `
-		<div class="info">
-			🏸 ${getDisciplines(event).join(" • ")}
-		</div>
-		` : ""}
-
-		<div class="separator"></div>
 
 		${registrationInfo ? `
-		<div class="registration">
-			<span class="registration-dot ${getRegistrationClass(event)}"></span>
+			<div class="separator"></div>
+
+			<div class="registration">
+				<span class="registration-dot ${getRegistrationClass(event)}"></span>
 				${registrationInfo}
-		</div>
+			</div>
 		` : ""}
 			
 		<button 
