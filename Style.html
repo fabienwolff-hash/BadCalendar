@@ -15,16 +15,6 @@ body{
     -moz-osx-font-smoothing:grayscale;
 }
 
-@media (pointer: coarse){
-
-    body{
-        max-width:none !important;
-        margin:0 !important;
-    }
-
-}
-
-
 /* =========================
    INITIALIZATION
 ========================= */
@@ -135,6 +125,13 @@ header h1{
 	box-shadow .2s;
 }
 
+.filters-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+	margin-top:12px;
+}
+
 .filters select:focus,
 .filters input:focus{
     outline:none;
@@ -143,9 +140,22 @@ header h1{
 }
 
 .filter-group{
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:16px;
     display:flex;
     flex-direction:column;
-    gap:4px;
+    gap:8px;
+}
+
+
+
+.filter-group > label:first-child{
+    font-size:18px;
+    font-weight:600;
+    color:#374151;
+    margin-bottom:8px;
 }
 
 .filter-group label{
@@ -154,6 +164,15 @@ header h1{
     color:#666;
     margin-left:4px;
 }
+
+.checkbox-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:4px 0;
+    cursor:pointer;
+}
+
 
 .filters-toggle{
 	display:flex;
@@ -543,6 +562,15 @@ header h1{
 ========================= */
 
 /* --- Mobile (optimisation principale) --- */
+@media (pointer: coarse){
+
+    body{
+        max-width:none !important;
+        margin:0 !important;
+    }
+
+}
+
 @media (max-width: 600px){
 
     body{
@@ -575,12 +603,14 @@ header h1{
         padding:11px;
     }
 	
+	.filters-grid {
+		grid-template-columns: 1fr;
+	}
+	
     .month-header{
         font-size:16px;
         margin:20px 2px 10px;
     }
-	
-	
 }
 
 /* --- Tablette --- */
@@ -626,6 +656,17 @@ header h1{
 		padding:6px;
 		margin-top:6px;
 		font-size:13px;
+	}
+	
+	.filter-group{
+		transition:border-color .2s ease,
+				   box-shadow .2s ease;
+	}
+
+	.filter-group:hover{
+		border-color:#cbd5e1;
+		box-shadow:
+			0 2px 8px rgba(0,0,0,.05);
 	}
 }
 

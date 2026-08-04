@@ -16,33 +16,35 @@
 		</div>
 		<span class="filters-toggle-icon">▼</span>
 	</button>
+	<div id="filtersContent">
+		<div class="filters-grid">
+			<div class="filter-group">
+				<label>Catégories</label>
+				<div id="filterCategories"></div>
+			</div>
 
-    <div id="filtersContent">
-		<div class="filter-group">
-			<label>Types</label>
-			<div id="filterTypes"></div>
+			<div class="filter-group">
+				<label>Portées</label>
+				<div id="filterScopes"></div>
+			</div>
+
+			<div class="filter-group">
+				<label>Types</label>
+				<div id="filterTypes"></div>
+			</div>
+
+			<div class="filter-group">
+				<label>Préférences</label>
+
+				<label class="checkbox-label">
+					<input
+						id="showFinished"
+						type="checkbox">
+					<span>
+						Afficher les compétitions terminées
+					</span>
+				</label>
+			</div>
 		</div>
-
-		<div class="filter-group">
-			<label>Portées</label>
-			<div id="filterScopes"></div>
-		</div>
-	
-		<div class="filter-group">
-			<label>Catégories</label>
-			<div id="filterCategories"></div>
-		</div>
-		
-		<hr class="filters-separator">
-
-		<label class="checkbox-label" for="showFinished">
-
-			<input
-				id="showFinished"
-				type="checkbox">
-
-			<span>Afficher les compétitions terminées</span>
-
-		</label>
 	</div>
 </div>

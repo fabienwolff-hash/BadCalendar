@@ -66,7 +66,7 @@ const App = {
 
 		document.body.classList.toggle(
 			"mobile-device",
-			window.screen.width < 600
+			window.matchMedia("(pointer: coarse)").matches
 		);
 
         this.events = events;
