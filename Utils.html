@@ -94,12 +94,12 @@ function getRegistrationMessage(event){
         return "";
 
     case STATUS.REGISTRATION.NOT_OPEN:
-        return event.registrationOpenDate
+        return event.registration.openDate
             ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registration.openDate)}`
             : UI.STATUS.REGISTRATION_NOT_OPEN;
 
     case STATUS.REGISTRATION.OPEN:
-        return event.registrationCloseDate
+        return event.registration.closeDate
             ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registration.closeDate)}`
             : UI.STATUS.REGISTRATION_OPEN;
 
@@ -108,7 +108,7 @@ function getRegistrationMessage(event){
 
     default:
         return "";
-	}
+    }
 }
 
 function getRegistrationClass(event) {
