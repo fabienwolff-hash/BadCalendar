@@ -10,7 +10,7 @@ function eventButton(event){
 
     let label;
 
-    switch(event.eventStatus){
+    switch(event.tournamentStatus){
         case STATUS.EVENT.FINISHED:
             label = UI.BUTTONS.VIEW_RESULTS;
             break;
@@ -95,12 +95,12 @@ function getRegistrationMessage(event){
 
     case STATUS.REGISTRATION.NOT_OPEN:
         return event.registrationOpenDate
-            ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registrationOpenDate)}`
+            ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registration.openDate)}`
             : UI.STATUS.REGISTRATION_NOT_OPEN;
 
     case STATUS.REGISTRATION.OPEN:
         return event.registrationCloseDate
-            ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registrationCloseDate)}`
+            ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registration.closeDate)}`
             : UI.STATUS.REGISTRATION_OPEN;
 
     case STATUS.REGISTRATION.CLOSED:

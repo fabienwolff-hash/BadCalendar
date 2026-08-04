@@ -57,15 +57,7 @@ const App = {
         this.events = events;
 		
 		console.log(events);
-		
-		console.table(
-			this.events.map(e => ({
-				title: e.title,
-				eventStatus: e.eventStatus,
-				registrationStatus: e.registrationStatus
-			}))
-		);
-		
+				
 		this.initialize();
     },
 	
@@ -197,7 +189,7 @@ const App = {
 					return false;
 
 			if (!this.state.showFinished &&
-				event.eventStatus === STATUS.EVENT.FINISHED){
+				event.tournamentStatus === STATUS.EVENT.FINISHED){
 					return false;
 				}
 

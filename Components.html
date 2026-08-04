@@ -6,10 +6,10 @@ function renderCard(event) {
 	
 	let cardClass = "";
 
-	if (event.eventStatus === STATUS.EVENT.FINISHED) {
+	if (event.tournamentStatus === STATUS.EVENT.FINISHED) {
 		cardClass = "card-finished";
 	}
-	else if (event.eventStatus === STATUS.EVENT.ONGOING) {
+	else if (event.tournamentStatus === STATUS.EVENT.ONGOING) {
 		cardClass = "card-ongoing";
 	}
 
@@ -80,7 +80,7 @@ function renderCard(event) {
 	<div class="card-details">
 
 		<div class="info">
-			👥 ${event.registrationMode}
+			👥 ${event.registration.mode}
 		</div>
 		
 		${eventButton(event)}

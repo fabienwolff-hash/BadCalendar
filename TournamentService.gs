@@ -236,7 +236,12 @@ const TournamentService = {
         endDate
       );
 	  
-	const siteCount = this.getUniqueSites_(tournament).length;  
+	const siteCount = this.getUniqueSites_(tournament).length; 
+
+	const calendarLocation =
+		siteCount > 1
+			? "Voir BadNet"
+			: this.buildDisplayLocation_(tournament);	
 
     const enrichedTournament = {
       ...tournament,
@@ -256,6 +261,14 @@ const TournamentService = {
 
       displayLocation:
         this.buildDisplayLocation_(tournament),
+
+	  googleCalendarUrl:
+	    CalendarService.buildGoogleCalendarUrl({
+		  title: tournament.title,
+		  startDate,
+		  endDate,
+		  displayLocation: calendarLocation
+		}),
 
       month:
         startDate
@@ -747,11 +760,6 @@ getUniqueSites_(tournament) {
   
   toDto_(tournament) {
 
-		const calendarLocation =
-		  tournament.siteCount > 1
-			? "Voir BadNet"
-			: tournament.displayLocation;
-
 	  return {
 		tournamentId:
 		  tournament.tournamentId,
@@ -806,14 +814,6 @@ getUniqueSites_(tournament) {
 
 		creationDate:
 		  tournament.creationDate,
-		
-		googleCalendarUrl:
-		  CalendarService.buildGoogleCalendarUrl({
-			title: tournament.title,
-			startDate: tournament.startDate,
-			endDate: tournament.endDate,
-			displayLocation: calendarLocation
-		  }),
 		
 		programs:
 		  tournament.programs
