@@ -4,11 +4,11 @@ const LocationService = {
 
   read() {
 
-    Logger.log("Lecture du Spreadsheet Locations");
-
     if (this.cache_) {
       return this.cache_;
     }
+	
+	Logger.log("Lecture du Spreadsheet Locations");
 
     const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
     const sheet = ss.getSheetByName(CONFIG.LOCATIONS_SHEET_NAME);
