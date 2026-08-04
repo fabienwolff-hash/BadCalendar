@@ -784,6 +784,11 @@ getUniqueSites_(tournament) {
   
   toDto_(tournament) {
 
+		const calendarLocation =
+		  tournament.siteCount > 1
+			? "Voir BadNet"
+			: tournament.displayLocation;
+
 	  return {
 		tournamentId:
 		  tournament.tournamentId,
@@ -845,11 +850,6 @@ getUniqueSites_(tournament) {
 		creationDate:
 		  tournament.creationDate,
 		
-		const calendarLocation =
-		  tournament.siteCount > 1
-			? "Voir BadNet"
-			: tournament.displayLocation;
-`
 		googleCalendarUrl:
 		  CalendarService.buildGoogleCalendarUrl({
 			title: tournament.title,
