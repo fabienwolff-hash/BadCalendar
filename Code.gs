@@ -1,8 +1,12 @@
 function doGet() {
-  return HtmlService
-    .createTemplateFromFile("Index")
-    .evaluate()
-    .setTitle(CONFIG.APP_NAME);
+
+	const template = HtmlService.createTemplateFromFile("Index");
+
+	template.version = CONFIG.APP_VERSION;
+
+	return template
+		.evaluate()
+		.setTitle(CONFIG.APP_NAME);
 }
 
 function include(filename) {
