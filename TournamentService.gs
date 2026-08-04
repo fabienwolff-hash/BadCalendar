@@ -815,9 +815,6 @@ getUniqueSites_(tournament) {
 			displayLocation: calendarLocation
 		  }),
 		
-		siteCount:
-		  tournament.siteCount,
-
 		programs:
 		  tournament.programs
 	  };

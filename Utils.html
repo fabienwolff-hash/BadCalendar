@@ -159,4 +159,34 @@ function getDisciplines(event) {
     return [...disciplines];
 }
 
+function getSites(event) {
+
+    const sites = [];
+    const seen = new Set();
+
+    event.programs.forEach(program => {
+
+        program.sites.forEach(site => {
+
+            const key = [
+                site.region || "",
+                site.department || "",
+                site.city || "",
+                site.gymnasium || ""
+            ].join("|");
+
+            if (!seen.has(key)) {
+                seen.add(key);
+                sites.push(site);
+            }
+        });
+    });
+
+    return sites;
+}
+
+function getSiteCount(event) {
+    return getSites(event).length;
+}
+
 </script>
