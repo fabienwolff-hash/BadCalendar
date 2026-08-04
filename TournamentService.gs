@@ -12,9 +12,7 @@ const TournamentService = {
     this.sort_(tournaments);
 
 	return tournaments.map(tournament =>
-	  this.toDto_(
 		this.serialize_(tournament)
-	  )
 	);
   },
 
