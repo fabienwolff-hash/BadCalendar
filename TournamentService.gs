@@ -306,7 +306,7 @@ const TournamentService = {
 	  });
 
 	  return [...categories].sort();
-	}
+	},
 	
 	buildDisciplinesArray_(tournament) {
 
@@ -322,7 +322,7 @@ const TournamentService = {
 	  });
 
 	  return [...disciplines].sort();
-	}
+	},
 
   getTournamentStartDate_(tournament) {
 
