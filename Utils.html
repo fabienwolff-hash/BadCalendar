@@ -126,4 +126,34 @@ function shortDate(date){
     );
 }
 
+function getCategories(event) {
+
+    const categories = new Set();
+
+    event.programs.forEach(program => {
+
+        program.categories.forEach(category => {
+            categories.add(category);
+        });
+
+    });
+
+    return [...categories];
+}
+
+function getDisciplines(event) {
+
+    const disciplines = new Set();
+
+    event.programs.forEach(program => {
+
+        program.disciplines.forEach(discipline => {
+            disciplines.add(discipline);
+        });
+
+    });
+
+    return [...disciplines];
+}
+
 </script>

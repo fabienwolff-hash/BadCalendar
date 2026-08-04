@@ -49,12 +49,12 @@ function renderCard(event) {
 		</div>
 
 		<div class="info">
-			👦 ${event.categoriesArray.join(" • ")}
+			👦 ${getCategories(event).join(" • ")}
 		</div>
 		
-		${event.disciplinesArray.length > 0 ? `
+		${getDisciplines(event).length > 0 ? `
 		<div class="info">
-			🏸 ${event.disciplinesArray.join(" • ")}
+			🏸 ${getDisciplines(event).join(" • ")}
 		</div>
 		` : ""}
 
