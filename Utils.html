@@ -54,6 +54,59 @@ function googleMapsButton(event) {
     `;
 }
 
+function googleMapsButton(event) {
+
+    const links = getGoogleMapsLinks(event);
+
+    if (links.length === 0) {
+        return "";
+    }
+
+    if (links.length === 1) {
+
+        return `
+			<a
+				class="secondary-link"
+				href="${links[0].url}"
+				target="_blank"
+				rel="noopener noreferrer">
+				${UI.BUTTONS.GOOGLE_MAPS}
+			</a>
+			`;
+    }
+
+    return links.map(link => `
+		<a
+			class="secondary-link"
+			href="${link.url}"
+			target="_blank"
+			rel="noopener noreferrer">
+			📍 ${link.city}
+		</a>
+		`).join("");
+}
+
+function googleMapsButton(event) {
+
+    const links =
+        getGoogleMapsLinks(event);
+
+    if (links.length === 0) {
+        return "";
+    }
+
+    if (links.length === 1) {
+
+        return `
+            <a
+                class="secondary-link"
+                href="${links[0].url}"
+                target="_blankap(link => `
+        <a
+            class="secondary-link"
+            href="${link.url}"
+            target
+
 function googleCalendarButton(event) {
 
     if (!event.googleCalendarUrl) {
@@ -187,6 +240,17 @@ function getSites(event) {
 
 function getSiteCount(event) {
     return getSites(event).length;
+}
+
+function getGoogleMapsLinks(event) {
+
+    return getSites(event)
+        .filter(site => site.googleMapsUrl)
+        .map(site => ({
+            city: site.city,
+            gymnasium: site.gymnasium,
+            url: site.googleMapsUrl
+        }));
 }
 
 </script>
