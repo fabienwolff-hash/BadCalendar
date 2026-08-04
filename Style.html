@@ -15,6 +15,16 @@ body{
     -moz-osx-font-smoothing:grayscale;
 }
 
+@media (pointer: coarse){
+
+    body{
+        max-width:none !important;
+        margin:0 !important;
+    }
+
+}
+
+
 /* =========================
    INITIALIZATION
 ========================= */
@@ -574,9 +584,9 @@ header h1{
 }
 
 /* --- Tablette --- */
-@media (min-width: 768px) and (max-width: 899px){
+@media (min-width: 601px) and (max-width: 899px){
 
-    body{
+    body:not(.mobile-device){
         max-width:600px;
         margin:auto;
     }
@@ -599,7 +609,7 @@ header h1{
 /* --- Desktop --- */
 @media (min-width:900px){
 
-    body{
+    body:not(.mobile-device){
         max-width:720px;
         margin:auto;
     }
@@ -611,6 +621,12 @@ header h1{
     .button{
         width:auto;
     }
+	
+	.card-toggle{
+		padding:6px;
+		margin-top:6px;
+		font-size:13px;
+	}
 
 }
 
