@@ -396,7 +396,6 @@ Les futures évolutions (fiche détaillée, Google Calendar, filtres avancés...
 
 - Ajout du champ Disciplines dans le modèle événement.
 - Ajout de la validation métier associée.
-- Ajout de disciplinesArray pour la présentation.
 
 ---
 

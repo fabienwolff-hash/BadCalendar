@@ -262,7 +262,6 @@ Les champs suivants sont calculés automatiquement par `TournamentService`.
 | monthNumber        | Nombre  | Numéro du mois                     |
 | year               | Nombre  | Année                              |
 | googleCalendarUrl  | URL     | URL pour Google Calendar           |
-| categoriesArray    | Tableau | Liste des catégories               |
 | eventStatus        | Enum    | UPCOMING / ONGOING / FINISHED      |
 | registrationStatus | Enum    | UNKNOWN / NOT_OPEN / OPEN / CLOSED |
 
@@ -284,10 +283,6 @@ Exemple simplifié :
   "city": "Rennes",
   "location": "Rennes",
   "categories": "Benjamin;Minime",
-  "categoriesArray": [
-    "Benjamin",
-    "Minime"
-  ],
   "eventStatus": "UPCOMING",
   "registrationStatus": "OPEN",
   "month": "...",

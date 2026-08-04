@@ -236,10 +236,6 @@ const TournamentService = {
         endDate
       );
 	  
-	const categoriesArray = this.buildCategoriesArray_(tournament);
-
-	const disciplinesArray = this.buildDisciplinesArray_(tournament);
-
 	const siteCount = this.getUniqueSites_(tournament).length;  
 
     const enrichedTournament = {
@@ -247,8 +243,6 @@ const TournamentService = {
 
       startDate,
       endDate,
-	  categoriesArray,
-	  disciplinesArray,
 	  siteCount,
 
       tournamentStatus,
@@ -285,37 +279,6 @@ const TournamentService = {
     return enrichedTournament;
   },
 
-	buildCategoriesArray_(tournament) {
-
-	  const categories =
-		new Set();
-
-	  tournament.programs.forEach(program => {
-
-		program.categories.forEach(category => {
-		  categories.add(category);
-		});
-
-	  });
-
-	  return [...categories].sort();
-	},
-	
-	buildDisciplinesArray_(tournament) {
-
-	  const disciplines =
-		new Set();
-
-	  tournament.programs.forEach(program => {
-
-		program.disciplines.forEach(discipline => {
-		  disciplines.add(discipline);
-		});
-
-	  });
-
-	  return [...disciplines].sort();
-	},
 
   getTournamentStartDate_(tournament) {
 
@@ -822,12 +785,6 @@ getUniqueSites_(tournament) {
 
 		year:
 		  tournament.year,
-
-		categoriesArray:
-		  tournament.categoriesArray,
-
-		disciplinesArray:
-		  tournament.disciplinesArray,
 
 		registrationMode:
 		  tournament.registration.mode,
