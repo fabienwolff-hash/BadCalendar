@@ -138,7 +138,10 @@ function getCategories(event) {
 
     });
 
-    return [...categories];
+    return sortByOrder(
+		[...categories],
+		ORDER.CATEGORIES
+	);
 }
 
 function getDisciplines(event) {
