@@ -282,14 +282,7 @@ const TournamentService = {
           : null
     };
 
-    return {
-      ...enrichedTournament,
-
-      googleCalendarUrl:
-        CalendarService.buildGoogleCalendarUrl(
-          enrichedTournament
-        )
-    };
+    return enrichedTournament;
   },
 
 	buildCategoriesArray_(tournament) {
@@ -851,10 +844,20 @@ getUniqueSites_(tournament) {
 
 		creationDate:
 		  tournament.creationDate,
-
+		
+		const calendarLocation =
+		  tournament.siteCount > 1
+			? "Voir BadNet"
+			: tournament.displayLocation;
+`
 		googleCalendarUrl:
-		  tournament.googleCalendarUrl,
-
+		  CalendarService.buildGoogleCalendarUrl({
+			title: tournament.title,
+			startDate: tournament.startDate,
+			endDate: tournament.endDate,
+			displayLocation: calendarLocation
+		  }),
+		
 		siteCount:
 		  tournament.siteCount,
 
