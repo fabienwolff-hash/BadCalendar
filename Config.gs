@@ -2,7 +2,7 @@ const CONFIG = {
 
   APP_NAME: "BadCalendar",
 
-  VERSION: "0.12.0",
+  APP_VERSION: "0.12.0",
 
   SPREADSHEET_ID:
     PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID"),
