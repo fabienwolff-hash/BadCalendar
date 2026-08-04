@@ -480,22 +480,6 @@ getUniqueSites_(tournament) {
   return sites;
 },
 
-  getUniqueCities_(tournament) {
-
-    const cities =
-      new Set();
-
-    tournament.programs.forEach(program => {
-      program.sites.forEach(site => {
-        if (site.city) {
-          cities.add(site.city);
-        }
-      });
-    });
-
-    return [...cities];
-  },
-
 	getSingleDepartment_(tournament) {
 
 	  const departments =
