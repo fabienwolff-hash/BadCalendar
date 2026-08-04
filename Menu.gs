@@ -9,9 +9,9 @@ function onOpen() {
 
 function verifyMaster() {
 
-  const events = EventService.readNormalized();
+  const rows = TournamentService.readRows_();
 
-  const issues = ValidationService.validate(events);
+  const issues = ValidationService.validate(rows);
 
   ReportService.write(issues);
 
