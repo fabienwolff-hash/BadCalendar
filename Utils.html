@@ -44,33 +44,20 @@ function googleMapsButton(event) {
 
     const links = getGoogleMapsLinks(event);
 
-    if (links.length === 0) {
+	// Multi-sites : les liens sont déjà présents dans getProgramSiteDetails()
+    if (links.length === 0 || links.length > 1) {
         return "";
     }
-
-	if (links.length === 1) {
-
-        return `
-			<a
-				class="secondary-link"
-				href="${links[0].url}"
-				target="_blank"
-				rel="noopener noreferrer">
-				🌍 ${getGoogleMapsLabel(links[0])}
-			</a>
-			`;
-    }
-
-    // Multi-sites
-    return links.map(link => `
+	
+    return `
 		<a
 			class="secondary-link"
-			href="${link.url}"
+			href="${links[0].url}"
 			target="_blank"
 			rel="noopener noreferrer">
-			🌍️ ${getGoogleMapsLabel(link)}
+			${UI.BUTTONS.GOOGLE_MAPS}
 		</a>
-		`).join("");
+	`;
 }
 
 function googleCalendarButton(event) {
@@ -244,12 +231,18 @@ function getProgramSiteDetails(event) {
                         ? `${site.city} (${site.gymnasium})`
                         : site.city;
 
-                return `
-                    <div class="site-categories">
-                        📍 ${location}
-                        ·
+				return `
+					<div class="program-site-detail">
+						<a
+							class="secondary-link"
+							href="${site.googleMapsUrl}"
+							target="_blank"
+							rel="noopener noreferrer">
+							🗺️ ${location}
+						</a>
+                    
                         👦 ${program.categories.join(" • ")}
-                    </div>
+					</div>
                 `;
             })
         )

@@ -291,7 +291,6 @@ Exemple simplifié :
   "displayLocation" : "...",
   "googleMapsUrl" : "...",
   "googleCalendarUrl" : "...",
-  "disciplinesArray" : "..."
   "registrationMode": "...",
   "registrationOpenDate": "...",
   "registrationCloseDate": "...",

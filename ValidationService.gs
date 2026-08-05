@@ -1,227 +1,18 @@
 const ValidationService = {
 
-  validate(events) {
+	validate(events) {
 
-	  const issues = [];
-	  const parameters = ParameterService.read();
-
-	  const requiredFields = [
-		{
-		  field: "tournamentId",
-		  label: "TournamentId"
-		},
-		{
-		  field: "type",
-		  label: "Type"
-		},
-		{
-		  field: "scope",
-		  label: "Scope"
-		},
-		{
-		  field: "title",
-		  label: "Title"
-		},
-		{
-		  field: "startDate",
-		  label: "StartDate"
-		},
-		{
-		  field: "endDate",
-		  label: "EndDate"
-		},
-		{
-		  field: "categories",
-		  label: "Categories"
-		},
-		{
-		  field: "registrationMode",
-		  label: "RegistrationMode"
-		}
+	  const issues = [
+		...this.validateRequiredFields_(events),
+		...this.validateDateRules_(events),
+		...this.validateAllowedValuesRules_(events),
+		...this.validatePatternRules_(events),
+		...this.validateBusinessRules_(events),
+		...this.validateTournamentConsistency_(events),
+		...this.validateStartDateOrder_(events)
 	  ];
 
-	  requiredFields.forEach(rule => {
-		issues.push(
-		  ...this.validateRequiredField_(events, rule)
-		);
-	  });
-	  
-	  const dateRules = [
-	  {
-		firstField: "startDate",
-		secondField: "endDate",
-
-		firstLabel: "StartDate",
-		secondLabel: "EndDate",
-
-		level: "ERROR",
-
-		message: "EndDate doit être supérieure ou égale à StartDate",
-
-		isValid: (start, end) => end >= start
-	  },
-
-	  {
-		firstField: "registrationOpenDate",
-		secondField: "registrationCloseDate",
-
-		firstLabel: "RegistrationOpenDate",
-		secondLabel: "RegistrationCloseDate",
-
-		level: "ERROR",
-
-		message:
-		  "RegistrationCloseDate doit être supérieure ou égale à RegistrationOpenDate",
-
-		isValid: (open, close) => close >= open
-	  },
-
-	  {
-		firstField: "registrationOpenDate",
-		secondField: "startDate",
-
-		firstLabel: "RegistrationOpenDate",
-		secondLabel: "StartDate",
-
-		level: "WARNING",
-
-		message:
-		  "Les inscriptions ouvrent après le début de l'événement",
-
-		isValid: (open, start) => open <= start
-	  },
-
-	  {
-		firstField: "registrationCloseDate",
-		secondField: "startDate",
-
-		firstLabel: "RegistrationCloseDate",
-		secondLabel: "StartDate",
-
-		level: "WARNING",
-
-		message:
-		  "Les inscriptions ferment après le début de l'événement",
-
-		isValid: (close, start) => close <= start
-	  }
-
-	];
-	
-	  dateRules.forEach(rule => {
-    	  issues.push(
-			...this.validateDateOrder_(events, rule)
-		  );
-
-		});
-		
-	const allowedValueRules = [
-		{
-			field: "type",
-			label: "Type",
-			allowedValues: parameters.Type,
-			multiple: false
-		 },
-    	{
-			field: "scope",
-			label: "Scope",
-			allowedValues: parameters.Scope,
-			multiple: false
-		},
-    	{
-			field: "categories",
-			label: "Categories",
-			allowedValues: parameters.Category,
-			multiple: true
-		},
-		{
-			field: "registrationMode",
-			label: "RegistrationMode",
-			allowedValues: parameters.RegistrationMode,
-			multiple: false
-		},
-		{
-			field: "region",
-			label: "Region",
-			allowedValues: parameters.Region,
-			multiple: false
-		},
-		{
-			field: "department",
-			label: "Department",
-			allowedValues: parameters.Department,
-			multiple: false
-		},
-		{
-			field: "city",
-			label: "City",
-			allowedValues: parameters.City,
-			multiple: false
-		},
-		{
-			 field:"disciplines",
-			 label:"Disciplines",
-			 allowedValues:parameters.Discipline,
-			 multiple:true
-		}
-	];
-		
-	allowedValueRules.forEach(rule => {
-
-		  issues.push(
-			...this.validateAllowedValues_(events, rule)
-		  );
-	});
-	
-	const patternRules = [
-	  {
-		field: "eventUrl",
-		label: "EventUrl",
-		pattern: /^https?:\/\//,
-		message: "URL invalide"
-	  }
-	];
-
-	patternRules.forEach(rule => {
-
-	  issues.push(
-		...this.validatePattern_(events, rule)
-	  );
-
-	});
-	
-	const businessRules = [
-	  {
-		field: "disciplines",
-		label: "Disciplines",
-		message: "Disciplines obligatoire pour ce type d'événement",
-
-		isValid: (event) => {
-
-		  if (event.type === "Stage") {
-			return true;
-		  }
-
-		  return (
-			event.disciplines &&
-			event.disciplines.trim() !== ""
-		  );
-		}
-	  }
-	];
-	
-	businessRules.forEach(rule => {
-
-	  issues.push(
-		...this.validateBusinessRule_(events, rule)
-	  );
-	});
-	
-	issues.push(
-		...this.validateTournamentConsistency_(events)
-	);
-
-	issues.sort((a, b) => {
+	  return issues.sort((a, b) => {
 
 		if (a.row !== b.row) {
 		  return a.row - b.row;
@@ -229,10 +20,176 @@ const ValidationService = {
 
 		return a.field.localeCompare(b.field);
 
-	});
+	  });
 
-	return issues;
-  },
+	},
+	
+	validateRequiredFields_(events) {
+
+	  const rules = [
+		{ field: "tournamentId", label: "TournamentId" },
+		{ field: "type", label: "Type" },
+		{ field: "scope", label: "Scope" },
+		{ field: "title", label: "Title" },
+		{ field: "startDate", label: "StartDate" },
+		{ field: "endDate", label: "EndDate" },
+		{ field: "categories", label: "Categories" },
+		{ field: "registrationMode", label: "RegistrationMode" }
+	  ];
+
+	  return rules.flatMap(rule =>
+		this.validateRequiredField_(events, rule)
+	  );
+
+	},
+	
+	validateDateRules_(events) {
+
+	  const rules = [
+		{
+		  firstField: "startDate",
+		  secondField: "endDate",
+		  firstLabel: "StartDate",
+		  secondLabel: "EndDate",
+		  level: "ERROR",
+		  message: "EndDate doit être supérieure ou égale à StartDate",
+		  isValid: (start, end) => end >= start
+		},
+		{
+		  firstField: "registrationOpenDate",
+		  secondField: "registrationCloseDate",
+		  firstLabel: "RegistrationOpenDate",
+		  secondLabel: "RegistrationCloseDate",
+		  level: "ERROR",
+		  message: "RegistrationCloseDate doit être supérieure ou égale à RegistrationOpenDate",
+		  isValid: (open, close) => close >= open
+		},
+		{
+		  firstField: "registrationOpenDate",
+		  secondField: "startDate",
+		  firstLabel: "RegistrationOpenDate",
+		  secondLabel: "StartDate",
+		  level: "WARNING",
+		  message: "Les inscriptions ouvrent après le début de l'événement",
+		  isValid: (open, start) => open <= start
+		},
+		{
+		  firstField: "registrationCloseDate",
+		  secondField: "startDate",
+		  firstLabel: "RegistrationCloseDate",
+		  secondLabel: "StartDate",
+		  level: "WARNING",
+		  message: "Les inscriptions ferment après le début de l'événement",
+		  isValid: (close, start) => close <= start
+		}
+	  ];
+
+	  return rules.flatMap(rule =>
+		this.validateDateOrder_(events, rule)
+	  );
+
+	},
+	
+	validateAllowedValuesRules_(events) {
+
+	  const parameters = ParameterService.read();
+
+	  const rules = [
+		{
+		  field: "type",
+		  label: "Type",
+		  allowedValues: parameters.Type,
+		  multiple: false
+		},
+		{
+		  field: "scope",
+		  label: "Scope",
+		  allowedValues: parameters.Scope,
+		  multiple: false
+		},
+		{
+		  field: "categories",
+		  label: "Categories",
+		  allowedValues: parameters.Category,
+		  multiple: true
+		},
+		{
+		  field: "registrationMode",
+		  label: "RegistrationMode",
+		  allowedValues: parameters.RegistrationMode,
+		  multiple: false
+		},
+		{
+		  field: "region",
+		  label: "Region",
+		  allowedValues: parameters.Region,
+		  multiple: false
+		},
+		{
+		  field: "department",
+		  label: "Department",
+		  allowedValues: parameters.Department,
+		  multiple: false
+		},
+		{
+		  field: "disciplines",
+		  label: "Disciplines",
+		  allowedValues: parameters.Discipline,
+		  multiple: true
+		}
+	  ];
+
+	  return rules.flatMap(rule =>
+		this.validateAllowedValues_(events, rule)
+	  );
+
+	},
+	
+	validatePatternRules_(events) {
+
+	  const rules = [
+		{
+		  field: "eventUrl",
+		  label: "EventUrl",
+		  pattern: /^https?:\/\//,
+		  message: "URL invalide"
+		}
+	  ];
+
+	  return rules.flatMap(rule =>
+		this.validatePattern_(events, rule)
+	  );
+
+	},
+	
+	validateBusinessRules_(events) {
+
+	  const rules = [
+		{
+		  field: "disciplines",
+		  label: "Disciplines",
+		  message: "Disciplines obligatoire pour ce type d'événement",
+
+		  isValid: event => {
+
+			if (event.type === "Stage") {
+			  return true;
+			}
+
+			return (
+			  event.disciplines &&
+			  event.disciplines.trim() !== ""
+			);
+
+		  }
+		}
+	  ];
+
+	  return rules.flatMap(rule =>
+		this.validateBusinessRule_(events, rule)
+	  );
+
+	},
 
   validateRequiredField_(events, rule) {
 
@@ -474,5 +431,42 @@ const ValidationService = {
 	  );
 
 	  return issues;
+	},
+	
+	validateStartDateOrder_(events) {
+
+	  const issues = [];
+
+	  let previousDate = null;
+
+	  events.forEach((event, index) => {
+
+		const currentDate = event.startDate;
+
+		if (!currentDate) {
+		  return;
+		}
+
+		if (
+		  previousDate &&
+		  currentDate.getTime() < previousDate.getTime()
+		) {
+
+		  issues.push(
+			ValidationIssue.warning(
+			  index + 2,
+			  "StartDate",
+			  "Le fichier n'est pas trié par StartDate croissante"
+			)
+		  );
+
+		}
+
+		previousDate = currentDate;
+
+	  });
+
+	  return issues;
+
 	}
 };
