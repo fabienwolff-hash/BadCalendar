@@ -5,32 +5,30 @@
     type="button"
     aria-expanded="true"
     aria-controls="filtersContent">
-		<div class="filters-toggle-content">
-			<div class="filters-toggle-title">
+		<div class="filters-toggle-title">
 				Filtres
-			</div>
-			<div
-				id="filtersSummary"
-				class="filters-summary">
-			</div>
 		</div>
 		<span class="filters-toggle-icon">▼</span>
 	</button>
+	 <div
+        id="filtersSummary"
+        class="filters-summary">
+    </div>
 	<div id="filtersContent">
 		<div class="filters-grid">
 			<div class="filter-group">
 				<label>Catégories</label>
-				<div id="filterCategories"></div>
+				<div id="filterCategories" class="filter-options"></div>
 			</div>
 
 			<div class="filter-group">
-				<label>Portées</label>
-				<div id="filterScopes"></div>
+				<label>Niveau de compétition</label>
+				<div id="filterScopes" class="filter-options"></div>
 			</div>
 
 			<div class="filter-group">
-				<label>Types</label>
-				<div id="filterTypes"></div>
+				<label>Type d'évènement</label>
+				<div id="filterTypes" class="filter-options"></div>
 			</div>
 
 			<div class="filter-group">
@@ -42,6 +40,15 @@
 						type="checkbox">
 					<span>
 						Afficher les compétitions terminées
+					</span>
+				</label>
+				
+				<label class="checkbox-label">
+					<input
+						id="showNewOnly"
+						type="checkbox">
+					<span>
+						Afficher uniquement les nouveaux tournois
 					</span>
 				</label>
 			</div>

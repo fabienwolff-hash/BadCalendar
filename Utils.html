@@ -10,14 +10,18 @@ function eventButton(event){
 
     switch(event.tournamentStatus){
         case STATUS.EVENT.FINISHED:
-            label = UI.BUTTONS.VIEW_RESULTS;
+            label = event.eventUrl.includes(URLS.BADNET)
+				? UI.BUTTONS.VIEW_RESULTS
+				: UI.BUTTONS.VIEW_EVENT;
             break;
 
         default:
 
             switch(event.registrationStatus){
                 case STATUS.REGISTRATION.OPEN:
-                    label = UI.BUTTONS.REGISTER;
+					label = event.eventUrl.includes(URLS.BADNET)
+                        ? UI.BUTTONS.REGISTER_BADNET
+                        : UI.BUTTONS.REGISTER;
                     break;
 
                 default:
@@ -34,7 +38,7 @@ function eventButton(event){
             ${label}
         </a>
     `;
-}
+} 
 
 function googleMapsButton(event) {
 

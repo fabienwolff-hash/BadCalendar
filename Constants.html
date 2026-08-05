@@ -7,12 +7,13 @@ const UI = {
     },
 
     BUTTONS: {
-		REGISTER: "S'inscrire sur Badnet",
-		VIEW_EVENT: "Consulter le tournoi",
-		VIEW_RESULTS: "Voir les résultats",
+		REGISTER: "S'inscrire",
+		REGISTER_BADNET: "S'inscrire sur Badnet",
+		VIEW_EVENT: "Consulter l'évènement",
+		VIEW_RESULTS: "Consulter les résultats",
 		RESET_FILTERS: "Réinitialiser les filtres",
 		GOOGLE_MAPS: "📍 Ouvrir dans Google Maps",
-		GOOGLE_CALENDAR: "📅 Ajouter au calendrier"
+		GOOGLE_CALENDAR: "📅 Ajouter à mon agenda"
 	},
 	
 	STATUS: {
@@ -21,8 +22,10 @@ const UI = {
 		REGISTRATION_NOT_OPEN: "Ouverture le"
 	},
 	
+	
+	
     MESSAGES: {
-		EMPTY: "Aucun événement ne correspond aux filtres sélectionnés.",
+		EMPTY: "Aucun tournoi ne correspond aux filtres sélectionnés.",
 		NO_FILTER: "Aucun filtre actif"
     }
 };
@@ -30,11 +33,10 @@ const UI = {
 const STORAGE_KEYS = {
 
 	FILTERS_COLLAPSED: "badcalendar.filtersCollapsed",
-	SHOW_FINISHED: "badcalendar.showFinished",
-	CATEGORY: "badcalendar.category",
-	SCOPE: "badcalendar.scope",
 	CATEGORIES: "badcalendar.categories",
-	SCOPES: "badcalendar.scopes"
+	SCOPES: "badcalendar.scopes",
+	SHOW_FINISHED: "badcalendar.showFinished",
+	SHOW_NEW_ONLY: "showNewOnly"
 };
 
 const STATUS = {
@@ -65,10 +67,15 @@ const DOM = {
 	FILTERS_SUMMARY: "filtersSummary",
     EVENTS: "events",
 	SHOW_FINISHED: "showFinished",
+	SHOW_NEW_ONLY: "showNewOnly",
 	
 	APP: "app",
 	ERROR: "error",
     LOADING: "loading"
+};
+
+const URLS = {
+	BADNET: "badnet.fr"
 };
 
 const ORDER = {

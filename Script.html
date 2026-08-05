@@ -100,6 +100,7 @@ const App = {
 		this.state.scopes = Storage.loadScopes();
 							
 		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
+		$(DOM.SHOW_NEW_ONLY).checked = this.state.showNewOnly;
 	},
 	
     populateFilters() {
@@ -204,6 +205,16 @@ const App = {
 		});
 	},
 	
+	getActiveFiltersCount() {
+
+		return (
+			this.state.categories.length +
+			this.state.scopes.length +
+			this.state.types.length +
+			(this.state.showNewOnly ? 1 : 0)
+		);
+	},
+	
 	getAvailableTypes() {
 
 		if (this.state.scopes.length === 0) {
@@ -244,6 +255,37 @@ const App = {
 
 						Storage.saveCategories(this.state.categories);
 						this.render();
+					}
+				);
+			});
+	},
+	
+	bindSummaryBadges() {
+
+		document.querySelectorAll(".filter-badge-remove")
+			.forEach(button => {
+				button.addEventListener(
+					"click",
+					e => {
+
+						e.preventDefault();
+						e.stopPropagation();
+
+						const badge =
+							e.target.closest(
+								".filter-badge"
+							);
+
+						const type =
+							badge.dataset.type;
+
+						const value =
+							badge.dataset.value;
+
+						this.removeFilter(
+							type,
+							value
+						);
 					}
 				);
 			});
@@ -322,8 +364,73 @@ const App = {
 				Storage.saveShowFinished(this.state.showFinished);
 
 				this.render();
-			});	
+			});
+			
+		$(DOM.SHOW_NEW_ONLY)
+			.addEventListener("change", e => {
+				this.state.showNewOnly = e.target.checked;
+
+				this.render();
+			});
     },
+	
+	removeFilter(type, value) {
+
+		switch(type) {
+
+			case "category":
+				this.state.categories =
+					this.state.categories.filter(
+						item => item !== value
+					);
+
+				Storage.saveCategories(
+					this.state.categories
+				);
+				break;
+
+			case "scope":
+
+				this.state.scopes =
+					this.state.scopes.filter(
+						item => item !== value
+					);
+
+				Storage.saveScopes(
+					this.state.scopes
+				);
+				
+				const availableTypes = this.getAvailableTypes();
+				this.state.types = this.state.types.filter(
+					type =>	availableTypes.includes(type));
+
+				break;
+
+			case "tournament":
+
+				this.state.types =
+					this.state.types.filter(
+						item => item !== value
+					);
+
+				break;
+				
+			case "preference":
+
+				this.state.showNewOnly = false;
+				$(DOM.SHOW_NEW_ONLY).checked = false;
+
+				break;
+		}
+
+		this.populateFilters();
+
+		this.bindCategoryFilter();
+		this.bindScopeFilter();
+		this.bindTypeFilter();
+
+		this.render();
+	},
 
     getFilteredEvents() {
 
@@ -343,6 +450,12 @@ const App = {
 								
 			if (this.state.scopes.length > 0 &&
 				!this.state.scopes.includes(event.scope)
+			){
+				return false;
+			}
+			
+			if (this.state.showNewOnly &&
+				!event.isNew
 			){
 				return false;
 			}
@@ -382,21 +495,40 @@ const App = {
 
 		const summary = [];
 
-		if (this.state.categories.length > 0) {
-			summary.push(this.state.categories.join(", "));
-		}
-		
-		if (this.state.types.length > 0) {
-			summary.push(this.state.types.join(", "));
-		}
+		this.state.categories.forEach(category => {
+			summary.push({
+				type: "category",
+				label: category,
+				value: category
+			});
+		});
 
-		if (this.state.scopes.length > 0) {
-			summary.push(this.state.scopes.join(", "));
+		this.state.scopes.forEach(scope => {
+			summary.push({
+				type: "scope",
+				label: scope,
+				value: scope
+			});
+		});
+
+		this.state.types.forEach(type => {
+			summary.push({
+				type: "tournament",
+				label: type,
+				value: type
+			});
+		});
+		
+		if (this.state.showNewOnly) {
+			summary.push({
+				type: "preference",
+				label: "Nouveaux",
+				value: "Nouveaux"
+			});
 		}
 
 		return summary;
-
-	},
+	},	
 
    render(){
    
@@ -422,6 +554,8 @@ const App = {
 
 		toggle.querySelector(".filters-toggle-icon").textContent =
 			this.state.filtersCollapsed ? "▶" : "▼";
+		toggle.querySelector(".filters-toggle-title").textContent =
+			`Filtres (${this.getActiveFiltersCount()} actifs)`;
 
 		const summary = this.getFiltersSummary();
 		const summaryElement = $(DOM.FILTERS_SUMMARY);
@@ -429,12 +563,31 @@ const App = {
 		if (summary.length === 0) {
 			summaryElement.textContent = UI.MESSAGES.NO_FILTER;
 		} else {
-			summaryElement.textContent = summary.join(" • ");
+			summaryElement.innerHTML = summary.map(item => {
+					return `
+						<span
+							class="filter-badge ${item.type}"
+							data-type="${item.type}"
+							data-value="${item.value}">
+
+							${item.label}
+
+							<button
+								type="button"
+								class="filter-badge-remove">
+								✕
+							</button>
+
+						</span>
+					`;
+				}).join("");
 		}
 
+		this.bindSummaryBadges();
+		
 		summaryElement.style.display =
 			this.state.filtersCollapsed
-				? "block"
+				? "flex"
 				: "none";
 	},
 	
@@ -467,6 +620,9 @@ const App = {
 		
 		this.state.showFinished = false;
 		$(DOM.SHOW_FINISHED).checked = false;
+		
+		this.state.showNewOnly = false;
+		$(DOM.SHOW_NEW_ONLY).checked = false;
 
 		Storage.saveFiltersCollapsed(this.state.filtersCollapsed);
 		Storage.saveShowFinished(this.state.showFinished);
