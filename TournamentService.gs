@@ -209,7 +209,7 @@ const TournamentService = {
 
 		googleMapsUrl:
 		  city
-			? LocationService.buildGoogleMapsUrl(city)
+			? LocationService.buildGoogleMapsUrl(city,row.gymnasium)
 			: ""
 	  };
 	},

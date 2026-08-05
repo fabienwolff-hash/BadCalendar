@@ -20,18 +20,28 @@ const LocationService = {
     const values = sheet.getDataRange().getValues();
     const rows = values.slice(1);
 
-    const locations = {};
+    const locations = {
+	  byCity: {},
+	  byCityAndGymnasium: {}
+	};
 
     rows.forEach(row => {
 
-      const city = String(row[0] || "").trim();
-      const googleMapsQuery = String(row[1] || "").trim();
+	  const city = String(row[0] || "").trim();
+	  const gymnasium = String(row[1] || "").trim();
+	  const googleMapsQuery = String(row[2] || "").trim();
 
       if (!city) {
         return;
       }
 
-      locations[city] = googleMapsQuery;
+      locations.byCity[city] = googleMapsQuery;
+
+		if (gymnasium) {
+		  locations.byCityAndGymnasium[
+			`${city}|${gymnasium}`
+		  ] = googleMapsQuery;
+		}
 	  
     });
 
@@ -40,17 +50,30 @@ const LocationService = {
     return locations;
   },
 
-  buildGoogleMapsUrl(city) {
+  buildGoogleMapsUrl(city, gymnasium) {
 
-	const locations = this.read();
-	const query = city && locations[city.trim()];
+  const locations = this.read();
 
-	if (!city || !query) {
-		return null;
-	}
+  let query = null;
 
-	return `https://www.google.com/maps/search/?api=1&query=${query}`;
-  },
+  if (gymnasium && gymnasium.trim()) {
+    query =
+      locations.byCityAndGymnasium[
+        `${city}|${gymnasium}`
+      ];
+  }
+
+  if (!query && city) {
+    query =
+      locations.byCity[city];
+  }
+
+  if (!query) {
+    return null;
+  }
+
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
+},
 
   clearCache() {
     this.cache_ = null;

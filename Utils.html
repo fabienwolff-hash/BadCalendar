@@ -48,7 +48,7 @@ function googleMapsButton(event) {
         return "";
     }
 
-    if (links.length === 1) {
+	if (links.length === 1) {
 
         return `
 			<a
@@ -56,18 +56,19 @@ function googleMapsButton(event) {
 				href="${links[0].url}"
 				target="_blank"
 				rel="noopener noreferrer">
-				${UI.BUTTONS.GOOGLE_MAPS}
+				🌍 ${getGoogleMapsLabel(links[0])}
 			</a>
 			`;
     }
 
+    // Multi-sites
     return links.map(link => `
 		<a
 			class="secondary-link"
 			href="${link.url}"
 			target="_blank"
 			rel="noopener noreferrer">
-			📍 ${link.city}
+			🌍️ ${getGoogleMapsLabel(link)}
 		</a>
 		`).join("");
 }
@@ -216,6 +217,43 @@ function getGoogleMapsLinks(event) {
             gymnasium: site.gymnasium,
             url: site.googleMapsUrl
         }));
+}
+
+function getGoogleMapsLabel(link) {
+
+    if (link.gymnasium) {
+        return `${link.city} (${link.gymnasium})`;
+    }
+
+    return link.city;
+}
+
+
+function getProgramSiteDetails(event) {
+
+	if (getSiteCount(event) <= 1) {
+		return "";
+	}
+
+    return event.programs
+        .flatMap(program =>
+            program.sites.map(site => {
+
+                const location =
+                    site.gymnasium
+                        ? `${site.city} (${site.gymnasium})`
+                        : site.city;
+
+                return `
+                    <div class="site-categories">
+                        📍 ${location}
+                        ·
+                        👦 ${program.categories.join(" • ")}
+                    </div>
+                `;
+            })
+        )
+        .join("");
 }
 
 </script>

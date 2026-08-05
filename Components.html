@@ -77,11 +77,12 @@ function renderCard(event) {
 
 	</div>
 	<div class="card-details">
-
 		<div class="info">
 			👥 ${event.registration.mode}
 		</div>
-		
+
+		${getProgramSiteDetails(event)}
+
 		${eventButton(event)}
 
 		<div class="secondary-actions">
