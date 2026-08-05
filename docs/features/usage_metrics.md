@@ -2,7 +2,7 @@
 
 # Objectif
 
-Les Usage Metrics permettent de comprendre comment BadCalendar est réellement utilisé.
+Les Usage Metrics permettent de comprendre comment BadPlanner est réellement utilisé.
 
 Elles ont pour objectif de :
 
@@ -11,7 +11,7 @@ Elles ont pour objectif de :
 - détecter les points de friction ;
 - orienter les évolutions futures.
 
-Les métriques servent exclusivement à améliorer BadCalendar.
+Les métriques servent exclusivement à améliorer BadPlanner.
 
 ---
 
@@ -81,7 +81,7 @@ Chaque événement suit ce circuit.
 
 # Session
 
-Une session correspond à une utilisation continue de BadCalendar.
+Une session correspond à une utilisation continue de BadPlanner.
 
 Chaque session possède un identifiant unique.
 
@@ -99,7 +99,7 @@ Cet identifiant permet de regrouper les événements d'une même utilisation.
 
 # Version
 
-Chaque événement contient la version de BadCalendar.
+Chaque événement contient la version de BadPlanner.
 
 Exemple :
 
@@ -134,7 +134,7 @@ Chaque ligne enregistrée dans l'onglet **Logs** contient :
 app_open
 ```
 
-Déclenché à chaque ouverture de BadCalendar.
+Déclenché à chaque ouverture de BadPlanner.
 
 ---
 
@@ -235,7 +235,7 @@ Les métriques permettent notamment de connaître :
 
 # Données volontairement exclues
 
-BadCalendar ne collecte jamais :
+BadPlanner ne collecte jamais :
 
 - identité de l'utilisateur ;
 - adresse IP ;
@@ -281,7 +281,7 @@ Les réponses orientent la roadmap du produit.
 
 # Robustesse
 
-Une erreur lors du tracking ne doit jamais empêcher l'utilisation de BadCalendar.
+Une erreur lors du tracking ne doit jamais empêcher l'utilisation de BadPlanner.
 
 En cas d'échec :
 
@@ -334,5 +334,5 @@ Le système de métriques est considéré comme conforme lorsque :
 - les données sont anonymes ;
 - le Dashboard est alimenté automatiquement ;
 - aucune régression de performance n'est observée ;
-- les métriques permettent de comprendre l'utilisation réelle de BadCalendar ;
+- les métriques permettent de comprendre l'utilisation réelle de BadPlanner ;
 - toute nouvelle métrique est documentée avant son intégration.

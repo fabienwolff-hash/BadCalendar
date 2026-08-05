@@ -6,7 +6,7 @@ La fonctionnalité Google Calendar permet à un parent d'ajouter rapidement une 
 
 L'objectif est de faciliter la planification de la saison et de réduire le risque d'oublier une compétition ou un stage.
 
-BadCalendar ne remplace pas Google Calendar : il simplifie uniquement la création de l'événement.
+BadPlanner ne remplace pas Google Calendar : il simplifie uniquement la création de l'événement.
 
 ---
 
@@ -35,7 +35,7 @@ Il reste masqué lorsque la carte est repliée afin de limiter la charge visuell
 
 Le clic ouvre Google Calendar avec un événement prérempli.
 
-Aucune donnée n'est enregistrée par BadCalendar.
+Aucune donnée n'est enregistrée par BadPlanner.
 
 L'utilisateur reste libre de :
 
@@ -124,7 +124,7 @@ La description contient les informations utiles au parent.
 Format recommandé :
 
 ```text
-BadCalendar
+BadPlanner
 
 Type :
 TDJ
@@ -269,7 +269,7 @@ Seul le TournamentId est transmis.
 
 # Philosophie
 
-BadCalendar facilite la planification.
+BadPlanner facilite la planification.
 
 Google Calendar reste responsable :
 
@@ -278,7 +278,7 @@ Google Calendar reste responsable :
 - des notifications ;
 - de la synchronisation multi-appareils.
 
-BadCalendar prépare simplement l'événement.
+BadPlanner prépare simplement l'événement.
 
 ---
 

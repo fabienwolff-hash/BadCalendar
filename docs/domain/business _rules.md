@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Ce document centralise l'ensemble des règles métier de BadCalendar.
+Ce document centralise l'ensemble des règles métier de BadPlanner.
 
 Il décrit les règles de gestion indépendamment de l'implémentation technique afin de garantir un comportement cohérent de l'application.
 
@@ -284,7 +284,7 @@ Le modèle distingue désormais :
 
 # Principes
 
-Les règles décrites dans ce document constituent la référence fonctionnelle de BadCalendar.
+Les règles décrites dans ce document constituent la référence fonctionnelle de BadPlanner.
 
 En cas de divergence entre le code et cette documentation, une revue doit déterminer si :
 

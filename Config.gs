@@ -1,6 +1,6 @@
 const CONFIG = {
 
-  APP_NAME: "BadCalendar",
+  APP_NAME: "BadPlanner",
 
   APP_VERSION: "0.12.0",
 

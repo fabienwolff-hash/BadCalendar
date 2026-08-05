@@ -1,15 +1,15 @@
-# Vision — BadCalendar
+# Vision — BadPlanner
 
 ## Présentation
 
-BadCalendar est une application Web développée avec Google Apps Script permettant de publier simplement le calendrier d'une saison sportive de badminton à partir d'une source de données facilement administrable.
+BadPlanner est une application Web développée avec Google Apps Script permettant de publier simplement le calendrier d'une saison sportive de badminton à partir d'une source de données facilement administrable.
 
 L'objectif est de fournir une consultation moderne, responsive et toujours à jour des compétitions, stages et événements, sans nécessiter de développement spécifique lors de l'ajout ou de la modification d'un événement.
 
 Chaque événement est présenté sous la forme d'une fiche synthétique conçue pour permettre aux utilisateurs d'identifier rapidement les informations essentielles, puis d'accéder aux informations complémentaires et aux actions disponibles uniquement lorsqu'elles sont utiles.
 
-BadCalendar est un produit de consultation. Son objectif n'est pas de gérer l'organisation des compétitions, les inscriptions ou les résultats, mais de faciliter l'accès à l'information pour ses utilisateurs.
-BadCalendar complète BadNet en proposant une vision de la saison sportive adaptée aux parents de jeunes joueurs. Il permet de préparer la saison et d'identifier les compétitions pertinentes avant de rediriger, lorsque cela est nécessaire, vers BadNet pour les fonctionnalités de gestion des compétitions et des inscriptions.
+BadPlanner est un produit de consultation. Son objectif n'est pas de gérer l'organisation des compétitions, les inscriptions ou les résultats, mais de faciliter l'accès à l'information pour ses utilisateurs.
+BadPlanner complète BadNet en proposant une vision de la saison sportive adaptée aux parents de jeunes joueurs. Il permet de préparer la saison et d'identifier les compétitions pertinentes avant de rediriger, lorsque cela est nécessaire, vers BadNet pour les fonctionnalités de gestion des compétitions et des inscriptions.
 
 Le projet est volontairement centré sur la simplicité d'administration, la qualité des données, la maintenabilité du code et la pérennité de la solution.
 
@@ -29,7 +29,7 @@ Les familles doivent souvent consulter plusieurs sources pour retrouver les info
 * modalités d'inscription ;
 * lien vers la compétition.
 
-BadCalendar vise à centraliser ces informations dans une interface unique, simple, toujours à jour et adaptée à une consultation rapide.
+BadPlanner vise à centraliser ces informations dans une interface unique, simple, toujours à jour et adaptée à une consultation rapide.
 
 L'objectif n'est pas d'afficher un maximum d'informations, mais de présenter uniquement celles qui facilitent la décision de l'utilisateur au moment où il en a besoin.
 
@@ -37,11 +37,11 @@ L'objectif n'est pas d'afficher un maximum d'informations, mais de présenter un
 
 # Objectifs
 
-BadCalendar poursuit plusieurs objectifs.
+BadPlanner poursuit plusieurs objectifs.
 
 ## Promesse utilisateur
 
-BadCalendar doit permettre à un utilisateur de prendre rapidement une décision sans avoir à consulter plusieurs documents ou plateformes.
+BadPlanner doit permettre à un utilisateur de prendre rapidement une décision sans avoir à consulter plusieurs documents ou plateformes.
 
 La fiche événement doit permettre au parent de déterminer rapidement si une compétition correspond à son enfant, avant de lui proposer les informations complémentaires et les actions disponibles.
 
@@ -51,7 +51,7 @@ La consultation doit rester simple, rapide et compréhensible quel que soit le s
 
 ## Aider à la prise de décision
 
-BadCalendar est conçu comme un outil d'aide à la décision.
+BadPlanner est conçu comme un outil d'aide à la décision.
 
 L'interface privilégie une lecture rapide des informations essentielles afin que les utilisateurs puissent identifier immédiatement les événements susceptibles de les intéresser.
 
@@ -65,7 +65,7 @@ Cette approche permet de conserver une interface légère, évolutive et particu
 
 Les calendriers sportifs sont souvent diffusés sous forme de fichiers PDF, de tableaux ou de pages Web difficiles à maintenir.
 
-BadCalendar propose une consultation dynamique, filtrable et adaptée aussi bien aux ordinateurs qu'aux smartphones.
+BadPlanner propose une consultation dynamique, filtrable et adaptée aussi bien aux ordinateurs qu'aux smartphones.
 
 ---
 
@@ -95,7 +95,7 @@ Le Master demeure l'unique source de vérité du système.
 
 # Public cible
 
-La première cible de BadCalendar est constituée des parents de jeunes joueurs de badminton.
+La première cible de BadPlanner est constituée des parents de jeunes joueurs de badminton.
 
 Le produit est conçu en priorité pour les compétitions jeunes organisées par le Comité Départemental d'Ille-et-Vilaine et la Ligue de Bretagne.
 
@@ -107,7 +107,7 @@ Les choix d'ergonomie, d'affichage et de navigation sont prioritairement pensés
 
 # Principes directeurs
 
-BadCalendar est conçu autour de quelques principes simples :
+BadPlanner est conçu autour de quelques principes simples :
 
 * aide à la prise de décision ;
 * hiérarchisation des informations ;
@@ -127,9 +127,9 @@ BadCalendar est conçu autour de quelques principes simples :
 
 # Vision à long terme
 
-À terme, BadCalendar a vocation à devenir une plateforme générique de publication de calendriers sportifs.
+À terme, BadPlanner a vocation à devenir une plateforme générique de publication de calendriers sportifs.
 
-Le Google Sheets Master reste le point d'entrée unique des données. Il décrit la saison sportive ; BadCalendar la met en valeur.
+Le Google Sheets Master reste le point d'entrée unique des données. Il décrit la saison sportive ; BadPlanner la met en valeur.
 
 L'application s'appuie sur des services spécialisés, chacun responsable d'un domaine fonctionnel clairement identifié :
 
@@ -151,7 +151,7 @@ Elles devront également respecter la philosophie de présentation des fiches é
 
 # Vision de succès
 
-Le succès de BadCalendar se mesure par sa capacité à fournir une information fiable, facilement accessible et maintenue sans effort technique particulier pour les responsables sportifs.
+Le succès de BadPlanner se mesure par sa capacité à fournir une information fiable, facilement accessible et maintenue sans effort technique particulier pour les responsables sportifs.
 
 Une évolution est considérée comme réussie lorsqu'elle enrichit l'expérience utilisateur sans alourdir la consultation des événements.
 
@@ -159,9 +159,9 @@ Le succès se mesure également par la capacité du projet à évoluer progressi
 
 ---
 
-# Ce que BadCalendar n'est pas
+# Ce que BadPlanner n'est pas
 
-BadCalendar n'a pas vocation à :
+BadPlanner n'a pas vocation à :
 
 - gérer les inscriptions ;
 - gérer les tableaux ;

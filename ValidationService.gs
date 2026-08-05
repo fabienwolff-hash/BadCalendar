@@ -34,7 +34,6 @@ const ValidationService = {
 		{ field: "startDate", label: "StartDate" },
 		{ field: "endDate", label: "EndDate" },
 		{ field: "categories", label: "Categories" },
-		{ field: "registrationMode", label: "RegistrationMode" }
 	  ];
 
 	  return rules.flatMap(rule =>
@@ -112,12 +111,6 @@ const ValidationService = {
 		  label: "Categories",
 		  allowedValues: parameters.Category,
 		  multiple: true
-		},
-		{
-		  field: "registrationMode",
-		  label: "RegistrationMode",
-		  allowedValues: parameters.RegistrationMode,
-		  multiple: false
 		},
 		{
 		  field: "region",
@@ -366,10 +359,6 @@ const ValidationService = {
 		{
 		  field: "scope",
 		  label: "Scope"
-		},
-		{
-		  field: "registrationMode",
-		  label: "RegistrationMode"
 		},
 		{
 		  field: "registrationOpenDate",

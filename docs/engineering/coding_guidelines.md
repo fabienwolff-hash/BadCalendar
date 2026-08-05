@@ -1,8 +1,8 @@
-# Coding Guidelines — BadCalendar
+# Coding Guidelines — BadPlanner
 
 # Objectif
 
-Ce document définit les conventions de développement de BadCalendar.
+Ce document définit les conventions de développement de BadPlanner.
 
 Son objectif est de garantir un code :
 
@@ -18,7 +18,7 @@ Ces règles s'appliquent à l'ensemble du projet.
 
 # Principes fondamentaux
 
-Le développement de BadCalendar repose sur les principes suivants :
+Le développement de BadPlanner repose sur les principes suivants :
 
 - KISS (Keep It Simple, Stupid)
 - YAGNI (You Aren't Gonna Need It)
@@ -361,7 +361,7 @@ Toute règle métier présente dans le frontend constitue une anomalie de concep
 
 # Conclusion
 
-BadCalendar privilégie une architecture simple, lisible et évolutive.
+BadPlanner privilégie une architecture simple, lisible et évolutive.
 
 Chaque contribution doit chercher à améliorer la qualité globale du projet sans introduire de complexité inutile.
 

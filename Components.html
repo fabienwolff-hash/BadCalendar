@@ -71,15 +71,12 @@ function renderCard(event) {
 			class="card-toggle"
 			type="button">
 
-			▼ Voir les détails
+			▼ Voir les actions
 		</button>
 
 
 	</div>
 	<div class="card-details">
-		<div class="info">
-			👥 ${event.registration.mode}
-		</div>
 
 		${getProgramSiteDetails(event)}
 
@@ -228,8 +225,8 @@ function bindCardDetailsEvents(){
 
                     button.textContent =
 						expanded
-						? "▲ Masquer les détails"
-						: "▼ Voir les détails";
+						? "▲ Masquer les actions"
+						: "▼ Voir les actions";
 
                 }
             );

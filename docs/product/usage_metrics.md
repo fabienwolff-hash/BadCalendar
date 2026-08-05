@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Ce document décrit la vision du suivi statistique de BadCalendar.
+Ce document décrit la vision du suivi statistique de BadPlanner.
 
 L'objectif n'est pas de produire un grand nombre d'indicateurs, mais de mesurer si l'application répond réellement à sa mission.
 
@@ -14,9 +14,9 @@ Toutes les données collectées sont anonymes.
 
 # Philosophie
 
-BadCalendar ne cherche pas à mesurer les compétitions.
+BadPlanner ne cherche pas à mesurer les compétitions.
 
-BadCalendar cherche à mesurer l'utilisation de l'application.
+BadPlanner cherche à mesurer l'utilisation de l'application.
 
 Le tableau de bord est un outil d'aide à la décision pour le Product Owner.
 
@@ -37,7 +37,7 @@ Chaque indicateur doit répondre à une question précise.
 
 ## Respect de la vie privée
 
-BadCalendar ne collecte aucune donnée personnelle.
+BadPlanner ne collecte aucune donnée personnelle.
 
 Aucun compte utilisateur n'est nécessaire.
 
@@ -61,7 +61,7 @@ Le tableau de bord doit permettre de répondre aux questions suivantes.
 
 ## Adoption
 
-Les parents utilisent-ils réellement BadCalendar ?
+Les parents utilisent-ils réellement BadPlanner ?
 
 ## Fidélisation
 
@@ -83,7 +83,7 @@ Une nouvelle fonctionnalité apporte-t-elle une valeur mesurable ?
 
 ### Visiteurs uniques (7 derniers jours)
 
-Nombre de visiteurs différents ayant utilisé BadCalendar durant les sept derniers jours.
+Nombre de visiteurs différents ayant utilisé BadPlanner durant les sept derniers jours.
 
 Cet indicateur mesure la diffusion réelle de l'application.
 
@@ -103,7 +103,7 @@ Une nouvelle session débute après une période d'inactivité significative (du
 
 ### Sessions moyennes par visiteur
 
-Permet d'évaluer si les utilisateurs reviennent consulter BadCalendar régulièrement.
+Permet d'évaluer si les utilisateurs reviennent consulter BadPlanner régulièrement.
 
 Cet indicateur est plus représentatif que le simple nombre de visites.
 
@@ -125,7 +125,7 @@ Cet indicateur mesure l'intérêt porté aux informations détaillées.
 
 Nombre de clics sur le bouton permettant d'accéder à BadNet.
 
-Cet indicateur mesure la complémentarité entre BadCalendar et BadNet.
+Cet indicateur mesure la complémentarité entre BadPlanner et BadNet.
 
 ---
 
@@ -147,7 +147,7 @@ Cet indicateur mesure l'intérêt pour la planification de la saison.
 
 # Utilisation des filtres
 
-BadCalendar ne cherche pas à connaître les valeurs recherchées.
+BadPlanner ne cherche pas à connaître les valeurs recherchées.
 
 Seul le type de filtre utilisé est enregistré.
 
@@ -176,7 +176,7 @@ Les éléments suivants ne font pas partie des statistiques produit.
 - nombre de pages vues ;
 - parcours détaillé des utilisateurs.
 
-Ces informations ne répondent pas aux objectifs de BadCalendar et n'apportent pas une valeur suffisante.
+Ces informations ne répondent pas aux objectifs de BadPlanner et n'apportent pas une valeur suffisante.
 
 ---
 

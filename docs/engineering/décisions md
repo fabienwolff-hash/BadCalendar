@@ -1,10 +1,10 @@
 # DECISIONS.md
 
-# BadCalendar — Journal des décisions d'architecture
+# BadPlanner — Journal des décisions d'architecture
 
 ## Objectif
 
-Ce document recense les décisions d'architecture et de conception prises au cours du développement de BadCalendar.
+Ce document recense les décisions d'architecture et de conception prises au cours du développement de BadPlanner.
 
 Contrairement à la documentation fonctionnelle, il répond à la question :
 

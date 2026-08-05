@@ -1,8 +1,8 @@
-# Architecture — BadCalendar
+# Architecture — BadPlanner
 
 # Objectif
 
-Ce document décrit l'architecture générale de BadCalendar, les responsabilités de chaque couche et les principes retenus pour faire évoluer le projet.
+Ce document décrit l'architecture générale de BadPlanner, les responsabilités de chaque couche et les principes retenus pour faire évoluer le projet.
 
 L'objectif est de conserver une architecture simple, maintenable et adaptée à Google Apps Script, tout en séparant clairement les responsabilités entre les données, le métier et la présentation.
 
@@ -10,7 +10,7 @@ L'objectif est de conserver une architecture simple, maintenable et adaptée à 
 
 # Vue d'ensemble
 
-BadCalendar s'appuie sur une architecture en couches où chaque service possède une responsabilité unique.
+BadPlanner s'appuie sur une architecture en couches où chaque service possède une responsabilité unique.
 
 ```text
                  Google Spreadsheet
@@ -201,7 +201,7 @@ Le frontend ne construit jamais lui-même une URL Google Calendar.
 
 Responsabilités :
 
-* créer le menu BadCalendar ;
+* créer le menu BadPlanner ;
 * lancer les traitements d'administration.
 
 ---
@@ -468,7 +468,7 @@ Les évolutions fonctionnelles détaillées sont décrites dans `roadmap.md`.
 
 # Architecture orientée enrichissement
 
-BadCalendar repose sur un modèle d'enrichissement progressif.
+BadPlanner repose sur un modèle d'enrichissement progressif.
 
 Les données métier sont volontairement simples dans le Master.
 

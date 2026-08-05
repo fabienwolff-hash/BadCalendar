@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines the development philosophy of BadCalendar.
+This document defines the development philosophy of BadPlanner.
 
 Unlike the architecture or coding guidelines, it explains **how development decisions should be made**.
 
@@ -12,7 +12,7 @@ Its purpose is to preserve the consistency of the project over time, regardless 
 
 # Philosophy
 
-BadCalendar is designed to remain simple.
+BadPlanner is designed to remain simple.
 
 Every evolution must improve the product without increasing unnecessary complexity.
 
@@ -131,9 +131,9 @@ Additional complexity is acceptable only when it remains invisible to the user.
 
 # Respect the ecosystem
 
-BadCalendar does not try to replace existing tools.
+BadPlanner does not try to replace existing tools.
 
-Whenever another platform already performs a task correctly (such as BadNet), BadCalendar complements it instead of duplicating it.
+Whenever another platform already performs a task correctly (such as BadNet), BadPlanner complements it instead of duplicating it.
 
 ---
 
@@ -155,6 +155,6 @@ Every implementation should therefore favour:
 
 Before implementing any evolution, ask the following question:
 
-> **Does this change make BadCalendar simpler, clearer or more useful for parents without unnecessarily increasing its complexity?**
+> **Does this change make BadPlanner simpler, clearer or more useful for parents without unnecessarily increasing its complexity?**
 
 If the answer is no, the implementation should be reconsidered.

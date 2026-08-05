@@ -2,7 +2,7 @@
 
 # Objectif
 
-Ce document décrit l'organisation des tests automatisés de BadCalendar.
+Ce document décrit l'organisation des tests automatisés de BadPlanner.
 
 L'objectif est de garantir la stabilité du produit tout en conservant un développement simple et rapide.
 
@@ -14,7 +14,7 @@ Ils ne remplacent pas les validations fonctionnelles réalisées avant une relea
 
 # Philosophie
 
-BadCalendar privilégie les tests métier.
+BadPlanner privilégie les tests métier.
 
 La majorité des règles de gestion étant implémentées dans le backend, les efforts de test portent principalement sur les services métier.
 
@@ -281,7 +281,7 @@ Un test ne doit jamais dépendre de l'ordre d'exécution d'un autre test.
 
 # Ce qui n'est pas testé
 
-BadCalendar ne cherche pas à automatiser :
+BadPlanner ne cherche pas à automatiser :
 
 - les performances ;
 - les styles CSS ;

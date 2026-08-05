@@ -2,7 +2,7 @@
 
 # Objectif
 
-Cette checklist est utilisée avant chaque déploiement de BadCalendar.
+Cette checklist est utilisée avant chaque déploiement de BadPlanner.
 
 Son objectif est de garantir qu'une version est prête à être publiée et qu'aucune étape importante n'a été oubliée.
 

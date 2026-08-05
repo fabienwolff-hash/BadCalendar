@@ -1,8 +1,8 @@
-# BadCalendar - Roadmap
+# BadPlanner - Roadmap
 
 ## Vision
 
-BadCalendar est une application Web Google Apps Script destinée aux parents d'un club de badminton.
+BadPlanner est une application Web Google Apps Script destinée aux parents d'un club de badminton.
 
 Son objectif est de fournir une vue simple, fiable et toujours à jour des compétitions, stages et événements jeunes, avec un accès rapide aux informations essentielles et aux pages officielles des tournois.
 

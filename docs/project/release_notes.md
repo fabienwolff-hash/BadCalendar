@@ -1,6 +1,6 @@
-# Release Notes — BadCalendar
+# Release Notes — BadPlanner
 
-Ce document retrace l'historique des évolutions fonctionnelles et techniques de BadCalendar.
+Ce document retrace l'historique des évolutions fonctionnelles et techniques de BadPlanner.
 
 ---
 
@@ -179,7 +179,7 @@ Objectif : améliorer l'ergonomie, la lisibilité et le confort d'utilisation de
 * Création du ValidationService
 * Création du ReportService
 * Création du modèle ValidationIssue
-* Ajout du menu BadCalendar
+* Ajout du menu BadPlanner
 * Contrôles bloquants
 * Avertissements
 * Rapport de validation
@@ -229,7 +229,7 @@ Les anomalies sont triées afin de faciliter leur correction.
 
 ## Objectif
 
-Renforcer le socle technique de BadCalendar en externalisant les référentiels métier dans le Google Sheets et en faisant évoluer le modèle de localisation, sans modifier l'expérience utilisateur.
+Renforcer le socle technique de BadPlanner en externalisant les référentiels métier dans le Google Sheets et en faisant évoluer le modèle de localisation, sans modifier l'expérience utilisateur.
 
 Cette version prépare les futures évolutions (Google Maps, filtres géographiques, etc.) tout en conservant une architecture simple, maintenable et centrée sur le Master comme unique source de vérité.
 
@@ -337,7 +337,7 @@ Consommation directe de googleMapsUrl
 
 ## Objectif
 
-Définir la future expérience utilisateur de BadCalendar avant toute implémentation.
+Définir la future expérience utilisateur de BadPlanner avant toute implémentation.
 
 Cette version est entièrement consacrée à la réflexion produit afin de concevoir une interface réellement adaptée aux besoins des parents.
 
@@ -384,7 +384,7 @@ adaptation aux usages mobiles.
 
 ## Vision produit
 
-Cette version marque l'évolution de BadCalendar d'une simple liste d'événements vers une application centrée sur la prise de décision rapide.
+Cette version marque l'évolution de BadPlanner d'une simple liste d'événements vers une application centrée sur la prise de décision rapide.
 
 Les futures évolutions (fiche détaillée, Google Calendar, filtres avancés...) s'appuieront sur cette réflexion UX.
 

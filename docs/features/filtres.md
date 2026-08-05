@@ -6,7 +6,7 @@ Le système de filtres permet à un parent de retrouver rapidement les compétit
 
 Les filtres doivent rester simples, rapides à utiliser et ne jamais donner l'impression d'être un moteur de recherche complexe.
 
-La philosophie de BadCalendar est de réduire progressivement la liste des compétitions jusqu'à afficher uniquement celles pertinentes.
+La philosophie de BadPlanner est de réduire progressivement la liste des compétitions jusqu'à afficher uniquement celles pertinentes.
 
 ---
 

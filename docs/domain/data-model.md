@@ -1,8 +1,8 @@
-# Modèle de données — BadCalendar
+# Modèle de données — BadPlanner
 
 ## Objectif
 
-Le Google Sheets **Master** constitue la source de données unique des événements de BadCalendar.
+Le Google Sheets **Master** constitue la source de données unique des événements de BadPlanner.
 
 Il contient exclusivement les données métier décrivant les compétitions, stages et autres événements.
 

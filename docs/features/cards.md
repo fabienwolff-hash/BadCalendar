@@ -2,7 +2,7 @@
 
 # Objectif
 
-Les cartes représentent les compétitions affichées dans BadCalendar.
+Les cartes représentent les compétitions affichées dans BadPlanner.
 
 Elles permettent à un parent d'obtenir rapidement les informations essentielles d'un tournoi et d'accéder aux principales actions sans quitter l'application.
 

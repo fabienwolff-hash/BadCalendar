@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Ce document définit l'identité de BadCalendar.
+Ce document définit l'identité de BadPlanner.
 
 Il décrit la personnalité du produit, les valeurs qu'il porte ainsi que l'expérience qu'il souhaite offrir à ses utilisateurs.
 
@@ -12,9 +12,9 @@ Cette identité guide les choix de conception, l'expérience utilisateur et la c
 
 # Mission
 
-BadCalendar aide les parents de jeunes joueurs à anticiper sereinement la saison sportive de leur enfant.
+BadPlanner aide les parents de jeunes joueurs à anticiper sereinement la saison sportive de leur enfant.
 
-Il centralise les informations essentielles, facilite le choix des compétitions et réduit le risque d'oublier une inscription ou une date importante.
+Il centralise les informations essentielles, facilite le choix des compétitions et réduit le risquev d'oublier une inscription ou une date importante.
 
 ---
 
@@ -26,7 +26,7 @@ En quelques secondes, un parent peut identifier les compétitions adaptées à s
 
 # Personnalité
 
-Si BadCalendar était une personne, ce serait un parent expérimenté.
+Si BadPlanner était une personne, ce serait un parent expérimenté.
 
 Il connaît bien le calendrier sportif.
 
@@ -40,20 +40,20 @@ Il inspire confiance sans être intrusif.
 
 # Les émotions recherchées
 
-Lorsque l'utilisateur quitte BadCalendar, il doit ressentir que :
+Lorsque l'utilisateur quitte BadPlanner, il doit ressentir que :
 
 - sa saison est sous contrôle ;
 - les compétitions importantes sont identifiées ;
 - il n'a plus besoin d'y penser immédiatement ;
 - il pourra revenir au bon moment.
 
-BadCalendar cherche à réduire la charge mentale liée à l'organisation d'une saison sportive.
+BadPlanner cherche à réduire la charge mentale liée à l'organisation d'une saison sportive.
 
 ---
 
 # Les qualités du produit
 
-BadCalendar doit toujours être :
+BadPlanner doit toujours être :
 
 - simple ;
 - clair ;
@@ -65,9 +65,9 @@ Ces qualités priment sur la richesse fonctionnelle.
 
 ---
 
-# Ce que BadCalendar refuse d'être
+# Ce que BadPlanner refuse d'être
 
-BadCalendar ne doit jamais donner l'impression :
+BadPlanner ne doit jamais donner l'impression :
 
 - que les informations sont peu fiables ;
 - qu'il faut créer un compte pour l'utiliser ;
@@ -80,7 +80,7 @@ Chaque évolution doit préserver cette simplicité.
 
 # Ton de communication
 
-BadCalendar s'exprime avec un langage simple, direct et accessible.
+BadPlanner s'exprime avec un langage simple, direct et accessible.
 
 Les libellés privilégient les formulations naturelles.
 
@@ -96,7 +96,7 @@ Toutes les évolutions du produit doivent respecter trois valeurs fondamentales.
 
 Chaque fonctionnalité doit répondre à un besoin réel.
 
-Une fonctionnalité sans valeur utilisateur n'a pas sa place dans BadCalendar.
+Une fonctionnalité sans valeur utilisateur n'a pas sa place dans BadPlanner.
 
 ## Simplicité
 
@@ -114,7 +114,7 @@ La qualité des données constitue un engagement essentiel du projet.
 
 # Définition du succès
 
-BadCalendar est considéré comme réussi lorsqu'un parent peut dire :
+BadPlanner est considéré comme réussi lorsqu'un parent peut dire :
 
 > « Cela m'a fait gagner beaucoup de temps. Je peux sereinement anticiper les tournois auxquels participera mon enfant sans risque d'oublier ou de confondre une date. »
 

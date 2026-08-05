@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Ce document définit les fonctionnalités que BadCalendar ne cherche pas à proposer.
+Ce document définit les fonctionnalités que BadPlanner ne cherche pas à proposer.
 
 Ces choix sont volontaires et participent à la philosophie du produit.
 
@@ -20,13 +20,13 @@ Avant d'ajouter une nouvelle fonctionnalité, trois questions doivent être pos�
 - Fait-elle réellement gagner du temps ?
 - Cette fonctionnalité n'existe-t-elle pas déjà dans un autre outil utilisé par les parents ?
 
-Si la réponse est négative à l'une de ces questions, la fonctionnalité n'a probablement pas sa place dans BadCalendar.
+Si la réponse est négative à l'une de ces questions, la fonctionnalité n'a probablement pas sa place dans BadPlanner.
 
 ---
 
 # Gestion des comptes utilisateurs
 
-BadCalendar ne nécessite aucun compte utilisateur.
+BadPlanner ne nécessite aucun compte utilisateur.
 
 L'application doit être immédiatement utilisable.
 
@@ -36,17 +36,17 @@ L'absence d'inscription réduit les freins à l'adoption et simplifie considéra
 
 # Gestion des inscriptions
 
-BadCalendar ne gère jamais les inscriptions.
+BadPlanner ne gère jamais les inscriptions.
 
 Les inscriptions sont réalisées sur BadNet ou sur la plateforme indiquée par l'organisateur.
 
-BadCalendar facilite uniquement l'accès à cette plateforme.
+BadPlanner facilite uniquement l'accès à cette plateforme.
 
 ---
 
 # Résultats sportifs
 
-Les résultats des compétitions sont hors du périmètre de BadCalendar.
+Les résultats des compétitions sont hors du périmètre de BadPlanner.
 
 Ils relèvent de BadNet.
 
@@ -54,7 +54,7 @@ Ils relèvent de BadNet.
 
 # Convocations
 
-Les convocations ne sont pas affichées dans BadCalendar.
+Les convocations ne sont pas affichées dans BadPlanner.
 
 Elles sont consultées directement sur BadNet.
 
@@ -62,7 +62,7 @@ Elles sont consultées directement sur BadNet.
 
 # Statistiques des joueurs
 
-BadCalendar ne propose aucune statistique individuelle.
+BadPlanner ne propose aucune statistique individuelle.
 
 Les performances sportives sont déjà couvertes par BadNet.
 
@@ -70,7 +70,7 @@ Les performances sportives sont déjà couvertes par BadNet.
 
 # Gestion sportive
 
-BadCalendar n'organise pas les compétitions.
+BadPlanner n'organise pas les compétitions.
 
 Il ne gère notamment pas :
 
@@ -87,7 +87,7 @@ Ces fonctionnalités appartiennent aux outils de gestion des compétitions.
 
 # Fonctionnalités communautaires
 
-BadCalendar ne propose pas :
+BadPlanner ne propose pas :
 
 - commentaires ;
 - discussions ;
@@ -110,7 +110,7 @@ Cette fonctionnalité n'apporte pas aujourd'hui une valeur suffisante.
 
 # Administration Web
 
-BadCalendar ne propose pas d'interface d'administration dédiée.
+BadPlanner ne propose pas d'interface d'administration dédiée.
 
 Le fichier Master constitue l'outil d'administration.
 
@@ -120,7 +120,7 @@ Cette approche permet de conserver un développement simple tout en offrant une 
 
 # Application mobile native
 
-BadCalendar n'a pas vocation à devenir une application Android ou iOS.
+BadPlanner n'a pas vocation à devenir une application Android ou iOS.
 
 Une Web App responsive répond au besoin tout en limitant fortement les coûts de développement et de maintenance.
 
@@ -128,7 +128,7 @@ Une Web App responsive répond au besoin tout en limitant fortement les coûts d
 
 # Multi-sports
 
-BadCalendar est conçu exclusivement pour le badminton.
+BadPlanner est conçu exclusivement pour le badminton.
 
 Même si certains concepts sont réutilisables, la généralisation à d'autres sports ne constitue pas un objectif du projet.
 
@@ -146,7 +146,7 @@ Cette fonctionnalité pourra être réévaluée ultérieurement si elle apporte 
 
 # Philosophie
 
-BadCalendar n'a pas vocation à devenir une plateforme complète de gestion des compétitions.
+BadPlanner n'a pas vocation à devenir une plateforme complète de gestion des compétitions.
 
 Sa mission est beaucoup plus simple.
 

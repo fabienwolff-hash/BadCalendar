@@ -2,7 +2,7 @@
 
 # Objectif
 
-L'expérience utilisateur de BadCalendar vise à permettre à un parent de trouver une compétition pertinente en quelques secondes, sans apprentissage préalable.
+L'expérience utilisateur de BadPlanner vise à permettre à un parent de trouver une compétition pertinente en quelques secondes, sans apprentissage préalable.
 
 Chaque décision d'interface doit contribuer à cet objectif.
 
@@ -12,7 +12,7 @@ La simplicité est prioritaire sur la richesse fonctionnelle.
 
 # Philosophie
 
-BadCalendar applique les principes suivants :
+BadPlanner applique les principes suivants :
 
 - mobile-first ;
 - une seule vue principale ;
@@ -259,9 +259,9 @@ Les acronymes peu connus peuvent être accompagnés d'une aide contextuelle.
 
 ---
 
-# Ce que BadCalendar n'est pas
+# Ce que BadPlanner n'est pas
 
-BadCalendar ne cherche pas à remplacer :
+BadPlanner ne cherche pas à remplacer :
 
 - BadNet ;
 - Google Calendar ;

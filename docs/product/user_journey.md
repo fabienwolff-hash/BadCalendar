@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Ce document décrit le parcours utilisateur de référence de BadCalendar.
+Ce document décrit le parcours utilisateur de référence de BadPlanner.
 
 Il présente la manière dont un parent utilise l'application tout au long d'une saison sportive.
 
@@ -34,7 +34,7 @@ S'inscrire
 Participer
 ```
 
-BadCalendar accompagne les quatre premières étapes.
+BadPlanner accompagne les quatre premières étapes.
 
 La participation à la compétition relève ensuite de BadNet et de l'organisation sportive.
 
@@ -42,11 +42,11 @@ La participation à la compétition relève ensuite de BadNet et de l'organisati
 
 # 1. Découvrir
 
-En début de saison, le parent ouvre BadCalendar.
+En début de saison, le parent ouvre BadPlanner.
 
 La plupart des compétitions de la saison sont déjà présentes, même lorsqu'elles ne sont pas encore publiées sur BadNet.
 
-BadCalendar offre ainsi une vision globale de la saison sportive.
+BadPlanner offre ainsi une vision globale de la saison sportive.
 
 Objectifs :
 
@@ -104,11 +104,11 @@ Au fil de la saison, les compétitions sont progressivement publiées sur BadNet
 
 Les dates d'ouverture des inscriptions deviennent alors connues.
 
-BadCalendar indique l'état des inscriptions.
+BadPlanner indique l'état des inscriptions.
 
 Lorsque celles-ci sont ouvertes, le parent accède directement à BadNet afin de réaliser l'inscription.
 
-BadCalendar ne gère jamais les inscriptions.
+BadPlanner ne gère jamais les inscriptions.
 
 Il facilite uniquement l'accès à l'information et à la plateforme officielle.
 
@@ -125,7 +125,7 @@ Celui-ci prend en charge :
 - les résultats ;
 - les classements.
 
-Cette étape est volontairement hors du périmètre de BadCalendar.
+Cette étape est volontairement hors du périmètre de BadPlanner.
 
 ---
 
@@ -135,7 +135,7 @@ Le parcours utilisateur repose sur plusieurs principes.
 
 ## Préparer plutôt que gérer
 
-BadCalendar aide les familles à préparer la saison.
+BadPlanner aide les familles à préparer la saison.
 
 Il ne remplace jamais les outils de gestion des compétitions.
 
@@ -153,7 +153,7 @@ Les informations secondaires sont volontairement reportées dans la vue détaill
 
 Toutes les informations ne sont pas utiles simultanément.
 
-BadCalendar accompagne naturellement le cycle de vie d'une compétition :
+BadPlanner accompagne naturellement le cycle de vie d'une compétition :
 
 - annonce de la compétition ;
 - préparation de la saison ;
@@ -164,9 +164,9 @@ BadCalendar accompagne naturellement le cycle de vie d'une compétition :
 
 ## Complémentarité avec BadNet
 
-BadCalendar et BadNet remplissent des rôles différents mais complémentaires.
+BadPlanner et BadNet remplissent des rôles différents mais complémentaires.
 
-BadCalendar aide à choisir une compétition.
+BadPlanner aide à choisir une compétition.
 
 BadNet permet de la gérer.
 
@@ -178,7 +178,7 @@ BadNet permet de la gérer.
 Publication de la saison
             │
             ▼
-Compétition visible dans BadCalendar
+Compétition visible dans BadPlanner
             │
             ▼
 Le parent découvre la compétition
@@ -199,6 +199,6 @@ Inscription sur BadNet
 Participation à la compétition
 ```
 
-Ce cycle constitue le parcours de référence de BadCalendar.
+Ce cycle constitue le parcours de référence de BadPlanner.
 
 Toutes les évolutions futures devront contribuer à rendre ce parcours plus simple, plus fluide et plus rapide.

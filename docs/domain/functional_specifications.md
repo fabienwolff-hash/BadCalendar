@@ -2,7 +2,7 @@
 
 ## Projet
 
-**Nom :** BadCalendar
+**Nom :** BadPlanner
 
 **Version cible :** v1.0 (Document vivant)
 
@@ -10,7 +10,7 @@
 
 # 1. Objet
 
-BadCalendar est une application Web permettant de consulter le calendrier des compétitions jeunes de badminton.
+BadPlanner est une application Web permettant de consulter le calendrier des compétitions jeunes de badminton.
 
 L'application est alimentée automatiquement depuis un fichier Google Sheets unique et permet aux utilisateurs de rechercher rapidement les compétitions correspondant à leurs critères.
 

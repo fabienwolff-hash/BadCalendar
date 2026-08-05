@@ -2,7 +2,7 @@
 
 # Objectif
 
-Le système de nouveautés permet de mettre en évidence les nouveaux tournois ajoutés à BadCalendar.
+Le système de nouveautés permet de mettre en évidence les nouveaux tournois ajoutés à BadPlanner.
 
 Il aide les parents à identifier rapidement les compétitions récemment publiées sans avoir à parcourir l'ensemble du calendrier.
 
@@ -188,7 +188,7 @@ La logique de calcul reste identique.
 
 Si un ancien tournoi est ajouté dans le Master aujourd'hui, il sera considéré comme nouveau.
 
-La nouveauté correspond à sa date d'ajout dans BadCalendar, et non à la date réelle de la compétition.
+La nouveauté correspond à sa date d'ajout dans BadPlanner, et non à la date réelle de la compétition.
 
 ---
 

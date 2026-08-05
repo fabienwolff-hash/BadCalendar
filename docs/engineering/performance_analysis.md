@@ -1,4 +1,4 @@
-# Analyse de performance du chargement initial - BadCalendar v0.8
+# Analyse de performance du chargement initial - BadPlanner v0.8
 
 **Date :** 2026-07-07
 **Objectif :** Identifier l'origine du temps de chargement initial (~2 secondes) avant toute optimisation.
@@ -7,7 +7,7 @@
 
 ## 1. Contexte
 
-L'application BadCalendar présente un temps de chargement initial supérieur à 1 seconde, pouvant atteindre environ 2 secondes selon les mesures réalisées.
+L'application BadPlanner présente un temps de chargement initial supérieur à 1 seconde, pouvant atteindre environ 2 secondes selon les mesures réalisées.
 
 Avant d'envisager une optimisation, une phase d'instrumentation a été réalisée afin d'identifier précisément où est consommé le temps de chargement :
 
@@ -153,7 +153,7 @@ Le temps de chargement observé côté navigateur provient principalement de l'a
 google.script.run.readEvents()
 ```
 
-Le traitement métier BadCalendar est performant.
+Le traitement métier BadPlanner est performant.
 
 Répartition approximative :
 

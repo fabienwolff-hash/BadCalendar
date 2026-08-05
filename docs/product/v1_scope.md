@@ -1,8 +1,8 @@
-# BadCalendar v1.0 Scope
+# BadPlanner v1.0 Scope
 
 # Objectif
 
-Ce document définit le périmètre officiel de la version 1.0 de BadCalendar.
+Ce document définit le périmètre officiel de la version 1.0 de BadPlanner.
 
 Il constitue la référence permettant de décider :
 
@@ -225,11 +225,11 @@ Tout ce qui ajoute de la complexité sans bénéfice clair est volontairement re
 
 ---
 
-# Ce que BadCalendar n'est pas
+# Ce que BadPlanner n'est pas
 
-BadCalendar n'a pas vocation à remplacer BadNet.
+BadPlanner n'a pas vocation à remplacer BadNet.
 
-BadCalendar complète BadNet.
+BadPlanner complète BadNet.
 
 Son rôle est de faciliter la découverte des compétitions et la planification de la saison.
 

@@ -2,7 +2,7 @@
 
 ## Projet
 
-**Nom :** BadCalendar
+**Nom :** BadPlanner
 
 **Objectif :** définir les règles de conception de l'interface utilisateur afin de garantir une expérience homogène, simple et maintenable.
 
@@ -17,7 +17,7 @@ Ce document complète les documents :
 
 # 1. Philosophie
 
-BadCalendar est une application d'aide à la décision.
+BadPlanner est une application d'aide à la décision.
 
 La liste des événements constitue une vue synthétique permettant à un parent d'identifier rapidement les compétitions pertinentes pour son enfant.
 
@@ -336,7 +336,7 @@ Toute nouvelle évolution de l'interface devra respecter les règles suivantes :
 - ne jamais afficher une information métier redondante ;
 - favoriser la lisibilité plutôt que la quantité d'informations.
 
-Ces principes constituent la référence de conception de l'interface utilisateur de BadCalendar.
+Ces principes constituent la référence de conception de l'interface utilisateur de BadPlanner.
 
 ---
 

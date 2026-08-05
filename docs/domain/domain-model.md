@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Ce document décrit le modèle métier de BadCalendar.
+Ce document décrit le modèle métier de BadPlanner.
 
 Il définit les principales entités manipulées par l'application, leurs responsabilités ainsi que leurs relations.
 
@@ -44,7 +44,7 @@ Chaque programme est organisé sur un site.
 
 Le Tournament représente une compétition ou un événement sportif.
 
-Il constitue l'entité principale manipulée par BadCalendar.
+Il constitue l'entité principale manipulée par BadPlanner.
 
 Un Tournament correspond à ce qu'un utilisateur identifie comme une compétition.
 
@@ -164,7 +164,7 @@ Chaque Program est organisé sur un Site unique.
 
 Le découpage des Tournament suit autant que possible celui utilisé par BadNet.
 
-Lorsqu'une compétition est publiée comme deux tournois distincts sur BadNet (par exemple un TRJ Simple et un TRJ Double), BadCalendar utilise également deux Tournament distincts.
+Lorsqu'une compétition est publiée comme deux tournois distincts sur BadNet (par exemple un TRJ Simple et un TRJ Double), BadPlanner utilise également deux Tournament distincts.
 
 ---
 

@@ -2,7 +2,7 @@
 
 # Objectif
 
-Le Dashboard permet de visualiser les Usage Metrics collectées par BadCalendar.
+Le Dashboard permet de visualiser les Usage Metrics collectées par BadPlanner.
 
 Il fournit une vue synthétique de l'utilisation de l'application afin d'orienter les décisions produit.
 
@@ -14,7 +14,7 @@ Le Dashboard est destiné exclusivement à l'administrateur.
 
 Le Dashboard répond à trois objectifs :
 
-- mesurer l'adoption de BadCalendar ;
+- mesurer l'adoption de BadPlanner ;
 - identifier les fonctionnalités réellement utilisées ;
 - détecter les points de friction.
 
@@ -56,7 +56,7 @@ Structure :
 |----------|-------------|
 | Timestamp | Date et heure |
 | SessionId | Identifiant de session |
-| Version | Version de BadCalendar |
+| Version | Version de BadPlanner |
 | EventType | Type d'événement |
 | EventCategory | Catégorie concernée |
 | EventValue | Valeur concernée |
@@ -144,7 +144,7 @@ Exemples :
 - sessions par semaine ;
 - évolution après une nouvelle version.
 
-Elle permet de mesurer l'adoption de BadCalendar.
+Elle permet de mesurer l'adoption de BadPlanner.
 
 ---
 
@@ -256,5 +256,5 @@ Le Dashboard est considéré comme conforme lorsque :
 - toutes les métriques sont calculées automatiquement ;
 - aucune saisie manuelle n'est nécessaire ;
 - les indicateurs reflètent fidèlement les données des Logs ;
-- les principales fonctionnalités de BadCalendar sont mesurables ;
+- les principales fonctionnalités de BadPlanner sont mesurables ;
 - les informations permettent de guider les décisions produit.

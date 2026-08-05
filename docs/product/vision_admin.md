@@ -1,8 +1,8 @@
-# Vision — Module d'administration BadCalendar
+# Vision — Module d'administration BadPlanner
 
 ## Objectif
 
-Le module d'administration a pour vocation d'accompagner le gestionnaire de BadCalendar dans la maintenance du calendrier.
+Le module d'administration a pour vocation d'accompagner le gestionnaire de BadPlanner dans la maintenance du calendrier.
 
 Contrairement à la WebApp, destinée aux utilisateurs finaux, ce module est réservé à l'administrateur du projet.
 
@@ -241,7 +241,7 @@ Un menu personnalisé permet d'accéder aux principales fonctions.
 
 Exemple :
 
-BadCalendar
+BadPlanner
 
 - Vérifier les données
 - Générer le rapport
@@ -286,6 +286,6 @@ Le module d'administration doit devenir un véritable assistant qualité.
 
 Son objectif n'est pas de remplacer l'administrateur mais de détecter automatiquement les erreurs, les incohérences et les oublis avant qu'ils n'atteignent la WebApp.
 
-La simplicité de Google Sheets est conservée, tandis que BadCalendar apporte progressivement des garanties de qualité comparables à celles d'une chaîne d'intégration continue (CI) dans un projet logiciel.
+La simplicité de Google Sheets est conservée, tandis que BadPlanner apporte progressivement des garanties de qualité comparables à celles d'une chaîne d'intégration continue (CI) dans un projet logiciel.
 
 À terme, quel que soit le mode d'alimentation des données (saisie manuelle, import ou synchronisation), le même moteur de validation continuera d'assurer la fiabilité du calendrier.

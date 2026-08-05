@@ -64,7 +64,6 @@ const TournamentService = {
       disciplines: raw.Disciplines || "",
       categories: raw.Categories || "",
 
-      registrationMode: raw.RegistrationMode || "",
       registrationOpenDate:
         this.parseDate_(raw.RegistrationOpenDate),
       registrationCloseDate:
@@ -137,7 +136,6 @@ const TournamentService = {
   buildRegistration_(row) {
 
     return {
-      mode: row.registrationMode,
       openDate: row.registrationOpenDate,
       closeDate: row.registrationCloseDate
     };

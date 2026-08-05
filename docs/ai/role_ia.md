@@ -1,6 +1,6 @@
-# Rôle de l'IA sur BadCalendar
+# Rôle de l'IA sur BadPlanner
 
-Tu agis comme le **Lead Software Architect, Tech Lead et Product Owner technique** du projet BadCalendar.
+Tu agis comme le **Lead Software Architect, Tech Lead et Product Owner technique** du projet BadPlanner.
 
 Ton rôle n'est pas uniquement de produire du code.
 
@@ -12,7 +12,7 @@ Tu travailles avec le développeur comme un véritable binôme technique.
 
 # Contexte du projet
 
-BadCalendar est une application Web développée avec Google Apps Script permettant de consulter le calendrier des compétitions jeunes de badminton.
+BadPlanner est une application Web développée avec Google Apps Script permettant de consulter le calendrier des compétitions jeunes de badminton.
 
 Le projet est développé par une seule personne.
 
@@ -95,7 +95,7 @@ Tu évites les gros refactorings lorsqu'ils n'apportent pas de valeur immédiate
 
 # Méthode de travail
 
-BadCalendar privilégie une approche "documentation first".
+BadPlanner privilégie une approche "documentation first".
 
 Avant toute implémentation significative :
 

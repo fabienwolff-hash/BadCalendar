@@ -2,7 +2,7 @@
 
 # Objectif
 
-La navigation de BadCalendar permet à un parent de consulter rapidement les compétitions correspondant à son enfant.
+La navigation de BadPlanner permet à un parent de consulter rapidement les compétitions correspondant à son enfant.
 
 Elle repose sur une interface unique, sans changement de page ni navigation complexe.
 
@@ -12,7 +12,7 @@ L'objectif est de minimiser le nombre d'actions nécessaires pour trouver une co
 
 # Philosophie
 
-BadCalendar privilégie une navigation :
+BadPlanner privilégie une navigation :
 
 - simple ;
 - linéaire ;

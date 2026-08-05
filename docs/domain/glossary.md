@@ -1,4 +1,4 @@
-# Glossaire — BadCalendar
+# Glossaire — BadPlanner
 
 ## Objectif
 
@@ -16,7 +16,7 @@ La Web App Google Apps Script permettant de consulter le calendrier des compéti
 
 Nom du projet :
 
-**BadCalendar**
+**BadPlanner**
 
 ---
 
@@ -140,7 +140,7 @@ Affichage destiné aux écrans d'ordinateur.
 
 ## Event
 
-Ancien modèle métier utilisé dans les premières versions de BadCalendar.
+Ancien modèle métier utilisé dans les premières versions de BadPlanner.
 
 À partir de l'introduction de TournamentService, le modèle métier est structuré autour des entités :
 
@@ -400,7 +400,7 @@ Compétition interrégionale.
 
 ## Tournament
 
-Entité métier principale de BadCalendar.
+Entité métier principale de BadPlanner.
 
 Un Tournament représente une compétition ou un événement sportif identifié de manière unique par un `TournamentId`.
 
@@ -499,7 +499,7 @@ Exemples :
 
 Application Google Apps Script publiée.
 
-Elle constitue l'interface utilisateur de BadCalendar.
+Elle constitue l'interface utilisateur de BadPlanner.
 
 ---
 
