@@ -265,7 +265,6 @@ const App = {
 							.map(input => input.value);
 
 						Storage.saveCategories(this.state.categories);
-						UsageMetricService.track(USAGE_METRICS.FILTER_CATEGORY);
 						this.render();
 					}
 				);
@@ -611,7 +610,7 @@ const App = {
 	
 	resetFilters(){
 		UsageMetricService.track(USAGE_METRICS.FILTER_RESET);
-		
+
 		this.state.categories = [];
 		this.state.types = [];
 		this.state.scopes = [];

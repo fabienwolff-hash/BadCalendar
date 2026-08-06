@@ -4,24 +4,21 @@ function recordUsageMetric(metric) {
 
 function getCurrentWeek() {
 
-    const date = new Date();
+  const date = new Date();
+  const day = date.getDay();
 
-    const firstDayOfYear =
-      new Date(date.getFullYear(), 0, 1);
+  const diff =
+    day === 0
+      ? -6  // dimanche -> lundi précédent
+      : 1 - day;
 
-    const days =
-      Math.floor(
-        (date - firstDayOfYear) /
-        (24 * 60 * 60 * 1000)
-      );
+  const monday = new Date(date);
 
-    const week =
-      Math.ceil(
-        (days + firstDayOfYear.getDay() + 1) / 7
-      );
+  monday.setDate(date.getDate() + diff);
+  monday.setHours(0, 0, 0, 0);
 
-    return `${date.getFullYear()}-W${String(week).padStart(2, "0")}`;
-  }
+  return monday;
+}
 
 const UsageMetricService = {
 
