@@ -203,7 +203,7 @@ function renderEvents(events){
     container.innerHTML=html;
 	
 	bindCardDetailsEvents();
-
+	bindUsageMetricEvents();
 }
 
 function bindCardDetailsEvents(){
@@ -216,12 +216,12 @@ function bindCardDetailsEvents(){
                 "click",
                 () => {
 
-                    const card =
-                        button.closest(".card");
+                    const card = button.closest(".card");
+                    const expanded = card.classList.toggle("expanded");
 
-                    const expanded =
-                        card.classList.toggle("expanded");
-
+                    if (expanded) {
+					    UsageMetricService.track(USAGE_METRICS.CARD_EXPAND);
+					}
 
                     button.textContent =
 						expanded
@@ -233,6 +233,36 @@ function bindCardDetailsEvents(){
 
         });
 
+}
+
+function bindUsageMetricEvents() {
+
+    document
+        .querySelectorAll(".badnet-link")
+        .forEach(link => {
+
+            link.addEventListener("click", () => {
+                UsageMetricService.track(USAGE_METRICS.BADNET_OPEN);
+            });
+        });
+
+    document
+        .querySelectorAll(".maps-link")
+        .forEach(link => {
+
+            link.addEventListener("click", () => {
+                UsageMetricService.track(USAGE_METRICS.MAPS_OPEN);
+            });
+        });
+
+    document
+        .querySelectorAll(".calendar-link")
+        .forEach(link => {
+
+            link.addEventListener("click", () => {
+                UsageMetricService.track(USAGE_METRICS.CALENDAR_EXPORT);
+            });
+        });
 }
 
 </script>

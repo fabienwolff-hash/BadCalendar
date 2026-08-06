@@ -28,6 +28,7 @@ body{
     align-items:center;
     min-height:100vh;
     padding:24px;
+	background:#f7f9fc;
 }
 
 /* display uniquement lorsque l'écran est visible */
@@ -40,21 +41,36 @@ body{
     max-width:320px;
 }
 
+.loading-content h1{
+    margin:0;
+    font-size:44px;
+    font-weight:700;
+    color:#1976d2;
+    letter-spacing:-0.02em;
+}
+
+.loading-content p:first-of-type{
+    margin-top:16px;
+    font-size:20px;
+    line-height:1.5;
+    color:#444;
+}
+
 .loading-logo{
     width:72px;
     margin-bottom:20px;
 }
 
 .loading-text{
-    margin-top:24px;
+    margin-top:36px;
     color:#666;
     font-size:15px;
 }
 
-.loading-version {
-    margin-top: 12px;
-    font-size: 12px;
-    color: #666;
+.loading-version{
+    margin-top:24px;
+    font-size:12px;
+    color:#999;
 }
 
 #error{
@@ -62,6 +78,7 @@ body{
     align-items:center;
     min-height:100vh;
     padding:24px;
+	background:#f7f9fc;
 }
 
 #error:not(.hidden){

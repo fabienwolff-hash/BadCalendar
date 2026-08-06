@@ -4,9 +4,9 @@
 
 Ce document décrit la vision du suivi statistique de BadPlanner.
 
-L'objectif n'est pas de produire un grand nombre d'indicateurs, mais de mesurer si l'application répond réellement à sa mission.
+L'objectif n'est pas de produire un grand nombre d'indicateurs mais de mesurer si l'application répond réellement à sa mission.
 
-Les statistiques doivent permettre d'améliorer le produit au fil du temps en observant les usages réels des parents.
+Les statistiques doivent permettre d'améliorer le produit au fil du temps en observant les usages réels des parents et des jeunes badistes.
 
 Toutes les données collectées sont anonymes.
 
@@ -25,7 +25,9 @@ Il doit permettre d'identifier :
 - si l'application est utilisée ;
 - si les utilisateurs reviennent régulièrement ;
 - quelles fonctionnalités apportent de la valeur ;
-- quelles fonctionnalités sont peu ou jamais utilisées.
+- quelles fonctionnalités sont peu ou jamais utilisées ;
+- si de nouvelles versions améliorent réellement l'expérience utilisateur ;
+- si l'application reste fiable au cours du temps.
 
 Les statistiques ne doivent jamais être collectées "au cas où".
 
@@ -43,7 +45,13 @@ Aucun compte utilisateur n'est nécessaire.
 
 Les statistiques sont entièrement anonymes.
 
-Les visiteurs sont identifiés uniquement par un identifiant anonyme généré localement afin de distinguer les visiteurs uniques.
+Aucune adresse e-mail n'est collectée.
+
+Aucune adresse IP n'est stockée.
+
+Aucun cookie de suivi n'est utilisé.
+
+Les visiteurs sont identifiés uniquement à l'aide d'un identifiant anonyme généré localement.
 
 ---
 
@@ -55,9 +63,103 @@ Quelques indicateurs utiles sont préférables à une multitude de graphiques di
 
 ---
 
-# Questions auxquelles doit répondre le tableau de bord
+## Utilité
 
-Le tableau de bord doit permettre de répondre aux questions suivantes.
+Chaque métrique doit permettre de prendre une décision produit.
+
+Les métriques sans usage concret doivent être évitées.
+
+---
+
+# Modèle de données
+
+## Structure d'un événement
+
+Chaque événement enregistré possède la structure suivante.
+
+| Champ | Description |
+|---------|-------------|
+| Timestamp | Date et heure de l'événement |
+| Week | Semaine ISO |
+| Version | Version de BadPlanner |
+| VisitorId | Identifiant anonyme permanent |
+| SessionId | Identifiant anonyme de session |
+| DeviceType | Type d'appareil |
+| OS | Système d'exploitation |
+| Browser | Navigateur |
+| Action | Action réalisée |
+| Value | Valeur complémentaire éventuelle |
+
+---
+
+## VisitorId
+
+Le VisitorId permet d'identifier un visiteur de manière anonyme.
+
+Il est généré localement lors de la première utilisation de l'application.
+
+Le même VisitorId est réutilisé lors des visites ultérieures.
+
+Il permet notamment de mesurer :
+
+- les visiteurs uniques ;
+- les visiteurs récurrents ;
+- les sessions par visiteur.
+
+Le VisitorId ne contient aucune donnée personnelle.
+
+---
+
+## SessionId
+
+Une SessionId est générée à chaque ouverture de l'application.
+
+Elle permet de regrouper les événements d'une même visite.
+
+Une nouvelle SessionId est créée à chaque nouvelle session.
+
+Elle ne permet pas d'identifier un utilisateur.
+
+---
+
+## Informations techniques
+
+Les informations suivantes sont enregistrées automatiquement :
+
+### DeviceType
+
+Valeurs possibles :
+
+- Desktop
+- Mobile
+- Tablet
+
+### OS
+
+Valeurs possibles :
+
+- Android
+- iOS
+- Windows
+- macOS
+- Linux
+- Unknown
+
+### Browser
+
+Valeurs possibles :
+
+- Chrome
+- Safari
+- Edge
+- Firefox
+- Other
+
+Ces informations permettent de comprendre quels environnements sont réellement utilisés et d'orienter les priorités de test et d'amélioration.
+
+---
+
+# Questions auxquelles doit répondre le tableau de bord
 
 ## Adoption
 
@@ -65,7 +167,7 @@ Les parents utilisent-ils réellement BadPlanner ?
 
 ## Fidélisation
 
-Les parents reviennent-ils consulter l'application au fil de la saison ?
+Les utilisateurs reviennent-ils consulter l'application au cours de la saison ?
 
 ## Utilisation
 
@@ -73,7 +175,109 @@ Quelles fonctionnalités sont réellement utilisées ?
 
 ## Évolution
 
-Une nouvelle fonctionnalité apporte-t-elle une valeur mesurable ?
+Une nouvelle version apporte-t-elle une amélioration mesurable ?
+
+## Santé
+
+L'application reste-t-elle fiable et performante ?
+
+---
+
+# Événements collectés
+
+## Application
+
+### APP_OPEN
+
+Déclenché lors de l'ouverture d'une nouvelle session.
+
+---
+
+### APP_LOAD_SUCCESS
+
+Déclenché lorsque les données sont chargées avec succès.
+
+---
+
+### APP_LOAD_FAILED
+
+Déclenché lorsqu'une erreur empêche le chargement de l'application.
+
+---
+
+### APP_LOAD_DURATION
+
+Temps de chargement de l'application exprimé en millisecondes.
+
+Cet événement permet de suivre les performances au fil des versions.
+
+---
+
+## Filtres
+
+### FILTER_CATEGORY
+
+Modification du filtre Catégorie.
+
+---
+
+### FILTER_TYPE
+
+Modification du filtre Type.
+
+---
+
+### FILTER_SCOPE
+
+Modification du filtre Portée.
+
+---
+
+### FILTER_FINISHED_TOURNAMENT
+
+Modification du filtre Tournois terminés.
+
+---
+
+### FILTER_NEW_TOURNAMENT
+
+Modification du filtre Nouveaux tournois.
+
+---
+
+### FILTER_RESET
+
+Réinitialisation des filtres.
+
+---
+
+## Consultation
+
+### CARD_EXPAND
+
+Dépliage d'une carte événement.
+
+Cet indicateur mesure l'intérêt porté aux informations détaillées.
+
+---
+
+## Actions
+
+### BADNET_OPEN
+
+Ouverture d'un lien BadNet.
+
+---
+
+### MAPS_OPEN
+
+Ouverture d'un lien Google Maps.
+
+---
+
+### CALENDAR_EXPORT
+
+Export vers Google Calendar.
 
 ---
 
@@ -81,159 +285,81 @@ Une nouvelle fonctionnalité apporte-t-elle une valeur mesurable ?
 
 ## Adoption
 
-### Visiteurs uniques (7 derniers jours)
+### Visiteurs uniques
 
-Nombre de visiteurs différents ayant utilisé BadPlanner durant les sept derniers jours.
+Nombre de VisitorId distincts.
 
 Cet indicateur mesure la diffusion réelle de l'application.
 
 ---
 
+### Sessions
+
+Nombre total de sessions ouvertes.
+
+---
+
+### Sessions par visiteur
+
+Rapport entre le nombre de sessions et le nombre de visiteurs uniques.
+
+Cet indicateur permet de mesurer l'engagement.
+
+---
+
 ## Fidélisation
 
-### Nombre de sessions
+### 1 seule visite
 
-Nombre total de sessions ouvertes durant les sept derniers jours.
-
-Une session correspond à une période d'utilisation continue de l'application.
-
-Une nouvelle session débute après une période d'inactivité significative (durée à définir lors de l'implémentation).
+Nombre de visiteurs n'ayant réalisé qu'une seule session.
 
 ---
 
-### Sessions moyennes par visiteur
+### Au moins 2 visites
 
-Permet d'évaluer si les utilisateurs reviennent consulter BadPlanner régulièrement.
-
-Cet indicateur est plus représentatif que le simple nombre de visites.
+Nombre de visiteurs ayant réalisé au moins deux sessions.
 
 ---
 
-# Utilisation des fonctionnalités
+### Au moins 5 visites
 
-Les fonctionnalités suivantes sont instrumentées.
-
-## Dépliage d'une carte
-
-Nombre de fois où un utilisateur affiche le détail d'un tournoi.
-
-Cet indicateur mesure l'intérêt porté aux informations détaillées.
+Nombre de visiteurs ayant réalisé au moins cinq sessions.
 
 ---
-
-## Ouverture BadNet
-
-Nombre de clics sur le bouton permettant d'accéder à BadNet.
-
-Cet indicateur mesure la complémentarité entre BadPlanner et BadNet.
-
----
-
-## Ouverture Google Maps
-
-Nombre de clics sur Google Maps.
-
-Cet indicateur permet d'évaluer l'utilité de cette fonctionnalité.
-
----
-
-## Ajout Google Calendar
-
-Nombre de clics permettant d'ajouter une compétition dans Google Calendar.
-
-Cet indicateur mesure l'intérêt pour la planification de la saison.
-
----
-
-# Utilisation des filtres
-
-BadPlanner ne cherche pas à connaître les valeurs recherchées.
-
-Seul le type de filtre utilisé est enregistré.
-
-Exemples :
-
-- filtre Catégorie ;
-- filtre Type ;
-- filtre Discipline ;
-- filtre Portée ;
-- filtre Localisation.
-
-Ces statistiques permettent d'identifier les filtres réellement utiles.
-
----
-
-# Indicateurs volontairement exclus
-
-Les éléments suivants ne font pas partie des statistiques produit.
-
-- tournoi le plus consulté ;
-- catégorie la plus recherchée ;
-- discipline la plus recherchée ;
-- nombre de compétitions ;
-- nombre de compétitions ouvertes ;
-- temps passé sur une carte ;
-- nombre de pages vues ;
-- parcours détaillé des utilisateurs.
-
-Ces informations ne répondent pas aux objectifs de BadPlanner et n'apportent pas une valeur suffisante.
-
----
-
-# Fréquence de consultation
-
-Le tableau de bord est conçu pour être consulté principalement de manière hebdomadaire.
-
-L'objectif est d'observer les tendances générales et non les variations quotidiennes.
-
----
-
-# Exemple de tableau de bord
-
-## Adoption
-
-- 👤 Visiteurs uniques : 84
-- 🔄 Sessions : 137
-- 📈 Sessions / visiteur : 1,63
 
 ## Fonctionnalités
 
-- 📂 Dépliages de cartes : 284
-- 🎯 Clics BadNet : 119
-- 🗺️ Ouvertures Google Maps : 38
-- 📅 Ajouts Google Calendar : 52
+### Dépliages de cartes
 
-## Filtres
-
-- Catégorie : 74 utilisations
-- Type : 31 utilisations
-- Discipline : 18 utilisations
-- Portée : 9 utilisations
-- Localisation : 6 utilisations
+Nombre total de CARD_EXPAND.
 
 ---
 
-# Utilisation des statistiques
+### Ouvertures BadNet
 
-Les statistiques ont pour objectif de guider les évolutions du produit.
-
-Quelques exemples :
-
-- une fonctionnalité très utilisée pourra être enrichie ;
-- une fonctionnalité jamais utilisée pourra être simplifiée ou supprimée ;
-- une nouvelle fonctionnalité pourra être évaluée objectivement après son déploiement.
-
-Les statistiques ne constituent pas une finalité mais un outil d'amélioration continue.
+Nombre total de BADNET_OPEN.
 
 ---
 
-# Évolutions futures
+### Ouvertures Google Maps
 
-Le périmètre pourra évoluer ultérieurement avec notamment :
+Nombre total de MAPS_OPEN.
 
-- évolution hebdomadaire des indicateurs ;
-- taux de retour des visiteurs ;
-- comparaison entre versions ;
-- tableau de bord d'administration enrichi.
+---
 
-Toute nouvelle statistique devra cependant respecter les principes définis dans ce document : simplicité, anonymat et utilité.
+### Exports Google Calendar
+
+Nombre total de CALENDAR_EXPORT.
+
+---
+
+## Utilisation des filtres
+
+Nombre d'utilisations des filtres suivants :
+
+- Catégorie
+- Type
+- Portée
+- Tournois terminés
+- Nouveaux tournois
+- Réinitialisation

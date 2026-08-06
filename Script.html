@@ -46,7 +46,14 @@ const Storage = {
 	saveScopes(values) {
 		localStorage.setItem(STORAGE_KEYS.SCOPES,JSON.stringify(values));
 	},
-	
+
+	loadVisitorId() {
+	    return localStorage.getItem(STORAGE_KEYS.VISITOR_ID);
+	},
+
+	saveVisitorId(value) {
+	    localStorage.setItem(STORAGE_KEYS.VISITOR_ID,value);
+	},
 };
 
 const App = {
@@ -63,7 +70,11 @@ const App = {
     },
 
     init(events) {
-
+    	UsageMetricService.track(USAGE_METRICS.APP_LOAD_SUCCESS);
+    	UsageMetricService.track(
+		    USAGE_METRICS.APP_LOAD_DURATION,
+		    Math.round(performance.now() - APP_LOAD_START)
+		);
 		document.body.classList.toggle(
 			"mobile-device",
 			window.matchMedia("(pointer: coarse)").matches
@@ -254,6 +265,7 @@ const App = {
 							.map(input => input.value);
 
 						Storage.saveCategories(this.state.categories);
+						UsageMetricService.track(USAGE_METRICS.FILTER_CATEGORY);
 						this.render();
 					}
 				);
@@ -316,6 +328,7 @@ const App = {
 								
 						this.populateTypeFilter();
 						this.bindTypeFilter();
+						UsageMetricService.track(USAGE_METRICS.FILTER_SCOPE);
 						
 						this.render();
 					}
@@ -339,6 +352,8 @@ const App = {
 							.map(
 								input => input.value
 							);
+						UsageMetricService.track(USAGE_METRICS.FILTER_TYPE);
+
 						this.render();
 					}
 				);
@@ -362,6 +377,7 @@ const App = {
 			.addEventListener("change", e => {
 				this.state.showFinished = e.target.checked;
 				Storage.saveShowFinished(this.state.showFinished);
+				UsageMetricService.track(USAGE_METRICS.FILTER_FINISHED_TOURNAMENT);
 
 				this.render();
 			});
@@ -369,6 +385,7 @@ const App = {
 		$(DOM.SHOW_NEW_ONLY)
 			.addEventListener("change", e => {
 				this.state.showNewOnly = e.target.checked;
+				UsageMetricService.track(USAGE_METRICS.FILTER_NEW_TOURNAMENT);
 
 				this.render();
 			});
@@ -593,7 +610,8 @@ const App = {
 	
 	
 	resetFilters(){
-
+		UsageMetricService.track(USAGE_METRICS.FILTER_RESET);
+		
 		this.state.categories = [];
 		this.state.types = [];
 		this.state.scopes = [];
@@ -653,6 +671,7 @@ const App = {
 	},
 	
 	initError(error){
+		UsageMetricService.track(USAGE_METRICS.APP_LOAD_FAILED);
 		this.showError();
 	}
 };
@@ -694,6 +713,7 @@ if (DEBUG.SIMULATE_INIT_ERROR) {
     );
 
 } else {
+	UsageMetricService.track(USAGE_METRICS.APP_OPEN);
 	google.script.run
 		.withSuccessHandler(App.init.bind(App))
 		.withFailureHandler(App.initError.bind(App))

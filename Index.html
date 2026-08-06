@@ -11,10 +11,10 @@
 	<body>
 		<div id="loading">
 			<div class="loading-content">
-				<h1>BadPlanner</h1>
-				<p>Calendrier des compétitions jeunes</p>
+				<h1>🏸 BadPlanner</h1>
+				<p>L'assistant des jeunes badistes et de leurs parents</p>
 				<p class="loading-text">
-					Chargement des compétitions...
+					⏳ Préparation de votre saison...
 				</p>
 				<p class="loading-version">
 					Version <?= version ?>
@@ -37,7 +37,8 @@
 		<div id="app" class="hidden">
 			<header>
 				<h1 class="app-title">
-					Calendrier Jeune Saison 2026/2027
+					🏸 BadPlanner
+					Saison Jeunes 2026/2027
 				</h1>
 			</header>
 
@@ -47,13 +48,10 @@
 		</div>
 		
 		<?!= include('Constants'); ?>
+		<?!= include('UsageMetrics'); ?>
 		<?!= include('Components'); ?>
 		<?!= include('Utils'); ?>
 		<?!= include('Script'); ?>
-		
+	
 	</body>
 </html>
-
-
-
-

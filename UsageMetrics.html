@@ -1,0 +1,110 @@
+<script>
+
+const SESSION_ID = crypto.randomUUID();
+const APP_LOAD_START = performance.now();
+
+const UsageMetricService = {
+
+    getVisitorId() {
+
+        let visitorId = localStorage.getItem(STORAGE_KEYS.VISITOR_ID);
+
+        if (!visitorId) {
+            visitorId = crypto.randomUUID();
+            localStorage.setItem(STORAGE_KEYS.VISITOR_ID,visitorId);
+        }
+
+        return visitorId;
+    },
+
+	track(action, value = "") {
+
+	  google.script.run
+	    .withFailureHandler(error =>
+	      console.error(error)
+	    )
+	    .recordUsageMetric({
+	      visitorId: this.getVisitorId(),
+	      sessionId: SESSION_ID,
+	      deviceType: this.getDeviceType(),
+	      os: this.getOS(),
+	      browser: this.getBrowser(),
+	      action,
+	      value
+	    });
+	},
+
+	getDeviceType() {
+
+		console.log(navigator.userAgent);
+    const userAgent =
+        navigator.userAgent;
+
+    if (/tablet|ipad/i.test(userAgent)) {
+        return "Tablet";
+    }
+
+    if (/mobi|android/i.test(userAgent)) {
+        return "Mobile";
+    }
+
+    return "Desktop";
+	},
+
+	getOS() {
+
+	    const ua =
+	        navigator.userAgent;
+
+	    if (/android/i.test(ua)) {
+	        return "Android";
+	    }
+
+	    if (/iphone|ipad|ipod/i.test(ua)) {
+	        return "iOS";
+	    }
+
+	    if (/windows/i.test(ua)) {
+	        return "Windows";
+	    }
+
+	    if (/mac/i.test(ua)) {
+	        return "macOS";
+	    }
+
+	    if (/linux/i.test(ua)) {
+	        return "Linux";
+	    }
+
+	    return "Unknown";
+	},
+
+	getBrowser() {
+
+	    const ua =
+	        navigator.userAgent;
+
+	    if (/edg/i.test(ua)) {
+	        return "Edge";
+	    }
+
+	    if (/firefox/i.test(ua)) {
+	        return "Firefox";
+	    }
+
+	    if (/chrome/i.test(ua) &&
+	        !/edg/i.test(ua)) {
+	        return "Chrome";
+	    }
+
+	    if (/safari/i.test(ua) &&
+	        !/chrome/i.test(ua)) {
+	        return "Safari";
+	    }
+
+	    return "Other";
+	}
+};
+
+
+</script>
