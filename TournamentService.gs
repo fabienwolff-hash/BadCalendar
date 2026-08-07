@@ -190,24 +190,18 @@ const TournamentService = {
 
 	buildSite_(row) {
 
-	  const city =
-		row.city || "";
+	  const city = row.city || "";
+    const department = row.department || "";
 
 	  return {
-		region:
-		  row.region || "",
-
-		department:
-		  row.department || "",
-
+		region: row.region || "",
+		department,
 		city,
-
-		gymnasium:
-		  row.gymnasium || "",
+		gymnasium: row.gymnasium || "",
 
 		googleMapsUrl:
 		  city
-			? LocationService.buildGoogleMapsUrl(city,row.gymnasium)
+			? LocationService.buildGoogleMapsUrl(department,city,row.gymnasium)
 			: ""
 	  };
 	},

@@ -37,7 +37,23 @@ const STORAGE_KEYS = {
 	SCOPES: "scopes",
 	SHOW_FINISHED: "showFinished",
 	SHOW_NEW_ONLY: "showNewOnly",
-	VISITOR_ID: "badplannerVisitorId"
+	
+	FIRST_VISIT_DATE: "firstVisitDate",
+	SESSION_COUNT: "sessionCount",
+
+	FEEDBACK_DISMISSED: "feedbackDismissed",
+	FEEDBACK_SNOOZED_UNTIL: "feedbackSnoozedUntil",
+	FEEDBACK_SUBMITTED_AT: "feedbackSubmittedAt"
+};
+
+const FEEDBACK = {
+  MIN_ACCOUNT_AGE_DAYS: 28,
+  MIN_SESSIONS: 15,
+
+  SNOOZE_DAYS: 28,
+  REASK_DAYS: 180,
+
+  FORM_URL: "https://docs.google.com/forms/d/e/1FAIpQLSf7NWcyd8MTXg65hyfc8E_sYulv1GqWecRGw-gg2QpkEbCnZg/viewform"
 };
 
 const STATUS = {
@@ -115,8 +131,11 @@ const USAGE_METRICS = {
 
   BADNET_OPEN: "BADNET_OPEN",
   MAPS_OPEN: "MAPS_OPEN",
-  CALENDAR_EXPORT: "CALENDAR_EXPORT"
+  CALENDAR_EXPORT: "CALENDAR_EXPORT",
 
+  FEEDBACK_CARD_CLICKED: "FEEDBACK_CARD_CLICKED",
+  FEEDBACK_CARD_SNOOZED: "FEEDBACK_CARD_SNOOZED",
+  FEEDBACK_CARD_DISMISSED: "FEEDBACK_CARD_DISMISSED"
 };
 
 </script>

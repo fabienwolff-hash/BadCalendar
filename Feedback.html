@@ -1,0 +1,169 @@
+<script>
+
+const Feedback = {
+
+    initialize() {
+        if (!Storage.loadFirstVisitDate()) {
+
+            Storage.saveFirstVisitDate(new Date().toISOString());
+        }
+		
+        const sessionCount = Storage.loadSessionCount();
+
+        Storage.saveSessionCount(sessionCount + 1);
+    },
+
+    isEligible() {
+
+        const firstVisitDate = Storage.loadFirstVisitDate();
+        const sessionCount = Storage.loadSessionCount();
+        const submittedAt = Storage.loadFeedbackSubmittedAt();
+        const snoozedUntil = Storage.loadFeedbackSnoozedUntil();
+        const dismissed = Storage.loadFeedbackDismissed();
+
+        if (!firstVisitDate) {
+            return false;
+        }
+
+        if (dismissed) {
+            return false;
+        }
+
+        const accountAgeDays =
+            Math.floor(
+                (
+                    Date.now() -
+                    new Date(firstVisitDate)
+                ) / (1000 * 60 * 60 * 24)
+            );
+
+        if (
+            snoozedUntil &&
+            new Date() < new Date(snoozedUntil)
+        ) {
+            return false;
+        }
+
+        if (submittedAt) {
+
+            const daysSinceSubmission =
+                Math.floor(
+                    (
+                        Date.now() -
+                        new Date(submittedAt)
+                    ) / (1000 * 60 * 60 * 24)
+                );
+
+            if (
+                daysSinceSubmission <
+                FEEDBACK.REASK_DAYS
+            ) {
+                return false;
+            }
+        }
+
+        return (
+            accountAgeDays >= FEEDBACK.MIN_ACCOUNT_AGE_DAYS &&
+            sessionCount >= FEEDBACK.MIN_SESSIONS
+        );
+    },
+
+    render() {
+        const container = document.getElementById("feedback");
+
+        if (!container) {
+            return;
+        }
+
+        if (!this.isEligible()) {
+
+            container.innerHTML = "";
+
+            return;
+        }
+
+     container.innerHTML = `
+        <div class="feedback-card">
+
+            <h3 class="feedback-title">
+                💬 Ton avis compte
+            </h3>
+
+            <p class="feedback-description">
+                Tu utilises BadPlanner depuis quelque temps déjà.
+            </p>
+
+            <p class="feedback-description">
+                Ton retour m'aidera à améliorer l'application.
+            </p>
+
+            <p class="feedback-duration">
+                ⏱️ 1 minute • 3 questions
+            </p>
+
+            <button
+                id="feedbackOpen"
+                class="button feedback-primary-button"
+                type="button">
+                Donner mon avis
+            </button>
+
+            <div class="feedback-actions">
+
+                <button
+                    id="feedbackLater"
+                    class="feedback-link-button">
+                    Plus tard
+                </button>
+
+                <button
+                    id="feedbackDismiss"
+                    class="feedback-link-button">
+                    Ne plus afficher
+                </button>
+
+            </div>
+
+        </div>
+    `;
+        this.bindEvents();
+    },
+
+    bindEvents() {
+
+        document
+            .getElementById("feedbackOpen")
+            ?.addEventListener("click", () => {
+                UsageMetricService.track(USAGE_METRICS.FEEDBACK_CARD_CLICKED);
+                Storage.saveFeedbackSubmittedAt(new Date().toISOString());
+                window.open(
+                    FEEDBACK.FORM_URL,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+                this.render();  
+            });
+
+        document
+            .getElementById("feedbackLater")
+            ?.addEventListener("click", () => {
+
+                const snoozedUntil = new Date();
+                snoozedUntil.setDate(snoozedUntil.getDate() + FEEDBACK.SNOOZE_DAYS);
+                Storage.saveFeedbackSnoozedUntil(snoozedUntil.toISOString());
+                UsageMetricService.track(USAGE_METRICS.FEEDBACK_CARD_SNOOZED);
+                this.render();
+            });
+
+        document
+            .getElementById("feedbackDismiss")
+            ?.addEventListener("click", () => {
+
+                Storage.saveFeedbackDismissed(true);
+                UsageMetricService.track(USAGE_METRICS.FEEDBACK_CARD_DISMISSED);
+                this.render();
+            });
+    }
+};
+
+</script>

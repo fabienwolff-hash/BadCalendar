@@ -50,7 +50,7 @@ const LocationService = {
     return locations;
   },
 
-  buildGoogleMapsUrl(city, gymnasium) {
+  buildGoogleMapsUrl(department, city, gymnasium) {
 
   const locations = this.read();
 
@@ -67,12 +67,21 @@ const LocationService = {
     query =
       locations.byCity[city];
   }
+  
+  // Fallback dynamique
+	if (!query && city) {
+		query = department
+			? `${city}, ${department}`
+			: city;
+	}
 
   if (!query) {
     return null;
   }
+  
+  const encodedQuery = encodeURIComponent(query);
 
-  return `https://www.google.com/maps/search/?api=1&query=${query}`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
 },
 
   clearCache() {

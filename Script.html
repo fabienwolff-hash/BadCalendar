@@ -54,6 +54,44 @@ const Storage = {
 	saveVisitorId(value) {
 	    localStorage.setItem(STORAGE_KEYS.VISITOR_ID,value);
 	},
+
+	loadFirstVisitDate() {
+    return localStorage.getItem(STORAGE_KEYS.FIRST_VISIT_DATE);
+	},
+
+	saveFirstVisitDate(value) {
+	    localStorage.setItem(STORAGE_KEYS.FIRST_VISIT_DATE,value);
+	},
+
+	loadSessionCount() {
+	    return Number(localStorage.getItem(STORAGE_KEYS.SESSION_COUNT)) || 0;
+	},
+
+	saveSessionCount(value) {
+	    localStorage.setItem(STORAGE_KEYS.SESSION_COUNT,value);
+	},
+
+	loadFeedbackDismissed() {
+	    return localStorage.getItem(STORAGE_KEYS.FEEDBACK_DISMISSED) === "true";
+	},
+
+	saveFeedbackDismissed(value) {
+	    localStorage.setItem(STORAGE_KEYS.FEEDBACK_DISMISSED,value);
+	},
+
+	loadFeedbackSnoozedUntil() {
+	    return localStorage.getItem(STORAGE_KEYS.FEEDBACK_SNOOZED_UNTIL);
+	},
+
+	saveFeedbackSnoozedUntil(value) {
+	    localStorage.setItem(STORAGE_KEYS.FEEDBACK_SNOOZED_UNTIL,value);
+	},
+	loadFeedbackSubmittedAt() {
+	    return localStorage.getItem(STORAGE_KEYS.FEEDBACK_SUBMITTED_AT);
+	},
+	saveFeedbackSubmittedAt(value) {
+	    localStorage.setItem(STORAGE_KEYS.FEEDBACK_SUBMITTED_AT,value);
+	},
 };
 
 const App = {
@@ -81,6 +119,10 @@ const App = {
 		);
 
         this.events = events;
+
+        Feedback.initialize();
+
+        Feedback.render();
 						
 		this.initialize();
     },
