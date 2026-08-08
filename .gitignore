@@ -1,2 +1,5 @@
 .clasp.json
-.git
+node_modules/
+
+.eslintcache
+.stylelintcache

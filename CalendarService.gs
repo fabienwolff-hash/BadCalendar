@@ -1,3 +1,5 @@
+/* exported CalendarService */
+
 /**
  * CalendarService
  *

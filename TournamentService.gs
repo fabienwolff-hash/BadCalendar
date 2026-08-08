@@ -1,3 +1,6 @@
+/* exported TournamentService */
+/* global CONFIG, LocationService, CalendarService, ParameterService */
+
 const TournamentService = {
 
   read() {

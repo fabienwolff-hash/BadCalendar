@@ -1,3 +1,6 @@
+/* exported ParameterService */
+/* global CONFIG */
+
 const ParameterService = {
 
   cache_: undefined,

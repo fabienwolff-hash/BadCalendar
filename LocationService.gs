@@ -1,3 +1,6 @@
+/* exported LocationService */
+/* global CONFIG */
+
 const LocationService = {
 
   cache_: null,

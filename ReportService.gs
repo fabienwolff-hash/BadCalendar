@@ -1,3 +1,6 @@
+/* exported ReportService */
+/* global CONFIG */
+
 const ReportService = {
 
   write(issues) {

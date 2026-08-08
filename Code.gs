@@ -1,3 +1,6 @@
+/* exported doGet, include, readTournaments */
+/* global CONFIG, TournamentService */
+
 function doGet() {
 
 	const template = HtmlService.createTemplateFromFile("Index");

@@ -1,3 +1,6 @@
+/* exported UsageMetricService, recordUsageMetric */
+/* global CONFIG */
+
 function recordUsageMetric(metric) {
   UsageMetricService.record(metric);
 }

@@ -1,3 +1,6 @@
+/* exported onEdit */
+/* global CONFIG */
+
 const TYPE_SCOPE_MAPPING = {
   Promobad: "Départementale",
   CDJ: "Départementale",

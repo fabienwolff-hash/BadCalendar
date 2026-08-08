@@ -1,3 +1,6 @@
+/* exported ValidationService */
+/* global ParameterService, ValidationIssue */
+
 const ValidationService = {
 
 	validate(events) {

@@ -1,3 +1,6 @@
+/* global CONFIG, TournamentService, ValidationService, ReportService */
+/* exported onOpen, verifyMaster */
+
 function onOpen() {
 
   SpreadsheetApp.getUi()

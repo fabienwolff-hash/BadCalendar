@@ -1,3 +1,5 @@
+/* exported CONFIG */
+
 const CONFIG = {
 
   APP_NAME: "BadPlanner",

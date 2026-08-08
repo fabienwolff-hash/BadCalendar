@@ -1,3 +1,5 @@
+/* exported ValidationIssue */
+
 const ValidationIssue = {
 
   error(row, field, message) {
