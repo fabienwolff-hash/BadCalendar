@@ -2,22 +2,17 @@
 /* global CONFIG, TournamentService */
 
 function doGet() {
+  const template = HtmlService.createTemplateFromFile("Index");
 
-	const template = HtmlService.createTemplateFromFile("Index");
+  template.version = CONFIG.APP_VERSION;
 
-	template.version = CONFIG.APP_VERSION;
-
-	return template
-		.evaluate()
-		.setTitle(CONFIG.APP_NAME);
+  return template.evaluate().setTitle(CONFIG.APP_NAME);
 }
 
 function include(filename) {
-  return HtmlService
-    .createHtmlOutputFromFile(filename)
-    .getContent();
+  return HtmlService.createHtmlOutputFromFile(filename).getContent();
 }
 
 function readTournaments() {
   return TournamentService.read();
-};
+}

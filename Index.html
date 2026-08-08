@@ -1,59 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-	<head>
-		<base target="_top">
+  <head>
+    <base target="_top" />
 
-		<meta name="viewport"
-		content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<?!= include('Style'); ?>
-	</head>
-	<body>
-		<div id="loading">
-			<div class="loading-content">
-				<h1>🏸 BadPlanner</h1>
-				<p>L'assistant des jeunes badistes et de leurs parents</p>
-				<p class="loading-text">
-					⏳ Préparation de votre saison...
-				</p>
-				<p class="loading-version">
-					Version <?= version ?>
-				</p>
-			</div>
-		</div>
-		<div id="error" class="hidden">
-			<div class="loading-content">
-				<h1>Impossible de charger BadPlanner</h1>
+    <?!= include('Style'); ?>
+  </head>
+  <body>
+    <div id="loading">
+      <div class="loading-content">
+        <h1>🏸 BadPlanner</h1>
+        <p>L'assistant des jeunes badistes et de leurs parents</p>
+        <p class="loading-text">⏳ Préparation de votre saison...</p>
+        <p class="loading-version">Version <?= version ?></p>
+      </div>
+    </div>
+    <div id="error" class="hidden">
+      <div class="loading-content">
+        <h1>Impossible de charger BadPlanner</h1>
 
-				<p class="loading-text">
-					Une erreur est survenue lors du chargement des compétitions.
-				</p>
+        <p class="loading-text">Une erreur est survenue lors du chargement des compétitions.</p>
 
-				<p class="loading-text">
-					Merci de réessayer dans quelques instants.
-				</p>
-			</div>
-		</div>
-		<div id="app" class="hidden">
-			<header>
-				<h1 class="app-title">
-					🏸 BadPlanner
-					Saison Jeunes 2026/2027
-				</h1>
-			</header>
+        <p class="loading-text">Merci de réessayer dans quelques instants.</p>
+      </div>
+    </div>
+    <div id="app" class="hidden">
+      <header>
+        <h1 class="app-title">🏸 BadPlanner Saison Jeunes 2026/2027</h1>
+      </header>
 
-			<?!= include('Filters'); ?>
+      <?!= include('Filters'); ?>
 
-			<div id="feedback"></div>
-			<div id="events"></div>
-		</div>
-		
-		<?!= include('Constants'); ?>
-		<?!= include('UsageMetrics'); ?>
-		<?!= include('Feedback'); ?>
-		<?!= include('Components'); ?>
-		<?!= include('Utils'); ?>
-		<?!= include('Script'); ?>
-	
-	</body>
+      <div id="feedback"></div>
+      <div id="events"></div>
+    </div>
+
+    <?!= include('Constants'); ?> <?!= include('UsageMetrics'); ?> <?!= include('Feedback'); ?> <?!=
+    include('Components'); ?> <?!= include('Utils'); ?> <?!= include('Script'); ?>
+  </body>
 </html>

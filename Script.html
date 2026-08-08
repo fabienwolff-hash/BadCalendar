@@ -1,191 +1,174 @@
 <script>
-const DEBUG = {
-    SIMULATE_INIT_ERROR: false
-};
+  const DEBUG = {
+    SIMULATE_INIT_ERROR: false,
+  };
 
-const Storage = {
-
+  const Storage = {
     loadFiltersCollapsed() {
-        return localStorage.getItem(STORAGE_KEYS.FILTERS_COLLAPSED) === "true";
+      return localStorage.getItem(STORAGE_KEYS.FILTERS_COLLAPSED) === "true";
     },
 
     saveFiltersCollapsed(value) {
-        localStorage.setItem(STORAGE_KEYS.FILTERS_COLLAPSED,value);
+      localStorage.setItem(STORAGE_KEYS.FILTERS_COLLAPSED, value);
     },
 
     loadShowFinished() {
-        return localStorage.getItem(STORAGE_KEYS.SHOW_FINISHED) === "true";
+      return localStorage.getItem(STORAGE_KEYS.SHOW_FINISHED) === "true";
     },
 
     saveShowFinished(value) {
-        localStorage.setItem(STORAGE_KEYS.SHOW_FINISHED,value);
+      localStorage.setItem(STORAGE_KEYS.SHOW_FINISHED, value);
     },
-		
-	loadCategories() {
 
-		const value = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
+    loadCategories() {
+      const value = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
 
-		return value
-			? JSON.parse(value)
-			: [];
-	},
-	
-	saveCategories(values) {
-		localStorage.setItem(STORAGE_KEYS.CATEGORIES,JSON.stringify(values));
-	},
-	
-	loadScopes() {
+      return value ? JSON.parse(value) : [];
+    },
 
-		const value = localStorage.getItem(STORAGE_KEYS.SCOPES);
+    saveCategories(values) {
+      localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(values));
+    },
 
-		return value
-			? JSON.parse(value)
-			: [];
-	},
-	
-	saveScopes(values) {
-		localStorage.setItem(STORAGE_KEYS.SCOPES,JSON.stringify(values));
-	},
+    loadScopes() {
+      const value = localStorage.getItem(STORAGE_KEYS.SCOPES);
 
-	loadVisitorId() {
-	    return localStorage.getItem(STORAGE_KEYS.VISITOR_ID);
-	},
+      return value ? JSON.parse(value) : [];
+    },
 
-	saveVisitorId(value) {
-	    localStorage.setItem(STORAGE_KEYS.VISITOR_ID,value);
-	},
+    saveScopes(values) {
+      localStorage.setItem(STORAGE_KEYS.SCOPES, JSON.stringify(values));
+    },
 
-	loadFirstVisitDate() {
-    return localStorage.getItem(STORAGE_KEYS.FIRST_VISIT_DATE);
-	},
+    loadVisitorId() {
+      return localStorage.getItem(STORAGE_KEYS.VISITOR_ID);
+    },
 
-	saveFirstVisitDate(value) {
-	    localStorage.setItem(STORAGE_KEYS.FIRST_VISIT_DATE,value);
-	},
+    saveVisitorId(value) {
+      localStorage.setItem(STORAGE_KEYS.VISITOR_ID, value);
+    },
 
-	loadSessionCount() {
-	    return Number(localStorage.getItem(STORAGE_KEYS.SESSION_COUNT)) || 0;
-	},
+    loadFirstVisitDate() {
+      return localStorage.getItem(STORAGE_KEYS.FIRST_VISIT_DATE);
+    },
 
-	saveSessionCount(value) {
-	    localStorage.setItem(STORAGE_KEYS.SESSION_COUNT,value);
-	},
+    saveFirstVisitDate(value) {
+      localStorage.setItem(STORAGE_KEYS.FIRST_VISIT_DATE, value);
+    },
 
-	loadFeedbackDismissed() {
-	    return localStorage.getItem(STORAGE_KEYS.FEEDBACK_DISMISSED) === "true";
-	},
+    loadSessionCount() {
+      return Number(localStorage.getItem(STORAGE_KEYS.SESSION_COUNT)) || 0;
+    },
 
-	saveFeedbackDismissed(value) {
-	    localStorage.setItem(STORAGE_KEYS.FEEDBACK_DISMISSED,value);
-	},
+    saveSessionCount(value) {
+      localStorage.setItem(STORAGE_KEYS.SESSION_COUNT, value);
+    },
 
-	loadFeedbackSnoozedUntil() {
-	    return localStorage.getItem(STORAGE_KEYS.FEEDBACK_SNOOZED_UNTIL);
-	},
+    loadFeedbackDismissed() {
+      return localStorage.getItem(STORAGE_KEYS.FEEDBACK_DISMISSED) === "true";
+    },
 
-	saveFeedbackSnoozedUntil(value) {
-	    localStorage.setItem(STORAGE_KEYS.FEEDBACK_SNOOZED_UNTIL,value);
-	},
-	loadFeedbackSubmittedAt() {
-	    return localStorage.getItem(STORAGE_KEYS.FEEDBACK_SUBMITTED_AT);
-	},
-	saveFeedbackSubmittedAt(value) {
-	    localStorage.setItem(STORAGE_KEYS.FEEDBACK_SUBMITTED_AT,value);
-	},
-};
+    saveFeedbackDismissed(value) {
+      localStorage.setItem(STORAGE_KEYS.FEEDBACK_DISMISSED, value);
+    },
 
-const App = {
+    loadFeedbackSnoozedUntil() {
+      return localStorage.getItem(STORAGE_KEYS.FEEDBACK_SNOOZED_UNTIL);
+    },
 
+    saveFeedbackSnoozedUntil(value) {
+      localStorage.setItem(STORAGE_KEYS.FEEDBACK_SNOOZED_UNTIL, value);
+    },
+    loadFeedbackSubmittedAt() {
+      return localStorage.getItem(STORAGE_KEYS.FEEDBACK_SUBMITTED_AT);
+    },
+    saveFeedbackSubmittedAt(value) {
+      localStorage.setItem(STORAGE_KEYS.FEEDBACK_SUBMITTED_AT, value);
+    },
+  };
+
+  const App = {
     events: [],
 
     state: {
-		categories: [],
-		scopes: [],
-		types: [],
-		showFinished: false,
-		showNewOnly: false,
-		showOpenRegistrationOnly: false,
-		filtersCollapsed: false
+      categories: [],
+      scopes: [],
+      types: [],
+      showFinished: false,
+      showNewOnly: false,
+      showOpenRegistrationOnly: false,
+      filtersCollapsed: false,
     },
 
     init(events) {
-    	UsageMetricService.track(USAGE_METRICS.APP_LOAD_SUCCESS);
-    	UsageMetricService.track(
-		    USAGE_METRICS.APP_LOAD_DURATION,
-		    Math.round(performance.now() - APP_LOAD_START)
-		);
-		document.body.classList.toggle(
-			"mobile-device",
-			window.matchMedia("(pointer: coarse)").matches
-		);
+      UsageMetricService.track(USAGE_METRICS.APP_LOAD_SUCCESS);
+      UsageMetricService.track(
+        USAGE_METRICS.APP_LOAD_DURATION,
+        Math.round(performance.now() - APP_LOAD_START)
+      );
+      document.body.classList.toggle(
+        "mobile-device",
+        window.matchMedia("(pointer: coarse)").matches
+      );
 
-        this.events = events;
+      this.events = events;
 
-        Feedback.initialize();
+      Feedback.initialize();
 
-        Feedback.render();
-						
-		this.initialize();
+      Feedback.render();
+
+      this.initialize();
     },
-	
-	initialize() {
 
-		this.restoreState();
+    initialize() {
+      this.restoreState();
 
-		this.populateFilters();
-		
-		this.bindCategoryFilter();
-		this.bindScopeFilter();
-		this.bindTypeFilter();
-		
-		this.markNewEvents();
+      this.populateFilters();
 
-		this.bindEvents();
-		
-		this.render();
-			
-		this.showApplication();
-	},
-	
-	restoreState() {
-		this.state.filtersCollapsed =  Storage.loadFiltersCollapsed();
-		this.state.showFinished = Storage.loadShowFinished();
-		this.state.categories = Storage.loadCategories();
-		this.state.scopes = Storage.loadScopes();
-							
-		$(DOM.SHOW_FINISHED).checked = this.state.showFinished;
-		$(DOM.SHOW_NEW_ONLY).checked = this.state.showNewOnly;
-		$(DOM.SHOW_OPEN_REGISTRATION_ONLY).checked = this.state.showOpenRegistrationOnly;
-	},
-	
+      this.bindCategoryFilter();
+      this.bindScopeFilter();
+      this.bindTypeFilter();
+
+      this.markNewEvents();
+
+      this.bindEvents();
+
+      this.render();
+
+      this.showApplication();
+    },
+
+    restoreState() {
+      this.state.filtersCollapsed = Storage.loadFiltersCollapsed();
+      this.state.showFinished = Storage.loadShowFinished();
+      this.state.categories = Storage.loadCategories();
+      this.state.scopes = Storage.loadScopes();
+
+      $(DOM.SHOW_FINISHED).checked = this.state.showFinished;
+      $(DOM.SHOW_NEW_ONLY).checked = this.state.showNewOnly;
+      $(DOM.SHOW_OPEN_REGISTRATION_ONLY).checked = this.state.showOpenRegistrationOnly;
+    },
+
     populateFilters() {
-		this.populateCategoryFilter();
-		this.populateScopeFilter();
-		this.populateTypeFilter();
+      this.populateCategoryFilter();
+      this.populateScopeFilter();
+      this.populateTypeFilter();
     },
-	
-	populateCategoryFilter() {
 
-		const container = $(DOM.FILTER_CATEGORIES);
-		
-		container.innerHTML = "";
+    populateCategoryFilter() {
+      const container = $(DOM.FILTER_CATEGORIES);
 
-		const categories =
-			sortByOrder(
-				[...new Set(
-					this.events.flatMap(
-						event => getCategories(event)
-					)
-				)],
-				ORDER.CATEGORIES
-			);
+      container.innerHTML = "";
 
-		categories.forEach(category => {
+      const categories = sortByOrder(
+        [...new Set(this.events.flatMap((event) => getCategories(event)))],
+        ORDER.CATEGORIES
+      );
 
-			const checked =
-				this.state.categories.includes(category);
+      categories.forEach((category) => {
+        const checked = this.state.categories.includes(category);
 
-			container.innerHTML += `
+        container.innerHTML += `
 				<label class="checkbox-label">
 
 					<input
@@ -197,29 +180,22 @@ const App = {
 
 				</label>
 			`;
-		});
-	},
-	
-	populateScopeFilter() {
+      });
+    },
 
-		const container = $(DOM.FILTER_SCOPES);
-		container.innerHTML = "";
+    populateScopeFilter() {
+      const container = $(DOM.FILTER_SCOPES);
+      container.innerHTML = "";
 
-		const scopes =
-			sortByOrder(
-				[...new Set(
-					this.events.map(
-						event => event.scope
-					)
-				)],
-				ORDER.SCOPES
-			);
+      const scopes = sortByOrder(
+        [...new Set(this.events.map((event) => event.scope))],
+        ORDER.SCOPES
+      );
 
-		scopes.forEach(scope => {
+      scopes.forEach((scope) => {
+        const checked = this.state.scopes.includes(scope);
 
-			const checked =	this.state.scopes.includes(scope);
-
-			container.innerHTML += `
+        container.innerHTML += `
 				<label class="checkbox-label">
 
 					<input
@@ -231,21 +207,19 @@ const App = {
 
 				</label>
 			`;
-		});
-	},
-	
-	populateTypeFilter() {
+      });
+    },
 
-		const container = $(DOM.FILTER_TYPES);
-		container.innerHTML = "";
+    populateTypeFilter() {
+      const container = $(DOM.FILTER_TYPES);
+      container.innerHTML = "";
 
-		const availableTypes = this.getAvailableTypes();
+      const availableTypes = this.getAvailableTypes();
 
-		availableTypes.forEach(type => {
-			const checked =
-				this.state.types.includes(type);
+      availableTypes.forEach((type) => {
+        const checked = this.state.types.includes(type);
 
-			container.innerHTML += `
+        container.innerHTML += `
 				<label class="checkbox-label">
 
 					<input
@@ -257,397 +231,304 @@ const App = {
 
 				</label>
 			`;
-		});
-	},
-	
-	getActiveFiltersCount() {
+      });
+    },
 
-		return (
-			this.state.categories.length +
-			this.state.scopes.length +
-			this.state.types.length +
-			(this.state.showNewOnly ? 1 : 0)
-		);
-	},
-	
-	getAvailableTypes() {
+    getActiveFiltersCount() {
+      return (
+        this.state.categories.length +
+        this.state.scopes.length +
+        this.state.types.length +
+        (this.state.showNewOnly ? 1 : 0)
+      );
+    },
 
-		if (this.state.scopes.length === 0) {
+    getAvailableTypes() {
+      if (this.state.scopes.length === 0) {
+        return [...new Set(this.events.map((event) => event.type))].sort();
+      }
 
-			return [
-				...new Set(
-					this.events.map(event => event.type)
-				)
-			].sort();
-		}
+      return [
+        ...new Set(
+          this.events
+            .filter((event) => this.state.scopes.includes(event.scope))
+            .map((event) => event.type)
+        ),
+      ].sort();
+    },
 
-		return [
-			...new Set(
-				this.events
-					.filter(event =>
-						this.state.scopes.includes(
-							event.scope
-						)
-					)
-					.map(event => event.type)
-			)
-		].sort();
-	},
-	
-	bindCategoryFilter() {
-		document.querySelectorAll(
-				"#filterCategories input[type='checkbox']"
-			)
-			.forEach(checkbox => {
-				checkbox.addEventListener(
-					"change",
-					() => {
-						this.state.categories =
-							[...document.querySelectorAll(
-								"#filterCategories input:checked"
-							)]
-							.map(input => input.value);
+    bindCategoryFilter() {
+      document.querySelectorAll("#filterCategories input[type='checkbox']").forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          this.state.categories = [
+            ...document.querySelectorAll("#filterCategories input:checked"),
+          ].map((input) => input.value);
 
-						Storage.saveCategories(this.state.categories);
-						this.render();
-					}
-				);
-			});
-	},
-	
-	bindSummaryBadges() {
+          Storage.saveCategories(this.state.categories);
+          this.render();
+        });
+      });
+    },
 
-		document.querySelectorAll(".filter-badge-remove")
-			.forEach(button => {
-				button.addEventListener(
-					"click",
-					e => {
+    bindSummaryBadges() {
+      document.querySelectorAll(".filter-badge-remove").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
 
-						e.preventDefault();
-						e.stopPropagation();
+          const badge = e.target.closest(".filter-badge");
 
-						const badge =
-							e.target.closest(
-								".filter-badge"
-							);
+          const type = badge.dataset.type;
 
-						const type =
-							badge.dataset.type;
+          const value = badge.dataset.value;
 
-						const value =
-							badge.dataset.value;
+          this.removeFilter(type, value);
+        });
+      });
+    },
 
-						this.removeFilter(
-							type,
-							value
-						);
-					}
-				);
-			});
-	},
-	
-	bindScopeFilter() {
+    bindScopeFilter() {
+      document.querySelectorAll("#filterScopes input[type='checkbox']").forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          this.state.scopes = [...document.querySelectorAll("#filterScopes input:checked")].map(
+            (input) => input.value
+          );
 
-		document.querySelectorAll(
-				"#filterScopes input[type='checkbox']"
-			)
-			.forEach(checkbox => {
-				checkbox.addEventListener(
-					"change",
-					() => {
-						this.state.scopes =
-							[...document.querySelectorAll(
-								"#filterScopes input:checked"
-							)]
-							.map(
-								input => input.value
-							);
+          Storage.saveScopes(this.state.scopes);
+          const availableTypes = this.getAvailableTypes();
 
-						Storage.saveScopes(this.state.scopes);
-						const availableTypes = this.getAvailableTypes();
+          this.state.types = this.state.types.filter((type) => availableTypes.includes(type));
 
-						this.state.types = this.state.types.filter(
-								type =>	availableTypes.includes(type));
-								
-						this.populateTypeFilter();
-						this.bindTypeFilter();
-						UsageMetricService.track(USAGE_METRICS.FILTER_SCOPE);
-						
-						this.render();
-					}
-				);
-			});
-	},
-	
-	bindTypeFilter() {
+          this.populateTypeFilter();
+          this.bindTypeFilter();
+          UsageMetricService.track(USAGE_METRICS.FILTER_SCOPE);
 
-		document.querySelectorAll(
-				"#filterTypes input[type='checkbox']"
-			)
-			.forEach(checkbox => {
-				checkbox.addEventListener(
-					"change",
-					() => {
-						this.state.types =
-							[...document.querySelectorAll(
-								"#filterTypes input:checked"
-							)]
-							.map(
-								input => input.value
-							);
-						UsageMetricService.track(USAGE_METRICS.FILTER_TYPE);
+          this.render();
+        });
+      });
+    },
 
-						this.render();
-					}
-				);
-			});
-	},
+    bindTypeFilter() {
+      document.querySelectorAll("#filterTypes input[type='checkbox']").forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          this.state.types = [...document.querySelectorAll("#filterTypes input:checked")].map(
+            (input) => input.value
+          );
+          UsageMetricService.track(USAGE_METRICS.FILTER_TYPE);
+
+          this.render();
+        });
+      });
+    },
 
     bindEvents() {
-	
-		$(DOM.FILTERS_TOGGLE)
-			.addEventListener("click", () => {
+      $(DOM.FILTERS_TOGGLE).addEventListener("click", () => {
+        this.state.filtersCollapsed = !this.state.filtersCollapsed;
 
-				this.state.filtersCollapsed =
-					!this.state.filtersCollapsed;
+        Storage.saveFiltersCollapsed(this.state.filtersCollapsed);
 
-				Storage.saveFiltersCollapsed(this.state.filtersCollapsed);
-				
-				this.render();
-			});
-			
-		$(DOM.SHOW_FINISHED)
-			.addEventListener("change", e => {
-				this.state.showFinished = e.target.checked;
-				Storage.saveShowFinished(this.state.showFinished);
-				UsageMetricService.track(USAGE_METRICS.FILTER_FINISHED_TOURNAMENT);
+        this.render();
+      });
 
-				this.render();
-			});
-			
-		$(DOM.SHOW_NEW_ONLY)
-			.addEventListener("change", e => {
-				this.state.showNewOnly = e.target.checked;
-				UsageMetricService.track(USAGE_METRICS.FILTER_NEW_TOURNAMENT);
+      $(DOM.SHOW_FINISHED).addEventListener("change", (e) => {
+        this.state.showFinished = e.target.checked;
+        Storage.saveShowFinished(this.state.showFinished);
+        UsageMetricService.track(USAGE_METRICS.FILTER_FINISHED_TOURNAMENT);
 
-				this.render();
-			});
+        this.render();
+      });
 
-		$(DOM.SHOW_OPEN_REGISTRATION_ONLY)
-		    .addEventListener("change", e => {
-		        this.state.showOpenRegistrationOnly = e.target.checked;
-		        UsageMetricService.track(USAGE_METRICS.FILTER_OPEN_REGISTRATION);
+      $(DOM.SHOW_NEW_ONLY).addEventListener("change", (e) => {
+        this.state.showNewOnly = e.target.checked;
+        UsageMetricService.track(USAGE_METRICS.FILTER_NEW_TOURNAMENT);
 
-		        this.render();
-		    });
+        this.render();
+      });
+
+      $(DOM.SHOW_OPEN_REGISTRATION_ONLY).addEventListener("change", (e) => {
+        this.state.showOpenRegistrationOnly = e.target.checked;
+        UsageMetricService.track(USAGE_METRICS.FILTER_OPEN_REGISTRATION);
+
+        this.render();
+      });
     },
-	
-	removeFilter(type, value) {
 
-		switch(type) {
+    removeFilter(type, value) {
+      switch (type) {
+        case "category":
+          this.state.categories = this.state.categories.filter((item) => item !== value);
 
-			case "category":
-				this.state.categories =
-					this.state.categories.filter(
-						item => item !== value
-					);
+          Storage.saveCategories(this.state.categories);
+          break;
 
-				Storage.saveCategories(
-					this.state.categories
-				);
-				break;
+        case "scope":
+          this.state.scopes = this.state.scopes.filter((item) => item !== value);
 
-			case "scope":
+          Storage.saveScopes(this.state.scopes);
 
-				this.state.scopes =
-					this.state.scopes.filter(
-						item => item !== value
-					);
+          const availableTypes = this.getAvailableTypes();
+          this.state.types = this.state.types.filter((type) => availableTypes.includes(type));
 
-				Storage.saveScopes(
-					this.state.scopes
-				);
-				
-				const availableTypes = this.getAvailableTypes();
-				this.state.types = this.state.types.filter(
-					type =>	availableTypes.includes(type));
+          break;
 
-				break;
+        case "tournament":
+          this.state.types = this.state.types.filter((item) => item !== value);
 
-			case "tournament":
+          break;
 
-				this.state.types =
-					this.state.types.filter(
-						item => item !== value
-					);
+        case "preference":
+          if (value === "Nouveaux") {
+            this.state.showNewOnly = false;
+            $(DOM.SHOW_NEW_ONLY).checked = false;
+          }
 
-				break;
-				
-			case "preference":
+          if (value === "Inscriptions ouvertes") {
+            this.state.showOpenRegistrationOnly = false;
+            $(DOM.SHOW_OPEN_REGISTRATION_ONLY).checked = false;
+          }
 
-			    if (value === "Nouveaux") {
-			        this.state.showNewOnly = false;
-			        $(DOM.SHOW_NEW_ONLY).checked = false;
-			    }
+          break;
+      }
 
-			    if (value === "Inscriptions ouvertes") {
-			        this.state.showOpenRegistrationOnly = false;
-			        $(DOM.SHOW_OPEN_REGISTRATION_ONLY).checked = false;
-			    }
+      this.populateFilters();
 
-			    break;
-		}
+      this.bindCategoryFilter();
+      this.bindScopeFilter();
+      this.bindTypeFilter();
 
-		this.populateFilters();
-
-		this.bindCategoryFilter();
-		this.bindScopeFilter();
-		this.bindTypeFilter();
-
-		this.render();
-	},
+      this.render();
+    },
 
     getFilteredEvents() {
+      return this.events.filter((event) => {
+        if (this.state.types.length > 0 && !this.state.types.includes(event.type)) {
+          return false;
+        }
 
-        return this.events.filter(event => {
+        if (
+          this.state.categories.length > 0 &&
+          !this.state.categories.some((category) => getCategories(event).includes(category))
+        ) {
+          return false;
+        }
 
-			if (this.state.types.length > 0 &&
-				!this.state.types.includes(event.type)) {
-				return false;
-			}
-	
-			if (this.state.categories.length > 0 &&
-				!this.state.categories.some(category =>	getCategories(event).includes(category))) {
-				return false;
-			}	
-								
-			if (this.state.scopes.length > 0 &&
-				!this.state.scopes.includes(event.scope)){
-				return false;
-			}
-			
-			if (this.state.showNewOnly && !event.isNew){
-				return false;
-			}
+        if (this.state.scopes.length > 0 && !this.state.scopes.includes(event.scope)) {
+          return false;
+        }
 
-			if (this.state.showOpenRegistrationOnly &&
-    			event.registrationStatus !== STATUS.REGISTRATION.OPEN){
-				    return false;
-				}
+        if (this.state.showNewOnly && !event.isNew) {
+          return false;
+        }
 
-			if (!this.state.showFinished &&
-				event.tournamentStatus === STATUS.EVENT.FINISHED){
-					return false;
-				}
+        if (
+          this.state.showOpenRegistrationOnly &&
+          event.registrationStatus !== STATUS.REGISTRATION.OPEN
+        ) {
+          return false;
+        }
 
+        if (!this.state.showFinished && event.tournamentStatus === STATUS.EVENT.FINISHED) {
+          return false;
+        }
 
-            return true;
-        });
+        return true;
+      });
     },
-	
-	markNewEvents() {
-		
-		// Par défaut un tournoi est marqué nouveau pendant 30 jours par rapport à sa date de création
-		const NEW_DURATION_DAYS = 30;
-		
-		this.events.forEach(event => {
 
-			if (!event.creationDate) {
-				event.isNew = false;
-				return;
-			}
+    markNewEvents() {
+      // Par défaut un tournoi est marqué nouveau pendant 30 jours par rapport à sa date de création
+      const NEW_DURATION_DAYS = 30;
 
-			const creationDate = new Date(event.creationDate);
-			const expirationDate = new Date(creationDate);
-			
-			expirationDate.setDate(expirationDate.getDate() + NEW_DURATION_DAYS);
+      this.events.forEach((event) => {
+        if (!event.creationDate) {
+          event.isNew = false;
+          return;
+        }
 
-			event.isNew = new Date() <= expirationDate;
-		});
-	},
+        const creationDate = new Date(event.creationDate);
+        const expirationDate = new Date(creationDate);
 
-	getFiltersSummary() {
+        expirationDate.setDate(expirationDate.getDate() + NEW_DURATION_DAYS);
 
-		const summary = [];
+        event.isNew = new Date() <= expirationDate;
+      });
+    },
 
-		this.state.categories.forEach(category => {
-			summary.push({
-				type: "category",
-				label: category,
-				value: category
-			});
-		});
+    getFiltersSummary() {
+      const summary = [];
 
-		this.state.scopes.forEach(scope => {
-			summary.push({
-				type: "scope",
-				label: scope,
-				value: scope
-			});
-		});
+      this.state.categories.forEach((category) => {
+        summary.push({
+          type: "category",
+          label: category,
+          value: category,
+        });
+      });
 
-		this.state.types.forEach(type => {
-			summary.push({
-				type: "tournament",
-				label: type,
-				value: type
-			});
-		});
-		
-		if (this.state.showNewOnly) {
-			summary.push({
-				type: "preference",
-				label: "Nouveaux",
-				value: "Nouveaux"
-			});
-		}
+      this.state.scopes.forEach((scope) => {
+        summary.push({
+          type: "scope",
+          label: scope,
+          value: scope,
+        });
+      });
 
-		if (this.state.showOpenRegistrationOnly) {
-		    summary.push({
-		        type: "preference",
-		        label: "Inscriptions ouvertes",
-		        value: "Inscriptions ouvertes"
-		    });
-		}
+      this.state.types.forEach((type) => {
+        summary.push({
+          type: "tournament",
+          label: type,
+          value: type,
+        });
+      });
 
-		return summary;
-	},	
+      if (this.state.showNewOnly) {
+        summary.push({
+          type: "preference",
+          label: "Nouveaux",
+          value: "Nouveaux",
+        });
+      }
 
-   render(){
-   
-		this.updateFiltersUI();
-   
-		renderEvents(this.getFilteredEvents());
-	},
-	
-	updateFiltersUI() {
+      if (this.state.showOpenRegistrationOnly) {
+        summary.push({
+          type: "preference",
+          label: "Inscriptions ouvertes",
+          value: "Inscriptions ouvertes",
+        });
+      }
 
-		const filtersContent = $(DOM.FILTERS_CONTENT);
-		const toggle = $(DOM.FILTERS_TOGGLE);
+      return summary;
+    },
 
-		filtersContent.classList.toggle(
-			"collapsed",
-			this.state.filtersCollapsed
-		);
+    render() {
+      this.updateFiltersUI();
 
-		toggle.setAttribute(
-			"aria-expanded",
-			String(!this.state.filtersCollapsed)
-		);
+      renderEvents(this.getFilteredEvents());
+    },
 
-		toggle.querySelector(".filters-toggle-icon").textContent =
-			this.state.filtersCollapsed ? "▶" : "▼";
-		toggle.querySelector(".filters-toggle-title").textContent =
-			`Filtres (${this.getActiveFiltersCount()} actifs)`;
+    updateFiltersUI() {
+      const filtersContent = $(DOM.FILTERS_CONTENT);
+      const toggle = $(DOM.FILTERS_TOGGLE);
 
-		const summary = this.getFiltersSummary();
-		const summaryElement = $(DOM.FILTERS_SUMMARY);
+      filtersContent.classList.toggle("collapsed", this.state.filtersCollapsed);
 
-		if (summary.length === 0) {
-			summaryElement.textContent = UI.MESSAGES.NO_FILTER;
-		} else {
-			summaryElement.innerHTML = summary.map(item => {
-					return `
+      toggle.setAttribute("aria-expanded", String(!this.state.filtersCollapsed));
+
+      toggle.querySelector(".filters-toggle-icon").textContent = this.state.filtersCollapsed
+        ? "▶"
+        : "▼";
+      toggle.querySelector(".filters-toggle-title").textContent =
+        `Filtres (${this.getActiveFiltersCount()} actifs)`;
+
+      const summary = this.getFiltersSummary();
+      const summaryElement = $(DOM.FILTERS_SUMMARY);
+
+      if (summary.length === 0) {
+        summaryElement.textContent = UI.MESSAGES.NO_FILTER;
+      } else {
+        summaryElement.innerHTML = summary
+          .map((item) => {
+            return `
 						<span
 							class="filter-badge ${item.type}"
 							data-type="${item.type}"
@@ -663,130 +544,105 @@ const App = {
 
 						</span>
 					`;
-				}).join("");
-		}
+          })
+          .join("");
+      }
 
-		this.bindSummaryBadges();
-		
-		summaryElement.style.display =
-			this.state.filtersCollapsed
-				? "flex"
-				: "none";
-	},
-	
-	
-	resetFilters(){
-		UsageMetricService.track(USAGE_METRICS.FILTER_RESET);
+      this.bindSummaryBadges();
 
-		this.state.categories = [];
-		this.state.types = [];
-		this.state.scopes = [];
+      summaryElement.style.display = this.state.filtersCollapsed ? "flex" : "none";
+    },
 
-		document.querySelectorAll(
-			"#filterCategories input[type='checkbox']")
-				.forEach(input => {
-					input.checked = false;
-				});
+    resetFilters() {
+      UsageMetricService.track(USAGE_METRICS.FILTER_RESET);
 
-		document.querySelectorAll(
-			"#filterScopes input[type='checkbox']")
-				.forEach(input => {
-					input.checked = false;
-				});
-			
-		document.querySelectorAll(
-			"#filterTypes input[type='checkbox']")
-				.forEach(input => {
-					input.checked = false;
-				});
-		
-		this.state.filtersCollapsed = false;
-		
-		this.state.showFinished = false;
-		$(DOM.SHOW_FINISHED).checked = false;
-		
-		this.state.showNewOnly = false;
-		$(DOM.SHOW_NEW_ONLY).checked = false;
+      this.state.categories = [];
+      this.state.types = [];
+      this.state.scopes = [];
 
-		this.state.showOpenRegistrationOnly = false;
-		$(DOM.SHOW_OPEN_REGISTRATION_ONLY).checked = false;
+      document.querySelectorAll("#filterCategories input[type='checkbox']").forEach((input) => {
+        input.checked = false;
+      });
 
-		Storage.saveFiltersCollapsed(this.state.filtersCollapsed);
-		Storage.saveShowFinished(this.state.showFinished);
-		Storage.saveCategories([]);
-		Storage.saveScopes([]);
-		
-		this.render();
-	},
-	
-	showApplication(){
-	
-		$(DOM.LOADING)
-			.classList.add("hidden");
+      document.querySelectorAll("#filterScopes input[type='checkbox']").forEach((input) => {
+        input.checked = false;
+      });
 
-		$(DOM.APP)
-			.classList.remove("hidden");
-	},
-	
-	showError(){
-		$(DOM.LOADING)
-			.classList.add("hidden");
+      document.querySelectorAll("#filterTypes input[type='checkbox']").forEach((input) => {
+        input.checked = false;
+      });
 
-		$(DOM.APP)
-			.classList.add("hidden");
+      this.state.filtersCollapsed = false;
 
-		$(DOM.ERROR)
-			.classList.remove("hidden");
-	},
-	
-	initError(error){
-		UsageMetricService.track(USAGE_METRICS.APP_LOAD_FAILED);
-		console.error(error);
-		this.showError();
-	}
-};
+      this.state.showFinished = false;
+      $(DOM.SHOW_FINISHED).checked = false;
 
-function sortByOrder(values, order){
+      this.state.showNewOnly = false;
+      $(DOM.SHOW_NEW_ONLY).checked = false;
 
+      this.state.showOpenRegistrationOnly = false;
+      $(DOM.SHOW_OPEN_REGISTRATION_ONLY).checked = false;
+
+      Storage.saveFiltersCollapsed(this.state.filtersCollapsed);
+      Storage.saveShowFinished(this.state.showFinished);
+      Storage.saveCategories([]);
+      Storage.saveScopes([]);
+
+      this.render();
+    },
+
+    showApplication() {
+      $(DOM.LOADING).classList.add("hidden");
+
+      $(DOM.APP).classList.remove("hidden");
+    },
+
+    showError() {
+      $(DOM.LOADING).classList.add("hidden");
+
+      $(DOM.APP).classList.add("hidden");
+
+      $(DOM.ERROR).classList.remove("hidden");
+    },
+
+    initError(error) {
+      UsageMetricService.track(USAGE_METRICS.APP_LOAD_FAILED);
+      console.error(error);
+      this.showError();
+    },
+  };
+
+  function sortByOrder(values, order) {
     return [...values].sort((a, b) => {
+      const ia = order.indexOf(a);
+      const ib = order.indexOf(b);
 
-        const ia = order.indexOf(a);
-        const ib = order.indexOf(b);
+      if (ia === -1 && ib === -1) {
+        return a.localeCompare(b);
+      }
 
-        if(ia === -1 && ib === -1){
-            return a.localeCompare(b);
-        }
+      if (ia === -1) {
+        return 1;
+      }
 
-        if(ia === -1){
-            return 1;
-        }
+      if (ib === -1) {
+        return -1;
+      }
 
-        if(ib === -1){
-            return -1;
-        }
-
-        return ia - ib;
-
+      return ia - ib;
     });
+  }
 
-}
-
-
-
-function $(id){
+  function $(id) {
     return document.getElementById(id);
-}
-if (DEBUG.SIMULATE_INIT_ERROR) {
-
-    App.initError(
-        new Error("Erreur simulée")
-    );
-
-} else {
-	UsageMetricService.track(USAGE_METRICS.APP_OPEN);
-	google.script.run
-		.withSuccessHandler(App.init.bind(App))
-		.withFailureHandler(App.initError.bind(App))
-		.readTournaments();
-}
+  }
+  if (DEBUG.SIMULATE_INIT_ERROR) {
+    App.initError(new Error("Erreur simulée"));
+  } else {
+    UsageMetricService.track(USAGE_METRICS.APP_OPEN);
+    google.script.run
+      .withSuccessHandler(App.init.bind(App))
+      .withFailureHandler(App.initError.bind(App))
+      .readTournaments();
+  }
 </script>

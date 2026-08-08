@@ -2,18 +2,16 @@
 /* global CONFIG */
 
 const ParameterService = {
-
   cache_: undefined,
   departmentsCache_: undefined,
 
   read() {
-
     if (this.cache_) {
       return this.cache_;
     }
 
     const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-	const sheet = ss.getSheetByName(CONFIG.PARAMETERS_SHEET_NAME);
+    const sheet = ss.getSheetByName(CONFIG.PARAMETERS_SHEET_NAME);
 
     if (!sheet) {
       throw new Error("Sheet 'Parameters' not found.");
@@ -25,8 +23,7 @@ const ParameterService = {
 
     const parameters = {};
 
-    rows.forEach(row => {
-
+    rows.forEach((row) => {
       const list = String(row[0] || "").trim();
       const value = String(row[1] || "").trim();
 
@@ -39,68 +36,55 @@ const ParameterService = {
       }
 
       parameters[list].push(value);
-
     });
 
     this.cache_ = parameters;
 
     return parameters;
   },
-  
+
   readDepartments() {
+    if (this.departmentsCache_) {
+      return this.departmentsCache_;
+    }
 
-	  if (this.departmentsCache_) {
-		return this.departmentsCache_;
-	  }
+    const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
+    const sheet = ss.getSheetByName(CONFIG.DEPARTMENTS_SHEET_NAME);
 
-	  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-	  const sheet = ss.getSheetByName(CONFIG.DEPARTMENTS_SHEET_NAME);
+    const values = sheet.getDataRange().getValues();
 
-	  const values = sheet.getDataRange().getValues();
+    const departments = {};
 
-	  const departments = {};
+    values.slice(1).forEach((row) => {
+      const code = String(row[0]).trim();
+      const label = String(row[1]).trim();
 
-	  values.slice(1).forEach(row => {
+      departments[code] = label;
+    });
 
-		const code = String(row[0]).trim();
-		const label = String(row[1]).trim();
+    this.departmentsCache_ = departments;
 
-		departments[code] = label;
-
-	  });
-
-	  this.departmentsCache_ = departments;
-
-	  return departments;
+    return departments;
   },
 
   getList(listName) {
-
     const parameters = this.read();
 
     return parameters[listName] || [];
-
   },
-  
-	getDepartmentLabel(departmentCode) {
 
-		const departments = this.readDepartments();
+  getDepartmentLabel(departmentCode) {
+    const departments = this.readDepartments();
 
-		return departments[departmentCode] || null;
-
-	},
+    return departments[departmentCode] || null;
+  },
 
   hasValue(listName, value) {
-
-    return this
-      .getList(listName)
-      .includes(value);
-
+    return this.getList(listName).includes(value);
   },
 
   clearCache() {
-
     this.cache_ = null;
-	this.departmentsCache_ = null;
-  }
+    this.departmentsCache_ = null;
+  },
 };

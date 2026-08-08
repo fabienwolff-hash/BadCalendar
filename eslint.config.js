@@ -33,8 +33,8 @@ module.exports = [
 
         // GAS / HTML
         google: "readonly",
-        console: "readonly"
-      }
+        console: "readonly",
+      },
     },
 
     rules: {
@@ -43,9 +43,9 @@ module.exports = [
       "no-unused-vars": [
         "warn",
         {
-          "args": "after-used",
-          "ignoreRestSiblings": true
-        }
+          args: "after-used",
+          ignoreRestSiblings: true,
+        },
       ],
 
       "no-unreachable": "error",
@@ -54,7 +54,7 @@ module.exports = [
 
       "no-debugger": "warn",
 
-      "eqeqeq": ["warn", "always"],
+      eqeqeq: ["warn", "always"],
 
       "no-var": "warn",
 
@@ -66,15 +66,11 @@ module.exports = [
 
       "no-fallthrough": "warn",
 
-      "complexity": ["warn", 15]
-    }
+      complexity: ["warn", 15],
+    },
   },
 
   {
-    ignores: [
-      "node_modules/**",
-	  "eslint.config.js",
-	  "stylelint.config.js"
-    ]
-  }
+    ignores: ["node_modules/**", "eslint.config.js", "stylelint.config.js"],
+  },
 ];

@@ -1,21 +1,18 @@
 <script>
+  function renderCard(event) {
+    if (event.tournamentStatus === STATUS.EVENT.FINISHED) {
+      return renderFinishedCard(event);
+    }
 
-function renderCard(event) {
+    const registrationInfo = getRegistrationMessage(event);
+
+    let cardClass = "";
 
     if (event.tournamentStatus === STATUS.EVENT.FINISHED) {
-        return renderFinishedCard(event);
+      cardClass = "card-finished";
+    } else if (event.tournamentStatus === STATUS.EVENT.ONGOING) {
+      cardClass = "card-ongoing";
     }
-	
-    const registrationInfo = getRegistrationMessage(event);
-	
-	let cardClass = "";
-
-	if (event.tournamentStatus === STATUS.EVENT.FINISHED) {
-		cardClass = "card-finished";
-	}
-	else if (event.tournamentStatus === STATUS.EVENT.ONGOING) {
-		cardClass = "card-ongoing";
-	}
 
     return `
 
@@ -30,11 +27,15 @@ function renderCard(event) {
 						${event.type}
 					</div>
 					
-					${event.isNew ? `
+					${
+            event.isNew
+              ? `
 						<div class="badge-new">
 							✨ Nouveau
 						</div>
-					` : ""}
+					`
+              : ""
+          }
 					
 					<h2 class="event-title">
 						${event.title}
@@ -49,23 +50,23 @@ function renderCard(event) {
 		
 		<div class="info">
 			📍 ${event.displayLocation}
-			${
-				getDisciplines(event).length > 0
-					? ` • 🏸 ${getDisciplines(event).join(" • ")}`
-					: ""
-			}
+			${getDisciplines(event).length > 0 ? ` • 🏸 ${getDisciplines(event).join(" • ")}` : ""}
 		</div>
 
 		<div class="info">
 			👦 ${getCategories(event).join(" • ")}
 		</div>
 
-		${registrationInfo ? `
+		${
+      registrationInfo
+        ? `
 			<div class="registration">
 				<span class="registration-dot ${getRegistrationClass(event)}"></span>
 				${registrationInfo}
 			</div>
-		` : ""}
+		`
+        : ""
+    }
 			
 		<button 
 			class="card-toggle"
@@ -93,11 +94,9 @@ function renderCard(event) {
 </div>
 
 `;
+  }
 
-}
-
-function renderFinishedCard(event) {
-
+  function renderFinishedCard(event) {
     const button = eventButton(event);
 
     return `
@@ -133,29 +132,25 @@ function renderFinishedCard(event) {
     </div>
 </div>
 `;
-}
+  }
 
-function renderMonthHeader(month, year){
-
+  function renderMonthHeader(month, year) {
     return `
 
 <h2 class="month-header">
 
-${month.charAt(0).toUpperCase()+month.slice(1)} ${year}
+${month.charAt(0).toUpperCase() + month.slice(1)} ${year}
 
 </h2>
 
 `;
+  }
 
-}
+  function renderEvents(events) {
+    const container = document.getElementById("events");
 
-function renderEvents(events){
-
-    const container=document.getElementById("events");
-	
-	if (events.length === 0) {
-
-    container.innerHTML = `
+    if (events.length === 0) {
+      container.innerHTML = `
         <div class="empty">
             <p>${UI.MESSAGES.EMPTY}</p>
 
@@ -170,99 +165,65 @@ function renderEvents(events){
         </div>
     `;
 
-    document
-        .getElementById("resetFilters")
-        .addEventListener("click", () => App.resetFilters());
+      document.getElementById("resetFilters").addEventListener("click", () => App.resetFilters());
 
-    return;
-	}
+      return;
+    }
 
-    let html="";
+    let html = "";
 
-    let currentGroup="";
+    let currentGroup = "";
 
-    events.forEach(event=>{
+    events.forEach((event) => {
+      const group = event.year + "-" + event.monthNumber;
 
-        const group=event.year+"-"+event.monthNumber;
+      if (group !== currentGroup) {
+        currentGroup = group;
 
-        if(group!==currentGroup){
+        html += renderMonthHeader(event.month, event.year);
+      }
 
-            currentGroup=group;
-
-            html+=renderMonthHeader(
-                event.month,
-                event.year
-            );
-
-        }
-
-        html+=renderCard(event);
-
+      html += renderCard(event);
     });
 
-    container.innerHTML=html;
-	
-	bindCardDetailsEvents();
-	bindUsageMetricEvents();
-}
+    container.innerHTML = html;
 
-function bindCardDetailsEvents(){
+    bindCardDetailsEvents();
+    bindUsageMetricEvents();
+  }
 
-    document
-        .querySelectorAll(".card-toggle")
-        .forEach(button => {
+  function bindCardDetailsEvents() {
+    document.querySelectorAll(".card-toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        const card = button.closest(".card");
+        const expanded = card.classList.toggle("expanded");
 
-            button.addEventListener(
-                "click",
-                () => {
+        if (expanded) {
+          UsageMetricService.track(USAGE_METRICS.CARD_EXPAND);
+        }
 
-                    const card = button.closest(".card");
-                    const expanded = card.classList.toggle("expanded");
+        button.textContent = expanded ? "▲ Masquer les actions" : "▼ Voir les actions";
+      });
+    });
+  }
 
-                    if (expanded) {
-					    UsageMetricService.track(USAGE_METRICS.CARD_EXPAND);
-					}
+  function bindUsageMetricEvents() {
+    document.querySelectorAll(".badnet-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        UsageMetricService.track(USAGE_METRICS.BADNET_OPEN);
+      });
+    });
 
-                    button.textContent =
-						expanded
-						? "▲ Masquer les actions"
-						: "▼ Voir les actions";
+    document.querySelectorAll(".maps-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        UsageMetricService.track(USAGE_METRICS.MAPS_OPEN);
+      });
+    });
 
-                }
-            );
-
-        });
-
-}
-
-function bindUsageMetricEvents() {
-
-    document
-        .querySelectorAll(".badnet-link")
-        .forEach(link => {
-
-            link.addEventListener("click", () => {
-                UsageMetricService.track(USAGE_METRICS.BADNET_OPEN);
-            });
-        });
-
-    document
-        .querySelectorAll(".maps-link")
-        .forEach(link => {
-
-            link.addEventListener("click", () => {
-                UsageMetricService.track(USAGE_METRICS.MAPS_OPEN);
-            });
-        });
-
-    document
-        .querySelectorAll(".calendar-link")
-        .forEach(link => {
-
-            link.addEventListener("click", () => {
-                UsageMetricService.track(USAGE_METRICS.CALENDAR_EXPORT);
-            });
-        });
-}
-
+    document.querySelectorAll(".calendar-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        UsageMetricService.track(USAGE_METRICS.CALENDAR_EXPORT);
+      });
+    });
+  }
 </script>

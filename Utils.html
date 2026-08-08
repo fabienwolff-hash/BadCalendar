@@ -1,34 +1,31 @@
 <script>
-
-function eventButton(event){
-
-    if(!event.eventUrl){
-        return "";
+  function eventButton(event) {
+    if (!event.eventUrl) {
+      return "";
     }
 
     let label;
 
-    switch(event.tournamentStatus){
-        case STATUS.EVENT.FINISHED:
+    switch (event.tournamentStatus) {
+      case STATUS.EVENT.FINISHED:
+        label = event.eventUrl.includes(URLS.BADNET)
+          ? UI.BUTTONS.VIEW_RESULTS
+          : UI.BUTTONS.VIEW_EVENT;
+        break;
+
+      default:
+        switch (event.registrationStatus) {
+          case STATUS.REGISTRATION.OPEN:
             label = event.eventUrl.includes(URLS.BADNET)
-				? UI.BUTTONS.VIEW_RESULTS
-				: UI.BUTTONS.VIEW_EVENT;
+              ? UI.BUTTONS.REGISTER_BADNET
+              : UI.BUTTONS.REGISTER;
             break;
 
-        default:
-
-            switch(event.registrationStatus){
-                case STATUS.REGISTRATION.OPEN:
-					label = event.eventUrl.includes(URLS.BADNET)
-                        ? UI.BUTTONS.REGISTER_BADNET
-                        : UI.BUTTONS.REGISTER;
-                    break;
-
-                default:
-                    label = UI.BUTTONS.VIEW_EVENT;
-            }
+          default:
+            label = UI.BUTTONS.VIEW_EVENT;
+        }
     }
-	
+
     return `
         <a
             class="button button-primary badnet-link"
@@ -38,17 +35,16 @@ function eventButton(event){
             ${label}
         </a>
     `;
-} 
+  }
 
-function googleMapsButton(event) {
-
+  function googleMapsButton(event) {
     const links = getGoogleMapsLinks(event);
 
-	// Multi-sites : les liens sont déjà présents dans getProgramSiteDetails()
+    // Multi-sites : les liens sont déjà présents dans getProgramSiteDetails()
     if (links.length === 0 || links.length > 1) {
-        return "";
+      return "";
     }
-	
+
     return `
 		<a
 			class="secondary-link maps-link"
@@ -58,12 +54,11 @@ function googleMapsButton(event) {
 			${UI.BUTTONS.GOOGLE_MAPS}
 		</a>
 	`;
-}
+  }
 
-function googleCalendarButton(event) {
-
+  function googleCalendarButton(event) {
     if (!event.googleCalendarUrl) {
-        return "";
+      return "";
     }
     return `
         <a
@@ -74,166 +69,138 @@ function googleCalendarButton(event) {
             ${UI.BUTTONS.GOOGLE_CALENDAR}
         </a>
     `;
-}
+  }
 
-function getRegistrationMessage(event){
-
+  function getRegistrationMessage(event) {
     switch (event.registrationStatus) {
-
-    case STATUS.REGISTRATION.UNKNOWN:
+      case STATUS.REGISTRATION.UNKNOWN:
         return "";
 
-    case STATUS.REGISTRATION.NOT_OPEN:
+      case STATUS.REGISTRATION.NOT_OPEN:
         return event.registration.openDate
-            ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registration.openDate)}`
-            : UI.STATUS.REGISTRATION_NOT_OPEN;
+          ? `${UI.STATUS.REGISTRATION_NOT_OPEN} ${shortDate(event.registration.openDate)}`
+          : UI.STATUS.REGISTRATION_NOT_OPEN;
 
-    case STATUS.REGISTRATION.OPEN:
+      case STATUS.REGISTRATION.OPEN:
         return event.registration.closeDate
-            ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registration.closeDate)}`
-            : UI.STATUS.REGISTRATION_OPEN;
+          ? `${UI.STATUS.REGISTRATION_OPEN} ${shortDate(event.registration.closeDate)}`
+          : UI.STATUS.REGISTRATION_OPEN;
 
-    case STATUS.REGISTRATION.CLOSED:
+      case STATUS.REGISTRATION.CLOSED:
         return UI.STATUS.REGISTRATION_CLOSED;
 
-    default:
+      default:
         return "";
     }
-}
+  }
 
-function getRegistrationClass(event) {
-
+  function getRegistrationClass(event) {
     switch (event.registrationStatus) {
+      case STATUS.REGISTRATION.OPEN:
+        return "registration-open";
 
-        case STATUS.REGISTRATION.OPEN:
-            return "registration-open";
+      case STATUS.REGISTRATION.NOT_OPEN:
+        return "registration-not-open";
 
-        case STATUS.REGISTRATION.NOT_OPEN:
-            return "registration-not-open";
+      case STATUS.REGISTRATION.CLOSED:
+        return "registration-closed";
 
-        case STATUS.REGISTRATION.CLOSED:
-            return "registration-closed";
-
-        default:
-            return "";
+      default:
+        return "";
     }
-}
+  }
 
-function shortDate(date){
+  function shortDate(date) {
+    const d = new Date(date);
 
-    const d=new Date(date);
+    return d.toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "short",
+    });
+  }
 
-    return d.toLocaleDateString(
-        "fr-FR",
-        {
-            day:"numeric",
-            month:"short"
-        }
-    );
-}
-
-function getCategories(event) {
-
+  function getCategories(event) {
     const categories = new Set();
 
-    event.programs.forEach(program => {
-
-        program.categories.forEach(category => {
-            categories.add(category);
-        });
-
+    event.programs.forEach((program) => {
+      program.categories.forEach((category) => {
+        categories.add(category);
+      });
     });
 
-    return sortByOrder(
-		[...categories],
-		ORDER.CATEGORIES
-	);
-}
+    return sortByOrder([...categories], ORDER.CATEGORIES);
+  }
 
-function getDisciplines(event) {
-
+  function getDisciplines(event) {
     const disciplines = new Set();
 
-    event.programs.forEach(program => {
-
-        program.disciplines.forEach(discipline => {
-            disciplines.add(discipline);
-        });
-
+    event.programs.forEach((program) => {
+      program.disciplines.forEach((discipline) => {
+        disciplines.add(discipline);
+      });
     });
 
     return [...disciplines];
-}
+  }
 
-function getSites(event) {
-
+  function getSites(event) {
     const sites = [];
     const seen = new Set();
 
-    event.programs.forEach(program => {
+    event.programs.forEach((program) => {
+      program.sites.forEach((site) => {
+        const key = [
+          site.region || "",
+          site.department || "",
+          site.city || "",
+          site.gymnasium || "",
+        ].join("|");
 
-        program.sites.forEach(site => {
-
-            const key = [
-                site.region || "",
-                site.department || "",
-                site.city || "",
-                site.gymnasium || ""
-            ].join("|");
-
-            if (!seen.has(key)) {
-                seen.add(key);
-                sites.push(site);
-            }
-        });
+        if (!seen.has(key)) {
+          seen.add(key);
+          sites.push(site);
+        }
+      });
     });
 
     return sites;
-}
+  }
 
-function getSiteCount(event) {
+  function getSiteCount(event) {
     return getSites(event).length;
-}
+  }
 
-function getGoogleMapsLinks(event) {
-
+  function getGoogleMapsLinks(event) {
     return getSites(event)
-        .filter(site => site.googleMapsUrl)
-        .map(site => ({
-            city: site.city,
-            gymnasium: site.gymnasium,
-            url: site.googleMapsUrl
-        }));
-}
+      .filter((site) => site.googleMapsUrl)
+      .map((site) => ({
+        city: site.city,
+        gymnasium: site.gymnasium,
+        url: site.googleMapsUrl,
+      }));
+  }
 
-function getGoogleMapsLabel(link) {
-
+  function getGoogleMapsLabel(link) {
     if (link.gymnasium) {
-        return `${link.city} (${link.gymnasium})`;
+      return `${link.city} (${link.gymnasium})`;
     }
 
     return link.city;
-}
+  }
 
-
-function getProgramSiteDetails(event) {
-
-	if (getSiteCount(event) <= 1) {
-		return "";
-	}
+  function getProgramSiteDetails(event) {
+    if (getSiteCount(event) <= 1) {
+      return "";
+    }
 
     return event.programs
-        .flatMap(program =>
-            program.sites
-                .filter(site => site.googleMapsUrl)
-                .map(site => {
+      .flatMap((program) =>
+        program.sites
+          .filter((site) => site.googleMapsUrl)
+          .map((site) => {
+            const location = site.gymnasium ? `${site.city} (${site.gymnasium})` : site.city;
 
-                const location =
-                    site.gymnasium
-                        ? `${site.city} (${site.gymnasium})`
-                        : site.city;
-
-				return `
+            return `
 					<div class="program-site-detail">
 						<a
 							class="secondary-link maps-link"
@@ -246,9 +213,8 @@ function getProgramSiteDetails(event) {
                         👦 ${program.categories.join(" • ")}
 					</div>
                 `;
-            })
-        )
-        .join("");
-}
-
+          })
+      )
+      .join("");
+  }
 </script>
