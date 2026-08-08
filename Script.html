@@ -713,6 +713,7 @@ const App = {
 	
 	initError(error){
 		UsageMetricService.track(USAGE_METRICS.APP_LOAD_FAILED);
+		console.error(error);
 		this.showError();
 	}
 };

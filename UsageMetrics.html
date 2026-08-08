@@ -7,11 +7,11 @@ const UsageMetricService = {
 
     getVisitorId() {
 
-        let visitorId = localStorage.getItem(STORAGE_KEYS.VISITOR_ID);
+        let visitorId = Storage.loadVisitorId();
 
         if (!visitorId) {
             visitorId = crypto.randomUUID();
-            localStorage.setItem(STORAGE_KEYS.VISITOR_ID,visitorId);
+            Storage.saveVisitorId(visitorId);
         }
 
         return visitorId;
@@ -36,9 +36,7 @@ const UsageMetricService = {
 
 	getDeviceType() {
 
-		console.log(navigator.userAgent);
-    const userAgent =
-        navigator.userAgent;
+    const userAgent = navigator.userAgent;
 
     if (/tablet|ipad/i.test(userAgent)) {
         return "Tablet";
@@ -53,8 +51,7 @@ const UsageMetricService = {
 
 	getOS() {
 
-	    const ua =
-	        navigator.userAgent;
+	    const ua = navigator.userAgent;
 
 	    if (/android/i.test(ua)) {
 	        return "Android";
