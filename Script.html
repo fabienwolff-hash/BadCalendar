@@ -636,13 +636,23 @@
   function $(id) {
     return document.getElementById(id);
   }
-  if (DEBUG.SIMULATE_INIT_ERROR) {
-    App.initError(new Error("Erreur simulée"));
-  } else {
-    UsageMetricService.track(USAGE_METRICS.APP_OPEN);
-    google.script.run
-      .withSuccessHandler(App.init.bind(App))
-      .withFailureHandler(App.initError.bind(App))
-      .readTournaments();
-  }
+
+  window.addEventListener("error", (event) => {
+	console.error("[Global Error]",event.error || event.message);
+	App.initError(event.error || new Error(event.message));
+  });
+
+  try {
+	  if (DEBUG.SIMULATE_INIT_ERROR) {
+	    App.initError(new Error("Erreur simulée"));
+	  } else {
+	    UsageMetricService.track(USAGE_METRICS.APP_OPEN);
+	    google.script.run
+	      .withSuccessHandler(App.init.bind(App))
+	      .withFailureHandler(App.initError.bind(App))
+	      .readTournaments();
+	  }
+	} catch(error) {
+	    App.initError(error);
+	}
 </script>
