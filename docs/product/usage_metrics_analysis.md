@@ -34,6 +34,7 @@ L'objectif est de distinguer :
 | Calendar Export | Forte | ✅ | ✅ | Mesure la planification de saison |
 | Filter Type | Forte | ✅ | ✅ | Peut justifier une persistance du filtre |
 | OS | Forte | ⚠️ Contexte | ✅ | Influence les choix fonctionnels |
+| Filter Open Registration | Forte  | ✅         | ✅       | Mesure la recherche active de tournois encore accessibles |
 | Nouveaux visiteurs | Moyenne à forte | ✅ | ✅ | Important surtout durant la phase de croissance |
 | Filter New | Moyenne | ✅ | ✅ | Fortement dépendant de la saisonnalité |
 | BadNet Open | Moyenne | ⚠️ À réévaluer | ✅ | Peu de décisions produit associées |
@@ -44,6 +45,7 @@ L'objectif est de distinguer :
 | App Load Failed | Technique | ✅ | ✅ | Santé applicative |
 | Success Rate | Technique | ✅ | ✅ | Santé applicative |
 | Browser | Technique | ❌ | ✅ | Aide au diagnostic et aux tests |
+
 
 ---
 
