@@ -7,16 +7,20 @@
     "format:gs": "prettier --write --parser babel \"**/*.gs\" \"**/*.js\"",
     "format:html": "prettier --write \"**/*.html\"",
     "format": "npm run format:gs && npm run format:html",
-	"lint": "eslint \"**/*.gs\"",
+    "lint": "eslint \"**/*.gs\"",
     "lint:fix": "eslint \"**/*.gs\" \"**/*.js\" --fix",
     "css": "stylelint \"**/*.html\"",
     "css:fix": "stylelint \"**/*.html\" --fix",
-    "audit": "npm run lint && npm run css"
+	"css-audit": "node css-audit.js",
+	"html-audit": "node html-audit.js",
+    "audit": "npm run lint && npm run css && npm run css-audit && npm run html-audit",
+    "audit:custom": "node audit.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/parser": "^8.0.4",
     "eslint": "^10.8.1",
     "globals": "^17.9.0",
     "postcss-html": "^2.0.0",
@@ -25,5 +29,3 @@
     "stylelint-config-standard": "^40.0.0"
   }
 }
-
-

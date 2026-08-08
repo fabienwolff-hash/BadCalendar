@@ -72,7 +72,4 @@ const LocationService = {
     return `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
   },
 
-  clearCache() {
-    this.cache_ = null;
-  },
 };

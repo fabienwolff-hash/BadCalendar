@@ -67,24 +67,4 @@ const ParameterService = {
     return departments;
   },
 
-  getList(listName) {
-    const parameters = this.read();
-
-    return parameters[listName] || [];
-  },
-
-  getDepartmentLabel(departmentCode) {
-    const departments = this.readDepartments();
-
-    return departments[departmentCode] || null;
-  },
-
-  hasValue(listName, value) {
-    return this.getList(listName).includes(value);
-  },
-
-  clearCache() {
-    this.cache_ = null;
-    this.departmentsCache_ = null;
-  },
 };

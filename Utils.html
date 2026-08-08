@@ -180,14 +180,6 @@
       }));
   }
 
-  function getGoogleMapsLabel(link) {
-    if (link.gymnasium) {
-      return `${link.city} (${link.gymnasium})`;
-    }
-
-    return link.city;
-  }
-
   function getProgramSiteDetails(event) {
     if (getSiteCount(event) <= 1) {
       return "";
