@@ -515,8 +515,11 @@
       toggle.setAttribute("aria-expanded", String(!this.state.filtersCollapsed));
 
       toggle.querySelector(".filters-toggle-icon").textContent = this.state.filtersCollapsed
-        ? "▶"
-        : "▼";
+        ? "▼"
+        : "▲";
+      toggle.querySelector(".filters-toggle-action").textContent = this.state.filtersCollapsed
+    	    ? "Afficher les filtres"
+    	    : "Masquer les filtres";
       toggle.querySelector(".filters-toggle-title").textContent =
         `Filtres (${this.getActiveFiltersCount()} actifs)`;
 
