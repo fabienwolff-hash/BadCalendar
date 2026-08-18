@@ -337,6 +337,7 @@
       });
 
       seasonButton?.addEventListener("click", () => {
+        UsageMetricService.track(USAGE_METRICS.SEASON_VIEW_OPENED);
         document.getElementById("events").classList.add("hidden");
 
         document.getElementById("seasonView").classList.remove("hidden");

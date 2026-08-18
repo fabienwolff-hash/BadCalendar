@@ -275,6 +275,14 @@ ${month.charAt(0).toUpperCase() + month.slice(1)} ${year}
   }
 
   function renderSeasonView(events) {
+    events = expandEventsForSeasonView(events);
+    events.sort((a, b) => {
+      const keyA = a.year * 100 + a.monthNumber;
+      const keyB = b.year * 100 + b.monthNumber;
+
+      return keyA - keyB;
+    });
+
     const container = document.getElementById("seasonView");
 
     if (events.length === 0) {
@@ -314,16 +322,30 @@ ${month.charAt(0).toUpperCase() + month.slice(1)} ${year}
   }
 
   function buildMonthOccupancy(events) {
-    const occupancy = [false, false, false, false, false];
+    const labels = buildWeekLabels(events[0].year, events[0].monthNumber);
+
+    const occupancy = Array(labels.length).fill(false);
 
     events.forEach((event) => {
-      const startDate = new Date(event.startDate);
+      const start = new Date(event.startDate);
+      const end = new Date(event.endDate);
 
-      const dayOfMonth = startDate.getDate();
+      const current = new Date(start);
 
-      const weekIndex = Math.min(Math.floor((dayOfMonth - 1) / 7), 4);
+      while (current <= end) {
+        if (
+          current.getMonth() + 1 === events[0].monthNumber &&
+          current.getFullYear() === events[0].year
+        ) {
+          const dayOfMonth = current.getDate();
 
-      occupancy[weekIndex] = true;
+          const weekIndex = Math.floor((dayOfMonth - 1) / 7);
+
+          occupancy[weekIndex] = true;
+        }
+
+        current.setDate(current.getDate() + 1);
+      }
     });
 
     return occupancy;
@@ -341,6 +363,34 @@ ${month.charAt(0).toUpperCase() + month.slice(1)} ${year}
     }
 
     return labels;
+  }
+
+  function expandEventsForSeasonView(events) {
+    const expanded = [];
+
+    events.forEach((event) => {
+      const start = new Date(event.startDate);
+      const end = new Date(event.endDate);
+
+      const current = new Date(start.getFullYear(), start.getMonth(), 1);
+
+      const lastMonth = new Date(end.getFullYear(), end.getMonth(), 1);
+
+      while (current <= lastMonth) {
+        expanded.push({
+          ...event,
+          year: current.getFullYear(),
+          monthNumber: current.getMonth() + 1,
+          month: current.toLocaleDateString("fr-FR", {
+            month: "long",
+          }),
+        });
+
+        current.setMonth(current.getMonth() + 1);
+      }
+    });
+
+    return expanded;
   }
 
   function renderOccupancyIndicators(occupancy, year, monthNumber) {
