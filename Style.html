@@ -22,8 +22,7 @@
     display: none;
   }
 
-
-  #error,  
+  #error,
   #loading {
     justify-content: center;
     align-items: center;
@@ -284,7 +283,7 @@
   .filters-toggle-title {
     font-weight: 600;
   }
-  
+
   .filters-toggle-right {
     display: flex;
     align-items: center;
@@ -295,8 +294,8 @@
     font-size: 14px;
     font-weight: 500;
     color: #6b7280;
-  }  
-  
+  }
+
   .filters-summary {
     display: flex;
     flex-wrap: wrap;
@@ -378,13 +377,129 @@
 ========================= */
 
   .month-header {
-    margin: 20px 4px 10px;
+    margin: 2px 4px 10px;
     padding-bottom: 8px;
     border-bottom: 2px solid #e0e0e0;
     font-size: 18px;
     font-weight: 700;
     color: #1565c0;
     letter-spacing: 0.3px;
+  }
+
+  /* =========================
+   SEASON VIEW
+========================= */
+
+  .view-switcher {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    padding: 16px 16px 0 16px;
+  }
+
+  .view-button {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    background: white;
+    padding: 10px 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .view-button.active {
+    background: #1976d2;
+    color: white;
+    border-color: #1976d2;
+  }
+
+  .season-view {
+    padding: 16px;
+  }
+
+  .season-month-card {
+    background: white;
+
+    padding: 20px;
+
+    margin-bottom: 16px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .season-month-card h2 {
+    margin: 0;
+
+    color: #1565c0;
+  }
+
+  .season-events-list {
+    margin-top: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .season-event {
+    font-size: 16px;
+    color: #334155;
+  }
+
+  .season-indicator {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .season-dot {
+    width: 36px;
+    height: 12px;
+
+    border-radius: 999px;
+
+    background: #d1d5db;
+  }
+
+  .season-dot.occupied {
+    background: #22c55e;
+  }
+
+  .season-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    flex: 1;
+  }
+
+  .season-slot small {
+    color: #1f2937;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .season-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .season-legend {
+    display: flex;
+    gap: 16px;
+    align-items: center;
   }
 
   /* =========================
@@ -582,7 +697,7 @@
   .cdj {
     background: #00897b;
   }
-  
+
   .bac,
   .bnp,
   .cej {
@@ -687,6 +802,11 @@
     .checkbox-label input[type="checkbox"] {
       width: 20px;
       height: 20px;
+    }
+
+    .season-header {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 

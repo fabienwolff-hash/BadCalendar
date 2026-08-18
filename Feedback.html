@@ -55,7 +55,7 @@
         return;
       }
 
-      if (!this.isEligible()) {
+      if (!DEBUG.FORCE_FEEDBACK_DISPLAY && !this.isEligible()) {
         container.innerHTML = "";
 
         return;

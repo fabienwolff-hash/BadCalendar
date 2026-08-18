@@ -150,23 +150,7 @@ ${month.charAt(0).toUpperCase() + month.slice(1)} ${year}
     const container = document.getElementById("events");
 
     if (events.length === 0) {
-      container.innerHTML = `
-        <div class="empty">
-            <p>${UI.MESSAGES.EMPTY}</p>
-
-            <button
-                id="resetFilters"
-                class="button"
-                type="button">
-
-                ${UI.BUTTONS.RESET_FILTERS}
-
-            </button>
-        </div>
-    `;
-
-      document.getElementById("resetFilters").addEventListener("click", () => App.resetFilters());
-
+      renderEmptyResults(container);
       return;
     }
 
@@ -225,5 +209,161 @@ ${month.charAt(0).toUpperCase() + month.slice(1)} ${year}
         UsageMetricService.track(USAGE_METRICS.CALENDAR_EXPORT);
       });
     });
+  }
+
+  function renderEmptyResults(container) {
+    container.innerHTML = `
+    <div class="empty">
+      <p>${UI.MESSAGES.EMPTY}</p>
+
+      <button
+        id="resetFilters"
+        class="button"
+        type="button">
+        ${UI.BUTTONS.RESET_FILTERS}
+      </button>
+    </div>
+  `;
+
+    document.getElementById("resetFilters").addEventListener("click", () => App.resetFilters());
+  }
+
+  function renderSeasonEvent(event) {
+    const icon = event.type === "Stage" ? "🎓" : "🏸";
+
+    return `
+    <div class="season-event">
+      ${icon} ${event.title}
+    </div>
+  `;
+  }
+
+  function renderSeasonMonth(month, year, events) {
+    const occupancy = buildMonthOccupancy(events);
+
+    return `
+    <div class="season-month-card">
+
+	<div class="season-header">
+
+	  <h2>
+		📅 ${month.charAt(0).toUpperCase() + month.slice(1)} ${year}
+	  </h2>
+
+	  <div class="season-legend">
+		<span class="legend-item">
+		  <span class="season-dot occupied"></span>
+		  Occupé
+		</span>
+
+		<span class="legend-item">
+		  <span class="season-dot"></span>
+		  Libre
+		</span>
+	  </div>
+
+	</div>
+
+      ${renderOccupancyIndicators(occupancy, year, events[0].monthNumber)}
+
+      <div class="season-events-list">
+        ${events.map(renderSeasonEvent).join("")}
+      </div>
+
+    </div>
+  `;
+  }
+
+  function renderSeasonView(events) {
+    const container = document.getElementById("seasonView");
+
+    if (events.length === 0) {
+      renderEmptyResults(container);
+      return;
+    }
+
+    let html = "";
+
+    let currentGroup = "";
+    let currentEvents = [];
+
+    events.forEach((event, index) => {
+      const group = event.year + "-" + event.monthNumber;
+
+      if (currentGroup === "") {
+        currentGroup = group;
+      }
+
+      if (group !== currentGroup) {
+        html += renderSeasonMonth(currentEvents[0].month, currentEvents[0].year, currentEvents);
+
+        currentEvents = [];
+        currentGroup = group;
+      }
+
+      currentEvents.push(event);
+
+      const isLast = index === events.length - 1;
+
+      if (isLast) {
+        html += renderSeasonMonth(currentEvents[0].month, currentEvents[0].year, currentEvents);
+      }
+    });
+
+    container.innerHTML = html;
+  }
+
+  function buildMonthOccupancy(events) {
+    const occupancy = [false, false, false, false, false];
+
+    events.forEach((event) => {
+      const startDate = new Date(event.startDate);
+
+      const dayOfMonth = startDate.getDate();
+
+      const weekIndex = Math.min(Math.floor((dayOfMonth - 1) / 7), 4);
+
+      occupancy[weekIndex] = true;
+    });
+
+    return occupancy;
+  }
+
+  function buildWeekLabels(year, monthNumber) {
+    const lastDay = new Date(year, monthNumber, 0).getDate();
+
+    const labels = [];
+
+    for (let startDay = 1; startDay <= lastDay; startDay += 7) {
+      const endDay = Math.min(startDay + 6, lastDay);
+
+      labels.push(`${String(startDay).padStart(2, "0")}-${String(endDay).padStart(2, "0")}`);
+    }
+
+    return labels;
+  }
+
+  function renderOccupancyIndicators(occupancy, year, monthNumber) {
+    const labels = buildWeekLabels(year, monthNumber);
+
+    return `
+    <div class="season-indicator">
+      ${occupancy
+        .map(
+          (occupied, index) => `
+            <div class="season-slot">
+
+              <span
+                class="season-dot ${occupied ? "occupied" : ""}">
+              </span>
+
+              <small>${labels[index]}</small>
+
+            </div>
+          `
+        )
+        .join("")}
+    </div>
+  `;
   }
 </script>

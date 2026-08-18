@@ -1,6 +1,7 @@
 <script>
   const DEBUG = {
     SIMULATE_INIT_ERROR: false,
+    FORCE_FEEDBACK_DISPLAY: false,
   };
 
   const Storage = {
@@ -131,6 +132,7 @@
 
       this.markNewEvents();
 
+      this.bindViewSwitcher();
       this.bindEvents();
 
       this.render();
@@ -321,6 +323,29 @@
       });
     },
 
+    bindViewSwitcher() {
+      const listButton = document.getElementById("listViewButton");
+      const seasonButton = document.getElementById("seasonViewButton");
+
+      listButton?.addEventListener("click", () => {
+        document.getElementById("events").classList.remove("hidden");
+
+        document.getElementById("seasonView").classList.add("hidden");
+
+        listButton.classList.add("active");
+        seasonButton.classList.remove("active");
+      });
+
+      seasonButton?.addEventListener("click", () => {
+        document.getElementById("events").classList.add("hidden");
+
+        document.getElementById("seasonView").classList.remove("hidden");
+
+        seasonButton.classList.add("active");
+        listButton.classList.remove("active");
+      });
+    },
+
     bindEvents() {
       $(DOM.FILTERS_TOGGLE).addEventListener("click", () => {
         this.state.filtersCollapsed = !this.state.filtersCollapsed;
@@ -503,7 +528,10 @@
     render() {
       this.updateFiltersUI();
 
-      renderEvents(this.getFilteredEvents());
+      const events = this.getFilteredEvents();
+
+      renderEvents(events);
+      renderSeasonView(events);
     },
 
     updateFiltersUI() {
@@ -518,8 +546,8 @@
         ? "▼"
         : "▲";
       toggle.querySelector(".filters-toggle-action").textContent = this.state.filtersCollapsed
-    	    ? "Afficher les filtres"
-    	    : "Masquer les filtres";
+        ? "Afficher les filtres"
+        : "Masquer les filtres";
       toggle.querySelector(".filters-toggle-title").textContent =
         `Filtres (${this.getActiveFiltersCount()} actifs)`;
 
@@ -641,21 +669,21 @@
   }
 
   window.addEventListener("error", (event) => {
-	console.error("[Global Error]",event.error || event.message);
-	App.initError(event.error || new Error(event.message));
+    console.error("[Global Error]", event.error || event.message);
+    App.initError(event.error || new Error(event.message));
   });
 
   try {
-	  if (DEBUG.SIMULATE_INIT_ERROR) {
-	    App.initError(new Error("Erreur simulée"));
-	  } else {
-	    UsageMetricService.track(USAGE_METRICS.APP_OPEN);
-	    google.script.run
-	      .withSuccessHandler(App.init.bind(App))
-	      .withFailureHandler(App.initError.bind(App))
-	      .readTournaments();
-	  }
-	} catch(error) {
-	    App.initError(error);
-	}
+    if (DEBUG.SIMULATE_INIT_ERROR) {
+      App.initError(new Error("Erreur simulée"));
+    } else {
+      UsageMetricService.track(USAGE_METRICS.APP_OPEN);
+      google.script.run
+        .withSuccessHandler(App.init.bind(App))
+        .withFailureHandler(App.initError.bind(App))
+        .readTournaments();
+    }
+  } catch (error) {
+    App.initError(error);
+  }
 </script>

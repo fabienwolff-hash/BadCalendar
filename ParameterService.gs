@@ -66,5 +66,4 @@ const ParameterService = {
 
     return departments;
   },
-
 };

@@ -3,7 +3,7 @@
 const CONFIG = {
   APP_NAME: "BadPlanner",
 
-  APP_VERSION: "0.16.0",
+  APP_VERSION: "1.0.0",
 
   SPREADSHEET_ID: PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID"),
 
