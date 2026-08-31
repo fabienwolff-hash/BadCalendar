@@ -143,10 +143,27 @@
     restoreState() {
       this.state.filtersCollapsed = Storage.loadFiltersCollapsed();
       this.state.showFinished = Storage.loadShowFinished();
-      this.state.categories = Storage.loadCategories();
-      this.state.scopes = Storage.loadScopes();
+ 
+	  const availableCategories = new Set(
+		this.events.flatMap((event) => getCategories(event))
+	  );
 
-      $(DOM.SHOW_FINISHED).checked = this.state.showFinished;
+	  const availableScopes = new Set(
+		this.events.map((event) => event.scope)
+	  );
+
+	  this.state.categories = Storage.loadCategories().filter((category) =>
+		availableCategories.has(category)
+	  );
+
+	  this.state.scopes = Storage.loadScopes().filter((scope) =>
+		availableScopes.has(scope)
+	  );
+
+	  Storage.saveCategories(this.state.categories);
+	  Storage.saveScopes(this.state.scopes);
+      
+	  $(DOM.SHOW_FINISHED).checked = this.state.showFinished;
       $(DOM.SHOW_NEW_ONLY).checked = this.state.showNewOnly;
       $(DOM.SHOW_OPEN_REGISTRATION_ONLY).checked = this.state.showOpenRegistrationOnly;
     },
@@ -193,6 +210,10 @@
         [...new Set(this.events.map((event) => event.scope))],
         ORDER.SCOPES
       );
+	  
+	  console.log(
+  scopes.map(s => s.label || s)
+);
 
       scopes.forEach((scope) => {
         const checked = this.state.scopes.includes(scope);
