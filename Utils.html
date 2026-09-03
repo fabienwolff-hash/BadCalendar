@@ -1,35 +1,71 @@
 <script>
   function eventButton(event) {
-    if (!event.eventUrl) {
+    const programsWithUrl = event.programs.filter((program) => program.eventUrl);
+
+    if (programsWithUrl.length === 0) {
       return "";
     }
 
-    let label;
+    // Cas historique : une seule URL
+    if (programsWithUrl.length === 1) {
+      const url = programsWithUrl[0].eventUrl;
 
-    switch (event.tournamentStatus) {
-      case STATUS.EVENT.FINISHED:
-        label = event.eventUrl.includes(URLS.BADNET)
-          ? UI.BUTTONS.VIEW_RESULTS
-          : UI.BUTTONS.VIEW_EVENT;
-        break;
+      let label;
 
-      default:
-        switch (event.registrationStatus) {
-          case STATUS.REGISTRATION.OPEN:
-            label = event.eventUrl.includes(URLS.BADNET)
-              ? UI.BUTTONS.REGISTER_BADNET
-              : UI.BUTTONS.REGISTER;
+      switch (event.tournamentStatus) {
+        case STATUS.EVENT.FINISHED:
+          label = url.includes(URLS.BADNET) ? UI.BUTTONS.VIEW_RESULTS : UI.BUTTONS.VIEW_EVENT;
+          break;
+
+        default:
+          switch (event.registrationStatus) {
+            case STATUS.REGISTRATION.OPEN:
+              label = url.includes(URLS.BADNET) ? UI.BUTTONS.REGISTER_BADNET : UI.BUTTONS.REGISTER;
+              break;
+
+            default:
+              label = UI.BUTTONS.VIEW_EVENT;
+          }
+      }
+
+      return buildButton(url, label);
+    }
+
+    // Cas multi-sites
+    return programsWithUrl
+      .map((program) => {
+        const url = program.eventUrl;
+
+        let label;
+
+        switch (event.tournamentStatus) {
+          case STATUS.EVENT.FINISHED:
+            label = url.includes(URLS.BADNET) ? UI.BUTTONS.VIEW_RESULTS : UI.BUTTONS.VIEW_EVENT;
             break;
 
           default:
-            label = UI.BUTTONS.VIEW_EVENT;
-        }
-    }
+            switch (event.registrationStatus) {
+              case STATUS.REGISTRATION.OPEN:
+                label = UI.BUTTONS.REGISTER;
+                break;
 
+              default:
+                label = UI.BUTTONS.VIEW_EVENT;
+            }
+        }
+
+        const categories = program.categories.join(" / ");
+
+        return buildButton(url, `${label} • ${categories}`);
+      })
+      .join("");
+  }
+
+  function buildButton(url, label) {
     return `
         <a
             class="button button-primary badnet-link"
-            href="${event.eventUrl}"
+            href="${url}"
             target="_blank"
         >
             ${label}

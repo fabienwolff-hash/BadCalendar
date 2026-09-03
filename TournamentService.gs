@@ -98,8 +98,6 @@ const TournamentService = {
 
       registration: this.buildRegistration_(firstRow),
 
-      eventUrl: firstRow.eventUrl,
-
       creationDate: firstRow.creationDate,
 
       programs,
@@ -130,6 +128,8 @@ const TournamentService = {
       disciplines: this.splitList_(row.disciplines),
 
       categories: this.splitList_(row.categories),
+
+      eventUrl: row.eventUrl,
 
       sites: this.buildSites_(row),
     };
