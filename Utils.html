@@ -6,9 +6,14 @@
       return "";
     }
 
-    // Cas historique : une seule URL
-    if (programsWithUrl.length === 1) {
-      const url = programsWithUrl[0].eventUrl;
+    // URLs distinctes
+    const uniqueUrls = [...new Set(programsWithUrl.map((program) => program.eventUrl))];
+
+    // Cas mono-site :
+    // - un seul programme
+    // - ou plusieurs programmes avec la même URL
+    if (uniqueUrls.length === 1) {
+      const url = uniqueUrls[0];
 
       let label;
 
@@ -31,7 +36,9 @@
       return buildButton(url, label);
     }
 
-    // Cas multi-sites
+    //
+    // Cas multi-sites : plusieurs URLs différentes
+    //
     return programsWithUrl
       .map((program) => {
         const url = program.eventUrl;
